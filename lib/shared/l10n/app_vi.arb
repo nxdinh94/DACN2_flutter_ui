@@ -1,0 +1,35 @@
+﻿{
+  "helloWorld": "Xin chào thế giới",
+  "@helloWorld": {
+    "description": "The conventional newborn programmer greeting"
+  },
+  "hello": "Xin chào {name}",
+  "welcomeTitle": "Chào mừng đến với Keep In Touch",
+  "@welcomeTitle": {
+    "description": "Main welcome title on home page"
+  },
+  "welcomeSubtitle": "Giữ liên lạc với danh bạ của bạn",
+  "@welcomeSubtitle": {
+    "description": "Welcome subtitle on home page"
+  },
+  "analytics": "Phân tích",
+  "@analytics": {
+    "description": "Analytics button label"
+  },
+  "viewAnalytics": "Xem phân tích",
+  "@viewAnalytics": {
+    "description": "Analytics button hint"
+  },
+  "addNew": "Thêm mới",
+  "@addNew": {
+    "description": "Add button label"
+  },
+  "addNewHint": "Thêm danh bạ hoặc lịch trình mới",
+  "@addNewHint": {
+    "description": "Add button hint"
+  },
+  "welcomeSection": "Phần chào mừng",
+  "@welcomeSection": {
+    "description": "Semantic label for welcome section"
+  }
+}

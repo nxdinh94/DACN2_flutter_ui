@@ -1,0 +1,35 @@
+﻿{
+  "helloWorld": "Hello World!",
+  "@helloWorld": {
+    "description": "The conventional newborn programmer greeting"
+  },
+  "hello": "Hello {name}",
+  "welcomeTitle": "Welcome to Keep In Touch",
+  "@welcomeTitle": {
+    "description": "Main welcome title on home page"
+  },
+  "welcomeSubtitle": "Stay connected with your contacts",
+  "@welcomeSubtitle": {
+    "description": "Welcome subtitle on home page"
+  },
+  "analytics": "Analytics",
+  "@analytics": {
+    "description": "Analytics button label"
+  },
+  "viewAnalytics": "View analytics",
+  "@viewAnalytics": {
+    "description": "Analytics button hint"
+  },
+  "addNew": "Add new item",
+  "@addNew": {
+    "description": "Add button label"
+  },
+  "addNewHint": "Add a new contact or schedule",
+  "@addNewHint": {
+    "description": "Add button hint"
+  },
+  "welcomeSection": "Welcome section",
+  "@welcomeSection": {
+    "description": "Semantic label for welcome section"
+  }
+}
