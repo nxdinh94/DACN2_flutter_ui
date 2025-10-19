@@ -6,6 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kit/app.dart';
 import 'package:kit/features/auth/presentation/pages/login_screen.dart';
+import 'package:kit/features/auth/presentation/pages/register_screen.dart';
+import 'package:kit/features/auth/presentation/pages/send_otp_screen.dart';
 import 'package:kit/features/home/presentation/pages/home_page.dart';
 
 import '../../features/auth/presentation/bloc/auth_bloc.dart';
@@ -26,6 +28,7 @@ class GoRouterRefreshStream extends ChangeNotifier {
   static const String splash = '/';
   static const String login = '/login';
   static const String register = '/register';
+  static const String sendOtp = '/send-otp';
   static const String home = '/home';
   static const String contacts = '/contacts';
   static const String contactDetail = '/contact-detail';
@@ -36,13 +39,18 @@ class GoRouterRefreshStream extends ChangeNotifier {
   static final GoRouter appRouter = GoRouter(
     initialLocation: home,
     redirect: (context, state) {
-      print(context.read<AuthBloc>().state);
-      if(context.read<AuthBloc>().state is AuthUnauthenticated) {
-        return login;
-      } else {
-        return null;
-      }
-    },
+    final isLoggedIn = context.read<AuthBloc>().state is AuthAuthenticated;
+    final isGoingToLoginOrOtp =
+        state.matchedLocation == AppRoutes.login ||
+        state.matchedLocation == AppRoutes.sendOtp ||
+        state.matchedLocation == '${AppRoutes.sendOtp}${AppRoutes.register}';
+
+    if (!isLoggedIn && !isGoingToLoginOrOtp) {
+      return AppRoutes.login;
+    }
+    return null;
+  },
+
     refreshListenable: GoRouterRefreshStream(getIt<AuthBloc>().stream),
     routes: <RouteBase>[
       GoRoute(
@@ -53,6 +61,20 @@ class GoRouterRefreshStream extends ChangeNotifier {
             observer: MyApp.observer,
           );
         },
+      ),
+      GoRoute(
+        path: sendOtp,
+        builder: (BuildContext context, GoRouterState state) {
+          return const SendOtpScreen();
+        },
+        routes: [
+          GoRoute(
+            path: register,
+            builder: (BuildContext context, GoRouterState state) {
+              return RegisterScreen();
+            },
+          ),
+        ]
       ),
       GoRoute(
         path: login,

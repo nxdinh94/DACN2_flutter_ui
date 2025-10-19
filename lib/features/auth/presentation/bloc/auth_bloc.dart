@@ -1,6 +1,9 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:kit/features/auth/domain/entities/send_otp.dart';
+import 'package:kit/features/auth/domain/usecases/register_usecase.dart';
+import 'package:kit/shared/constants/enum/auth.dart';
 
 import '../../domain/entities/user.dart';
 import '../../domain/usecases/login_usecase.dart';
@@ -16,10 +19,12 @@ part 'auth_bloc.g.dart';
 class AuthBloc extends HydratedBloc <AuthEvent, AuthState> {
   final LoginUseCase loginUseCase;
   final LogoutUseCase logoutUseCase;
+  final RegisterUseCase registerUseCase;
 
   AuthBloc({
     required this.loginUseCase,
     required this.logoutUseCase,
+    required this.registerUseCase,
   }) : super(AuthState.authenticated(
       User(id: '0', name: 'Guest', email: 'jkj',lastSeen:DateTime.now())
   )) {
@@ -31,8 +36,32 @@ class AuthBloc extends HydratedBloc <AuthEvent, AuthState> {
           await _onLogoutRequested(emit);
         case CheckAuthStatus():
           await _onCheckAuthStatus(emit);
+        case SendOtpRequested(:final email):
+          await _onSendOtpRequested(email, emit);
+          break;
+        case RegisterRequested(:final name, :final email, :final password, :final confirmPassword, :final phoneNumber, :final code):
+          // Handle register event
+          break;
       }
     });
+  }
+
+  Future<void> _onSendOtpRequested(
+    String email,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(const AuthState.otpSent(isLoading: true));
+    try {
+      final result = await registerUseCase.sendOtp(SendOtp(email: email, type: AuthType.REGISTER.name));
+      result.fold(
+        (error) {
+          return emit(AuthState.error(error));
+        },
+        (success) => emit(const AuthState.otpSent(isLoading: false)),
+      );
+    } catch (e) {
+      emit(AuthState.error(e.toString()));
+    }
   }
 
   Future<void> _onLoginRequested(

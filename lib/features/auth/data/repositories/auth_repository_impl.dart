@@ -1,6 +1,7 @@
+import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:kit/features/auth/domain/entities/register.dart';
+import 'package:kit/features/auth/domain/entities/send_otp.dart';
 import '../../domain/entities/user.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../datasources/auth_remote_data_source.dart';
@@ -22,11 +23,10 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<User> register(String name, String email, String password) async {
-    final user = await remoteDataSource.register(name, email, password);
-    // Store user data and token
-
-    return user;
+  Future<Either<String, bool>> register(Register model) async {
+    final user = await remoteDataSource.register(model);
+    
+    return user.fold((e) => Left(e), (isRegistered) => Right(isRegistered));
   }
 
   @override
@@ -44,5 +44,11 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<bool> isLoggedIn() async {
     throw Exception();
+  }
+
+  @override
+  Future<Either<String, bool>> sendOtp(SendOtp model) async {
+      final result = await remoteDataSource.sendOtp(model);
+      return result.fold((e)=> Left(e), (onRight) => Right(onRight));
   }
 }

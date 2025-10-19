@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kit/shared/constants/app_assets.dart';
 import 'package:kit/shared/widgets/app_svg.dart';
 
 import '../../core/theme/app_theme.dart';
@@ -7,12 +6,12 @@ import '../../core/theme/app_theme.dart';
 class AppButton extends StatelessWidget {
   final String? text;
   final VoidCallback? onPressed;
-  final bool ? isDisabled;
+  final bool isDisabled;
 
   // Appearance
-  final Color? backgroundColor;
-  final Color? textColor;
-  final Color? borderColor;
+  final Color backgroundColor;
+  final Color  textColor;
+  final Color borderColor;
 
   // Typography
   final double? fontSize;
@@ -23,24 +22,10 @@ class AppButton extends StatelessWidget {
   final String? iconPath; // could be an asset path
   final Color? iconColor;
 
+  final EdgeInsetsGeometry padding;
+
   // Button style type
   final _AppButtonType _type;
-
-  const AppButton._({
-    super.key,
-    this.text,
-    this.onPressed,
-    this.backgroundColor = AppTheme.primaryColor,
-    this.textColor = AppTheme.onPrimaryColor,
-    this.borderColor,
-    this.fontSize,
-    this.fontWeight,
-    this.iconSize,
-    this.iconPath,
-    this.iconColor,
-    this.isDisabled = false,
-    required _AppButtonType type,
-  }) : _type = type;
 
   /// 🔹 Named constructors
   const AppButton.elevated({
@@ -49,13 +34,14 @@ class AppButton extends StatelessWidget {
     this.onPressed,
     this.backgroundColor = AppTheme.primaryColor,
     this.textColor = AppTheme.onPrimaryColor,
-    this.borderColor = AppTheme.borderColor,
+    this.borderColor = Colors.transparent,
     this.fontSize,
     this.fontWeight,
     this.iconSize,
     this.iconPath,
     this.iconColor,
     this.isDisabled = false,
+    this.padding = const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
   }) : _type = _AppButtonType.elevated;
 
   const AppButton.outlined({
@@ -71,6 +57,7 @@ class AppButton extends StatelessWidget {
     this.iconPath,
     this.iconColor,
     this.isDisabled = false,
+    this.padding = const EdgeInsets.symmetric(vertical: 12, horizontal: 0)
   }) : _type = _AppButtonType.outlined;
 
   const AppButton.text({
@@ -86,36 +73,32 @@ class AppButton extends StatelessWidget {
     this.iconPath,
     this.iconColor,
     this.isDisabled = false,
+    this.padding = const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
   }) : _type = _AppButtonType.text;
 
   @override
-  Widget build(BuildContext context) {
-
-    final Color effectiveBackgroundColor = isDisabled == true
-        ? (backgroundColor!.withValues(alpha: 0.4))
-        : (backgroundColor!);
-
-    final Color effectiveTextColor = textColor ?? Colors.white;
-
+  Widget build(BuildContext context) {  
     final TextStyle textStyle = TextStyle(
-        fontSize: fontSize ?? 16,
-        fontWeight: fontWeight ?? FontWeight.w400,
-      color: effectiveTextColor,
+      fontSize: fontSize ?? 16,
+      fontWeight: fontWeight ?? FontWeight.w400,
+      color: textColor,
     );
 
     final Widget? iconWidget = iconPath != null
         ? Padding(
-      padding: const EdgeInsets.only(right: 8.0),
-      child: iconPath!.contains('svg') ? AppSvg(
-        size: iconSize,
-        color: iconColor ?? effectiveTextColor,
-        iconPath: iconPath!,
-      ) : Image.asset(
-        iconPath!,
-        width: iconSize ?? 24,
-        height: iconSize ?? 24,
-      ),
-    )
+            padding: const EdgeInsets.only(right: 8.0),
+            child: iconPath!.contains('svg')
+                ? AppSvg(
+                    size: iconSize,
+                    color: iconColor ?? textColor,
+                    iconPath: iconPath!,
+                  )
+                : Image.asset(
+                    iconPath!,
+                    width: iconSize ?? 24,
+                    height: iconSize ?? 24,
+                  ),
+          )
         : null;
 
     final Widget child = Row(
@@ -128,75 +111,58 @@ class AppButton extends StatelessWidget {
     );
 
     switch (_type) {
+      // ✅ ElevatedButton (unchanged)
       case _AppButtonType.elevated:
         return ElevatedButton(
-          onPressed: (isDisabled ?? false) ? null : onPressed,
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.resolveWith((states) {
-              if (states.contains(MaterialState.disabled)) {
-                return (backgroundColor ?? AppTheme.primaryColor).withOpacity(0.4);
-              }
-              return backgroundColor ?? AppTheme.primaryColor;
-            }),
-            foregroundColor: MaterialStateProperty.all(
-              textColor ?? AppTheme.onPrimaryColor,
+          onPressed: isDisabled ? null : onPressed,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: backgroundColor,
+            disabledBackgroundColor: backgroundColor.withValues(alpha: 0.4),
+
+            foregroundColor: textColor,
+            disabledForegroundColor: textColor.withValues(alpha: 0.4),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(60),
+              side: BorderSide(color: isDisabled ? borderColor.withValues(alpha: 0.4) : borderColor),
             ),
-            shape: MaterialStateProperty.all(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(60),
-                side: BorderSide(color: borderColor ?? Colors.transparent),
-              ),
-            ),
-            overlayColor: MaterialStateProperty.all(Colors.transparent),
-            surfaceTintColor: MaterialStateProperty.all(Colors.transparent),
-            elevation: MaterialStateProperty.all(0),
+            minimumSize: Size.zero, // Set this
+            padding: padding,
           ),
           child: child,
         );
 
+      // ✅ OutlinedButton (converted to .styleFrom)
       case _AppButtonType.outlined:
         return OutlinedButton(
-          onPressed: (isDisabled ?? false) ? null : onPressed,
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(
-              backgroundColor ?? Colors.transparent,
+          onPressed: isDisabled ? null : onPressed,
+          style: OutlinedButton.styleFrom(
+            foregroundColor: textColor,
+            backgroundColor: backgroundColor,
+            side: BorderSide(color: borderColor),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(60),
             ),
-            foregroundColor: MaterialStateProperty.all(
-              textColor ?? AppTheme.primaryColor,
-            ),
-            side: MaterialStateProperty.all(
-              BorderSide(color: borderColor ?? AppTheme.primaryColor),
-            ),
-            shape: MaterialStateProperty.all(
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(60)),
-            ),
-            overlayColor: MaterialStateProperty.all(Colors.transparent),
-            surfaceTintColor: MaterialStateProperty.all(Colors.transparent),
+            padding: padding,
           ),
           child: child,
         );
 
       case _AppButtonType.text:
         return TextButton(
-          onPressed: (isDisabled ?? false) ? null : onPressed,
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(
-              backgroundColor ?? Colors.transparent,
+          onPressed: isDisabled ? null : onPressed,
+          style: TextButton.styleFrom(
+            foregroundColor: textColor,
+            backgroundColor: backgroundColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(60),
             ),
-            foregroundColor: MaterialStateProperty.all(
-              textColor ?? AppTheme.primaryColor,
-            ),
-            shape: MaterialStateProperty.all(
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(60)),
-            ),
-            overlayColor: MaterialStateProperty.all(Colors.transparent),
-            surfaceTintColor: MaterialStateProperty.all(Colors.transparent),
+            padding: padding,
           ),
           child: child,
         );
     }
-
   }
+
 }
 
 enum _AppButtonType { elevated, outlined, text }

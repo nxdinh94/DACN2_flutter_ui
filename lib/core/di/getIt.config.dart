@@ -20,6 +20,7 @@ import '../../features/auth/data/repositories/auth_repository_impl.dart'
 import '../../features/auth/domain/repositories/auth_repository.dart' as _i787;
 import '../../features/auth/domain/usecases/login_usecase.dart' as _i188;
 import '../../features/auth/domain/usecases/logout_usecase.dart' as _i48;
+import '../../features/auth/domain/usecases/register_usecase.dart' as _i941;
 import '../../features/auth/presentation/bloc/auth_bloc.dart' as _i797;
 import '../../features/contacts/data/datasources/contact_remote_data_source.dart'
     as _i971;
@@ -75,15 +76,19 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i48.LogoutUseCase>(
       () => _i48.LogoutUseCase(gh<_i787.AuthRepository>()),
     );
-    gh.singleton<_i797.AuthBloc>(
-      () => _i797.AuthBloc(
-        loginUseCase: gh<_i188.LoginUseCase>(),
-        logoutUseCase: gh<_i48.LogoutUseCase>(),
-      ),
+    gh.factory<_i941.RegisterUseCase>(
+      () => _i941.RegisterUseCase(gh<_i787.AuthRepository>()),
     );
     gh.factory<_i295.ContactsBloc>(
       () => _i295.ContactsBloc(
         getContactsUseCase: gh<_i1050.GetContactsUseCase>(),
+      ),
+    );
+    gh.singleton<_i797.AuthBloc>(
+      () => _i797.AuthBloc(
+        loginUseCase: gh<_i188.LoginUseCase>(),
+        logoutUseCase: gh<_i48.LogoutUseCase>(),
+        registerUseCase: gh<_i941.RegisterUseCase>(),
       ),
     );
     return this;

@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:kit/shared/constants/app_colors.dart';
 
 import 'app_theme.dart';
 TextTheme getAppTextTheme() {

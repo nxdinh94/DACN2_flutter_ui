@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
 
 import '../logger/logger.dart';
@@ -7,6 +8,8 @@ import '../logger/logger.dart';
 class DioClient {
   late final Dio _dio;
   final AppLogger _logger = AppLogger();
+
+  final String baseUrl = 'http://192.168.2.14:4000'; 
 
   DioClient() {
     _dio = Dio();
@@ -56,31 +59,30 @@ class DioClient {
     }
   }
 
-  Future<Response> post(
+  Future<Either<Exception, Response>> post(
     String path, {
     dynamic data,
     Map<String, dynamic>? queryParameters,
     Options? options,
   }) async {
-    try {
-      return await _dio.post(
-        path,
+    return TaskEither<Exception, Response>.tryCatch(
+      () async => await _dio.post(
+        '$baseUrl$path',
         data: data,
         queryParameters: queryParameters,
         options: options,
-      );
-    } catch (e) {
-      _logger.error('POST request failed: $path', error: e);
-      rethrow;
-    }
+      ),
+      (error, stackTrace) {
+        // Optional: log or transform DioException to your own Failure type
+        return error is Exception ? error : Exception(error.toString());
+      },
+    ).run();
   }
 
   Future<Response> put(
-  String path, {
-  dynamic data,
-  Map<String, dynamic>? queryParameters,
-    Options? options,
-  }) async {
+    String path, {
+      dynamic data, Map<String, dynamic>? queryParameters, Options? options,
+    }) async {
     try {
       return await _dio.put(
         path,

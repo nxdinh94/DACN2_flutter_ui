@@ -8,6 +8,18 @@ sealed class AuthEvent with _$AuthEvent {
   }) = LoginRequested;
   
   const factory AuthEvent.logoutRequested() = LogoutRequested;
+
+  const factory AuthEvent.sendOtpRequested({
+    required String email,  
+  }) = SendOtpRequested;
   
+  const factory AuthEvent.registerRequested({
+    required String name,
+    required String email,
+    required String password,
+    required String confirmPassword,
+    String? phoneNumber,
+    required String code,
+  }) = RegisterRequested;
   const factory AuthEvent.checkAuthStatus() = CheckAuthStatus;
 }

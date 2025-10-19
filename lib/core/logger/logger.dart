@@ -3,7 +3,7 @@ import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class AppLogger {
-  static const String _prefix = '[KIT]';
+  static const String _prefix = '[Linggo]';
 
   void debug(String message) {
     if (kDebugMode) {

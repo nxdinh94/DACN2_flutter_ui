@@ -1,11 +1,15 @@
+import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
+import 'package:kit/features/auth/domain/entities/register.dart';
+import 'package:kit/features/auth/domain/entities/send_otp.dart';
 
 import '../../domain/entities/user.dart';
 import '../../../../core/network/dio_client.dart';
 
 abstract class AuthRemoteDataSource {
   Future<User> login(String email, String password);
-  Future<User> register(String name, String email, String password);
+  Future<Either<String, bool>> register(Register model);
+  Future<Either<String, bool>> sendOtp(SendOtp model);
   Future<void> logout();
 }
 
@@ -37,29 +41,18 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<User> register(String name, String email, String password) async {
-    try {
-      // Mock implementation - replace with actual API call
-      // final response = await dioClient.post('/auth/register', data: {
-      //   'name': name,
-      //   'email': email,
-      //   'password': password,
-      // });
-      
-      // Mock response delay
-      await Future.delayed(const Duration(seconds: 1));
-      
-      return User(
-        id: '1',
-        name: name,
-        email: email,
-        lastSeen: DateTime.now(),
-        isOnline: true,
-      );
-    } catch (e) {
-      throw Exception('Registration failed: $e');
-    }
+  Future<Either<String, bool>> register(Register model) async {
+    final result = await dioClient.post(
+      '/api/auth/register',
+      data: model.toJson(),
+    );
+
+    return result.fold(
+      (error) => Left(error.toString()),
+      (response) => Right(true),
+    );
   }
+
 
   @override
   Future<void> logout() async {
@@ -73,4 +66,21 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       throw Exception('Logout failed: $e');
     }
   }
+  
+  @override
+  Future<Either<String, bool>> sendOtp(SendOtp model) async {
+    final result = await dioClient.post(
+      '/api/auth/otp',
+      data: model.toJson(),
+    );
+
+    return result.fold(
+      (error) {
+        return Left('This email is already registered');
+      },
+      (response) => Right(true),
+    );
+  }
+
+  
 }

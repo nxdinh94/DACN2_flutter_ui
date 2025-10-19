@@ -5,13 +5,15 @@ import 'package:kit/core/theme/text_theme.dart';
 class AppTheme {
   static const Color primaryColor = Colors.black87;
   static const Color onPrimaryColor = Colors.white;
-  static const Color onSecondaryColor = Colors.white;
-  static const Color secondaryColor = Color(0xFF262626);
+  static const Color onSecondaryColor = Colors.black87;
+  static const Color secondaryColor = Color.fromARGB(255, 233, 233, 233);
   static const Color surfaceColor = Colors.white;
   static const Color onSurfaceColor = Colors.black87;
   static const Color borderColor = Color(0xFFC4C6C9);
   static const Color blackColor = Colors.black;
   static const Color whiteColor = Colors.white;
+  static const Color tertiaryColor = Color.fromARGB(255, 15, 46, 245);
+  static const Color errorColor = Color(0xffb00020);
 
 
   static ThemeData get lightTheme {
@@ -86,6 +88,8 @@ class AppTheme {
           surfaceColor: surfaceColor,
           blackColor: blackColor,
           whiteColor: whiteColor,
+          tertiaryColor: tertiaryColor,
+          errorColor: errorColor,
         ),
       ],
 
@@ -110,6 +114,8 @@ class AppTheme {
           surfaceColor: surfaceColor,
           blackColor: blackColor,
           whiteColor: whiteColor,
+          tertiaryColor: tertiaryColor,
+          errorColor: errorColor,
         ),
       ],
     );

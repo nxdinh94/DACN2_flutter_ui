@@ -49,6 +49,7 @@ class MyApp extends StatelessWidget {
                 Locale('en'), // English
                 Locale('vi'), // Vietnamese
               ],
+              debugShowCheckedModeBanner: false,
             );
           },
         )

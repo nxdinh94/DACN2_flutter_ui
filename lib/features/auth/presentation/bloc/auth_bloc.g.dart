@@ -28,6 +28,17 @@ Map<String, dynamic> _$AuthUnauthenticatedToJson(
   AuthUnauthenticated instance,
 ) => <String, dynamic>{'runtimeType': instance.$type};
 
+AuthOtpSent _$AuthOtpSentFromJson(Map<String, dynamic> json) => AuthOtpSent(
+  isLoading: json['isLoading'] as bool,
+  $type: json['runtimeType'] as String?,
+);
+
+Map<String, dynamic> _$AuthOtpSentToJson(AuthOtpSent instance) =>
+    <String, dynamic>{
+      'isLoading': instance.isLoading,
+      'runtimeType': instance.$type,
+    };
+
 AuthError _$AuthErrorFromJson(Map<String, dynamic> json) =>
     AuthError(json['message'] as String, $type: json['runtimeType'] as String?);
 
