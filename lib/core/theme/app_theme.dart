@@ -3,13 +3,15 @@ import 'package:kit/core/theme/app_theme_extension.dart';
 import 'package:kit/core/theme/text_theme.dart';
 
 class AppTheme {
-  static const Color primaryColor = Colors.white;
+  static const Color primaryColor = Colors.black87;
   static const Color onPrimaryColor = Colors.white;
   static const Color onSecondaryColor = Colors.white;
-  static const Color secondaryColor = Color(0xFF48BB78);
+  static const Color secondaryColor = Color(0xFF262626);
   static const Color surfaceColor = Colors.white;
-  static const Color onSurfaceColor = Colors.black54;
-  static const Color borderColor = Color(0xFFE2E8F0);
+  static const Color onSurfaceColor = Colors.black87;
+  static const Color borderColor = Color(0xFFC4C6C9);
+  static const Color blackColor = Colors.black;
+  static const Color whiteColor = Colors.white;
 
 
   static ThemeData get lightTheme {
@@ -41,7 +43,7 @@ class AppTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
         ),
       ),
       cardTheme: const CardThemeData(
@@ -75,13 +77,15 @@ class AppTheme {
       ),
       extensions: const <ThemeExtension<dynamic>>[
         AppThemeExtension(
-          primaryColor: Colors.white,
-          secondaryColor: Colors.white,
-          onPrimaryColor: Colors.black54,
-          onSecondaryColor: Colors.white,
-          onSurfaceColor: Colors.black54,
-          borderColor: Color(0xFFE2E8F0),
-          surfaceColor: Colors.white
+          primaryColor: primaryColor,
+          secondaryColor: secondaryColor,
+          onPrimaryColor: onPrimaryColor,
+          onSecondaryColor: onSecondaryColor,
+          onSurfaceColor: onSurfaceColor,
+          borderColor: borderColor,
+          surfaceColor: surfaceColor,
+          blackColor: blackColor,
+          whiteColor: whiteColor,
         ),
       ],
 
@@ -104,6 +108,8 @@ class AppTheme {
           onSurfaceColor: onSurfaceColor,
           borderColor: borderColor,
           surfaceColor: surfaceColor,
+          blackColor: blackColor,
+          whiteColor: whiteColor,
         ),
       ],
     );

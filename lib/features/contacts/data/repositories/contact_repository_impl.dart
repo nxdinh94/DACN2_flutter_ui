@@ -4,7 +4,7 @@ import '../../domain/entities/contact.dart';
 import '../../domain/repositories/contact_repository.dart';
 import '../datasources/contact_remote_data_source.dart';
 
-@injectable
+@Injectable(as: ContactRepository)
 class ContactRepositoryImpl implements ContactRepository {
   final ContactRemoteDataSource remoteDataSource;
 

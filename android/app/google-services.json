@@ -7,6 +7,42 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:986549874924:android:4888b6bae2149ef96535c9",
+        "android_client_info": {
+          "package_name": "com.example.dacn2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "986549874924-uv9rj9t8t6fj4gsp1jmjql5vr0kussfv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBB-fI9rw7EY6NLIgKmZKXYrRccF_Kngws"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "986549874924-uv9rj9t8t6fj4gsp1jmjql5vr0kussfv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "986549874924-aq44tbdcdg86ltmkdr05tk814mflmqah.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.kit"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:986549874924:android:52fc03f689dc8afe6535c9",
         "android_client_info": {
           "package_name": "com.example.fe_financial_manager"
@@ -19,6 +55,50 @@
           "android_info": {
             "package_name": "com.example.fe_financial_manager",
             "certificate_hash": "ac927eae32c8888f81672a58560d74bcbfcb7eda"
+          }
+        },
+        {
+          "client_id": "986549874924-uv9rj9t8t6fj4gsp1jmjql5vr0kussfv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBB-fI9rw7EY6NLIgKmZKXYrRccF_Kngws"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "986549874924-uv9rj9t8t6fj4gsp1jmjql5vr0kussfv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "986549874924-aq44tbdcdg86ltmkdr05tk814mflmqah.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.kit"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:986549874924:android:be8ab4fd7f2b370f6535c9",
+        "android_client_info": {
+          "package_name": "com.example.flutter_bloc_base_source_code"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "986549874924-ibdiq1k6594o5k3fujgo34pmjajsud66.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flutter_bloc_base_source_code",
+            "certificate_hash": "a876a0c83802e98fd95dc3f5de8869fde21f7cd7"
           }
         },
         {

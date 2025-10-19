@@ -4,14 +4,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:kit/core/di/injectable.dart';
+import 'package:kit/core/di/getIt.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'firebase_options.dart';
 import 'app.dart';
-
-GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 @pragma('vm:entry-point')
 void notificationTapBackground(NotificationResponse notificationResponse) {
@@ -33,12 +31,7 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  configureDependencies();
-  HydratedBloc.storage = await HydratedStorage.build(
-    storageDirectory: kIsWeb
-        ? HydratedStorageDirectory.web
-        : HydratedStorageDirectory((await getTemporaryDirectory()).path),
-  );
+
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -46,6 +39,12 @@ void main() async {
 
   await _setupNotifications();
   await _setupFirebaseMessaging();
+  HydratedBloc.storage = await HydratedStorage.build(
+    storageDirectory: kIsWeb
+        ? HydratedStorageDirectory.web
+        : HydratedStorageDirectory((await getTemporaryDirectory()).path),
+  );
+  configureDependencies();
 
   runApp(const MyApp());
 }

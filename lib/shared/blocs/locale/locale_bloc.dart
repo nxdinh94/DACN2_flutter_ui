@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
 
 part 'locale_event.dart';
 part 'locale_state.dart';
 part 'locale_bloc.freezed.dart';
 
-/// BLoC for managing application locale/language settings
+@injectable
 class LocaleBloc extends Bloc<LocaleEvent, LocaleState> {
   LocaleBloc() : super(const LocaleState(locale: Locale('en'))) {
     on<LocaleEvent>((event, emit) {

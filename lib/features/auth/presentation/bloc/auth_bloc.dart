@@ -12,7 +12,7 @@ part 'auth_bloc.freezed.dart';
 part 'auth_bloc.g.dart';
 
 // BLoC
-@injectable
+@singleton
 class AuthBloc extends HydratedBloc <AuthEvent, AuthState> {
   final LoginUseCase loginUseCase;
   final LogoutUseCase logoutUseCase;
@@ -20,7 +20,9 @@ class AuthBloc extends HydratedBloc <AuthEvent, AuthState> {
   AuthBloc({
     required this.loginUseCase,
     required this.logoutUseCase,
-  }) : super(const AuthState.unauthenticated()) {
+  }) : super(AuthState.authenticated(
+      User(id: '0', name: 'Guest', email: 'jkj',lastSeen:DateTime.now())
+  )) {
     on<AuthEvent>((event, emit) async {
       switch (event) {
         case LoginRequested(:final email, :final password):
@@ -51,7 +53,7 @@ class AuthBloc extends HydratedBloc <AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     try {
-      await logoutUseCase();
+      // await logoutUseCase();
       emit(const AuthState.unauthenticated());
     } catch (e) {
       emit(AuthState.error(e.toString()));

@@ -3,9 +3,10 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kit/core/di/injectable.dart';
+import 'package:kit/core/di/getIt.dart';
 import 'package:kit/core/extensions/context.dart';
 import 'package:kit/core/router/app_routes.dart';
+import 'package:kit/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:kit/features/home/presentation/widgets/home_app_bar.dart';
 import 'package:kit/features/home/presentation/widgets/welcome_section.dart';
 import 'package:kit/shared/blocs/locale/locale_bloc.dart';
@@ -57,8 +58,8 @@ class _HomePageState extends State<HomePage> {
     _messagingService.onMessageOpenedApp.listen(_handleMessage);
   }
 
-  void _navigateToNewContactSchedule() {
-    context.push('/'); // TODO: Update to proper route constant
+  void _navigateToNewContactSchedule(BuildContext context) {
+    context.read<AuthBloc>().add(const AuthEvent.logoutRequested());
   }
 
   void _toggleLanguage() {
@@ -70,7 +71,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: HomeAppBar(
         title: context.locale.hello('Xander Dson'),
-        onAnalyticsPressed: _navigateToNewContactSchedule,
+        onAnalyticsPressed:()=>  _navigateToNewContactSchedule(context),
         onAddPressed: _toggleLanguage,
       ),
       body: const WelcomeSection(),

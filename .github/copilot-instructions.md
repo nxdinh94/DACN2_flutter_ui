@@ -1407,7 +1407,7 @@ import 'package:flutter/services.dart';
 
 // Third-party imports
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:injectable/injectable.dart';
+import 'package:injectable/getIt.dart';
 
 // Application imports
 import 'package:my_app/core/utils/constants.dart';

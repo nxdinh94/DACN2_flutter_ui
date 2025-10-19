@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-
 import '../../domain/entities/contact.dart';
 import '../../domain/usecases/get_contacts_usecase.dart';
 
@@ -13,7 +12,6 @@ part 'contacts_bloc.freezed.dart';
 @injectable
 class ContactsBloc extends Bloc<ContactsEvent, ContactsState> {
   final GetContactsUseCase getContactsUseCase;
-
   ContactsBloc({
     required this.getContactsUseCase,
   }) : super(const ContactsState.initial()) {

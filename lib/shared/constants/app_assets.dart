@@ -1,6 +1,5 @@
 class AppAssets {
   AppAssets._();
-
-  // Example asset (replace with actual asset names from Figma if needed)
-  static const String homeIllustration = 'assets/images/home_illustration.png';
+  static const String googleIcon = 'assets/images/google_icon.png';
+  static const String appLogo = 'assets/images/logo.png';
 }

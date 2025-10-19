@@ -6,4 +6,6 @@ extension LocalizationContextExtensions on BuildContext {
   AppLocalizations get locale => AppLocalizations.of(this)!;
   ThemeData get theme => Theme.of(this);
   AppThemeExtension get appTheme => Theme.of(this).extension<AppThemeExtension>()!;
+  TextTheme get textStyle => Theme.of(this).textTheme;
+  bool get isLightMode => Theme.of(this).brightness == Brightness.light;
 }

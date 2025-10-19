@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:kit/core/di/getIt.dart';
 import 'package:kit/core/router/app_routes.dart';
 import 'package:kit/core/theme/app_theme.dart';
+import 'package:kit/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:kit/shared/blocs/locale/locale_bloc.dart';
 import 'package:kit/shared/l10n/app_localizations.dart';
 
@@ -16,28 +18,41 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => LocaleBloc(),
-      child: BlocBuilder<LocaleBloc, LocaleState>(
-        builder: (context, state) {
-          return MaterialApp.router(
-            locale: state.locale,
-            routerConfig: AppRoutes.appRouter,
-            localizationsDelegates: const [
-              AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            theme: AppTheme.lightTheme,
-            darkTheme: AppTheme.darkTheme,
-            themeMode: ThemeMode.light,
-            supportedLocales: const [
-              Locale('en'), // English
-              Locale('vi'), // Vietnamese
-            ],
-          );
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthBloc>(
+          create: (context) => getIt<AuthBloc>()
+        ),
+        BlocProvider<LocaleBloc>(
+          create: (context) => getIt<LocaleBloc>()
+        ),
+      ],
+      child: BlocListener<AuthBloc, AuthState>(
+        listener: (context, state) {
+          AppRoutes.appRouter.refresh();
         },
+        child: BlocBuilder<LocaleBloc, LocaleState>(
+          builder: (BuildContext context, LocaleState state) {
+            return MaterialApp.router(
+              locale: state.locale,
+              routerConfig: AppRoutes.appRouter,
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              theme: AppTheme.lightTheme,
+              darkTheme: AppTheme.darkTheme,
+              themeMode: ThemeMode.light,
+              supportedLocales: const [
+                Locale('en'), // English
+                Locale('vi'), // Vietnamese
+              ],
+            );
+          },
+        )
+
       ),
     );
   }
