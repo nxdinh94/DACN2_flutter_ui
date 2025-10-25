@@ -1,11 +1,12 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:kit/features/auth/domain/entities/auth_token_entity.dart';
+import 'package:kit/features/auth/domain/entities/login.dart';
+import 'package:kit/features/auth/domain/entities/register.dart';
 import 'package:kit/features/auth/domain/entities/send_otp.dart';
 import 'package:kit/features/auth/domain/usecases/register_usecase.dart';
 import 'package:kit/shared/constants/enum/auth.dart';
-
-import '../../domain/entities/user.dart';
 import '../../domain/usecases/login_usecase.dart';
 import '../../domain/usecases/logout_usecase.dart';
 
@@ -25,9 +26,7 @@ class AuthBloc extends HydratedBloc <AuthEvent, AuthState> {
     required this.loginUseCase,
     required this.logoutUseCase,
     required this.registerUseCase,
-  }) : super(AuthState.authenticated(
-      User(id: '0', name: 'Guest', email: 'jkj',lastSeen:DateTime.now())
-  )) {
+  }) : super(AuthState.unauthenticated()) {
     on<AuthEvent>((event, emit) async {
       switch (event) {
         case LoginRequested(:final email, :final password):
@@ -40,8 +39,10 @@ class AuthBloc extends HydratedBloc <AuthEvent, AuthState> {
           await _onSendOtpRequested(email, emit);
           break;
         case RegisterRequested(:final name, :final email, :final password, :final confirmPassword, :final phoneNumber, :final code):
-          // Handle register event
+          await _onRegisterRequested(name, email, password, confirmPassword, phoneNumber, code, emit);
           break;
+        case CheckAuthStatus():
+          await _onCheckAuthStatus(emit);
       }
     });
   }
@@ -51,17 +52,45 @@ class AuthBloc extends HydratedBloc <AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     emit(const AuthState.otpSent(isLoading: true));
-    try {
-      final result = await registerUseCase.sendOtp(SendOtp(email: email, type: AuthType.REGISTER.name));
-      result.fold(
-        (error) {
-          return emit(AuthState.error(error));
-        },
-        (success) => emit(const AuthState.otpSent(isLoading: false)),
-      );
-    } catch (e) {
-      emit(AuthState.error(e.toString()));
-    }
+  
+    final result = await registerUseCase.sendOtp(SendOtp(email: email, type: AuthType.REGISTER.name));
+    result.fold(
+      (error) {
+        return emit(AuthState.error(sentOptMessage: error, loginMessage: null, registerMessage: null, logoutMessage: null));
+      },
+      (success) => emit(const AuthState.otpSent(isLoading: false)),
+    );
+    
+  }
+
+  Future<void> _onRegisterRequested(
+    String name,
+    String email,
+    String password,
+    String confirmPassword,
+    String phoneNumber,
+    String code,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(const AuthState.register(isLoading: true));
+   
+    final result = await registerUseCase.register(
+      Register(
+        name: name,
+        email: email,
+        password: password,
+        confirmPassword: confirmPassword,
+        phoneNumber: phoneNumber,
+        code: code,
+      ),
+    );
+    result.fold(
+      (error) {
+        return emit(AuthState.error(registerMessage: error, loginMessage: null, logoutMessage: null, sentOptMessage: null));
+      },
+      (success) => emit(const AuthState.register(isLoading: false)),
+    );
+    
   }
 
   Future<void> _onLoginRequested(
@@ -69,24 +98,34 @@ class AuthBloc extends HydratedBloc <AuthEvent, AuthState> {
     String password,
     Emitter<AuthState> emit,
   ) async {
-    emit(const AuthState.loading());
-    try {
-      final user = await loginUseCase(email, password);
-      emit(AuthState.authenticated(user));
-    } catch (e) {
-      emit(AuthState.error(e.toString()));
-    }
+    emit(const AuthState.login(isLoading: true));
+    
+    final result = await loginUseCase(
+      Login(
+        email: email,
+        password: password,
+      ),
+    );
+    result.fold(
+      (error) => emit(AuthState.error(loginMessage: error, logoutMessage: null, registerMessage: null, sentOptMessage: null)),
+      (token) {
+        emit(AuthState.login(isLoading: false));
+        emit(AuthState.authenticated());
+      },
+    );
   }
 
   Future<void> _onLogoutRequested(
     Emitter<AuthState> emit,
   ) async {
-    try {
-      // await logoutUseCase();
-      emit(const AuthState.unauthenticated());
-    } catch (e) {
-      emit(AuthState.error(e.toString()));
-    }
+    final result = await logoutUseCase();
+    result.fold(
+      (error) {
+        print('Logout error1: $error');
+        emit(AuthState.error(logoutMessage: error, loginMessage: null, registerMessage: null, sentOptMessage: null));
+      },
+      (success) => emit(const AuthState.unauthenticated()),
+    );
   }
 
   Future<void> _onCheckAuthStatus(

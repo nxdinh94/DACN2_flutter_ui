@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:kit/core/di/getIt.dart';
 import 'package:kit/core/extensions/context.dart';
-import 'package:kit/core/router/app_routes.dart';
 import 'package:kit/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:kit/features/auth/presentation/pages/send_otp_screen.dart';
 import 'package:kit/shared/constants/app_assets.dart';
 import 'package:kit/shared/widgets/app_button.dart';
-
-import '../../../../core/theme/app_theme.dart';
+import 'package:kit/shared/widgets/toast.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -20,103 +16,137 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
 
-  void _handleCreateAccount(BuildContext context) {
-    context.push(AppRoutes.sendOtp);
+  void _handleLogin(BuildContext context) {
+    context.read<AuthBloc>().add(
+      LoginRequested(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      )
+    );
+  }
+  late final TextEditingController _emailController;
+  late final TextEditingController _passwordController;
+  
+  @override
+  void initState() {
+    super.initState();
+    _emailController = TextEditingController(text: 'nguyenxuandinh336@gmail.com');
+    _passwordController = TextEditingController(text: 'Dinh@#@fdfd2');
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<AuthBloc>(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Image.asset(AppAssets.appLogo, width: 120, height: 120,),
-          centerTitle: true,
-        ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
+    return Scaffold(
+      appBar: AppBar(
+        title: Image.asset(AppAssets.appLogo, width: 120, height: 120,),
+        centerTitle: true,
+        surfaceTintColor: context.appTheme.surfaceColor,
+      ),
+      // resizeToAvoidBottomInset: false,
+      floatingActionButton: BlocConsumer<AuthBloc, AuthState>(
+        builder: (BuildContext context, AuthState state) { 
+          bool isLoading = state is AuthLogin && state.isLoading == true;
+          return SizedBox(
+            width: 76, height: 36,
+            child: AppButton.elevated(
+              onPressed: ()=> _handleLogin(context), 
+              text: 'Login',
+              borderColor: context.appTheme.primaryColor,
+              padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 0),
+              isDisabled: isLoading,
+            ),
+          );
+         },
+        listener: (BuildContext context, AuthState state) { 
+          state.maybeWhen(
+            error: (sentOptMessage, registerMessage, loginMessage, logoutMessage) {
+              if(loginMessage != null) {
+                showToast(loginMessage);
+              }
+            },
+            login: (isLoading) {
+              if(isLoading) {
+                return;
+              }
+              showToast( 'Login successful');
+            },
+            orElse: () {},
+
+          );
+         },
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+        child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             spacing: 8,
             children: [
-              Expanded(
-                child: Container(
-                  alignment: Alignment.centerLeft,
-                  child: Text('Let learn english with Linggo', style: context.textStyle.titleLarge?.copyWith(
-                    fontWeight: FontWeight.w800
-                  ),)
-                )
-              ),
-              AppButton.elevated(
-                onPressed: ()async {
-                  Storage storage = HydratedBloc.storage;
-                  await storage.clear();
-                },
-                text: 'Continue with Google',
-                fontWeight: FontWeight.w600,
-                iconPath: AppAssets.googleIcon,
-                textColor: context.appTheme.blackColor,
-                backgroundColor: context.appTheme.whiteColor,
-                borderColor: context.isLightMode ? context.appTheme.borderColor: context.appTheme.blackColor,
-              ),
-              Or(),
-              AppButton.elevated(
-                onPressed: () => _handleCreateAccount(context),
-                text: 'Create account',
-                fontWeight: FontWeight.w600,
-                textColor: context.appTheme.onPrimaryColor,
-                backgroundColor: context.appTheme.primaryColor,
-                borderColor: context.appTheme.blackColor,
-              ),
-
-              Padding(
-                padding: EdgeInsetsGeometry.symmetric(vertical: 16),
-                child: Text('By continuing, you agree to our Terms of Service and Privacy Policy', style: context.textStyle.bodyMedium,)
-              ),
-
-              SafeArea(
-                minimum: EdgeInsets.only(bottom: 14),
-                child: Text(
-                  'Have an account already? Log in', style: context.textStyle.bodyLarge,
+              Text(
+                'Login to your account',
+                style: context.textStyle.titleLarge?.copyWith(
+                  fontWeight: FontWeight.w800
                 ),
-              )
-
+              ),
+              Text(
+                'Enter your email and password to continue', style: context.textStyle.bodyLarge,
+                textAlign: TextAlign.center,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Divider(
+                      color: context.appTheme.primaryColor,
+                      thickness: 3,
+                      endIndent: 100,
+                      indent: 100,
+                      radius: BorderRadius.all(Radius.circular(8)),
+                    ),
+                  ),
+                ],
+              ),
+              Container(
+                padding: const EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                  color: context.appTheme.surfaceColor,
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withValues(alpha: .2),
+                      spreadRadius: 1,
+                      blurRadius: 1,
+                      offset: const Offset(0, 1),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  spacing: 12,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    AppTextField(
+                      controller: _emailController,
+                      hintText: 'Email',
+                    ),
+                    AppTextField(
+                      controller: _passwordController,
+                      hintText: 'Password',
+                    ),
+                  ],
+                ),
+              ),
+          
             ],
           ),
-        )
-
-      ),
+        ),
+      )
     );
   }
-}
 
-class Or extends StatelessWidget {
-  const Or({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return const Row(
-      children: [
-        Expanded(
-          child: Divider(
-            color: AppTheme.borderColor,
-            thickness: .75,
-            indent: 16,
-            endIndent: 16,
-          ),
-        ),
-        Text('or'),
-        Expanded(
-          child: Divider(
-            color: AppTheme.borderColor,
-            thickness: .75,
-            indent: 16,
-            endIndent: 16,
-          ),
-        ),
-      ],
-    );
-  }
 }

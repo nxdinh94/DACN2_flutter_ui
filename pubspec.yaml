@@ -11,6 +11,8 @@ dependencies:
   path_provider: ^2.1.5
   fpdart: ^1.1.1
   flutter_native_splash: ^2.4.7
+  flutter_secure_storage: ^9.2.4
+  fluttertoast: ^9.0.0
   flutter_svg: ^2.2.1
   # State Management
   flutter_bloc: ^9.1.1

@@ -1,16 +1,17 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
+import 'package:kit/core/utils/app_utils.dart';
+import 'package:kit/features/auth/data/models/auth_token_dto.dart';
+import 'package:kit/features/auth/domain/entities/login.dart';
 import 'package:kit/features/auth/domain/entities/register.dart';
 import 'package:kit/features/auth/domain/entities/send_otp.dart';
-
-import '../../domain/entities/user.dart';
 import '../../../../core/network/dio_client.dart';
 
 abstract class AuthRemoteDataSource {
-  Future<User> login(String email, String password);
+  Future<Either<String, AuthTokenDto>> login(Login model);
   Future<Either<String, bool>> register(Register model);
   Future<Either<String, bool>> sendOtp(SendOtp model);
-  Future<void> logout();
+  Future<Either<String, bool>> logout(String refreshToken);
 }
 
 @Injectable(as: AuthRemoteDataSource)
@@ -20,48 +21,42 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   AuthRemoteDataSourceImpl({required this.dioClient});
 
   @override
-  Future<User> login(String email, String password) async {
-    try {
-      // Mock implementation - replace with actual API call
-      final response = await dioClient.get('https://jsonplaceholder.typicode.com/todos/1');
-      print(response.data);
-      // Mock response delay
-      await Future.delayed(const Duration(seconds: 1));
-      
-      return User(
-        id: '1',
-        name: 'John Doe',
-        email: email,
-        lastSeen: DateTime.now(),
-        isOnline: true,
-      );
-    } catch (e) {
-      throw Exception('Login failed: $e');
-    }
+  Future<Either<String, AuthTokenDto>> login(Login model) async {
+    final result = await dioClient.post(
+      AppConstants.loginEndpoint,
+      data: model.toJson(),
+    );
+  
+    return result.fold(
+      (error) {
+        return Left('Invalid email or password');
+      },
+      (response) => Right(AuthTokenDto.fromJson(response.data['data'])),
+    );
   }
 
   @override
   Future<Either<String, bool>> register(Register model) async {
     final result = await dioClient.post(
-      '/api/auth/register',
+      AppConstants.registerEndpoint,
       data: model.toJson(),
     );
 
     return result.fold(
-      (error) => Left(error.toString()),
+      (error) => Left('OTP is invalid or expired'),
       (response) => Right(true),
     );
   }
 
 
   @override
-  Future<void> logout() async {
+  Future<Either<String, bool>> logout(String refreshToken) async {
     try {
-      // Mock implementation - replace with actual API call
-      // await dioClient.post('/auth/logout');
-      
-      // Mock response delay
-      await Future.delayed(const Duration(milliseconds: 500));
+      final result = await dioClient.post(AppConstants.logoutEndpoint, data: {'refreshToken': refreshToken});
+      return result.fold(
+        (error) => Left('Logout failed: $error'),
+        (response) => Right(true),
+      );
     } catch (e) {
       throw Exception('Logout failed: $e');
     }
@@ -70,7 +65,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<Either<String, bool>> sendOtp(SendOtp model) async {
     final result = await dioClient.post(
-      '/api/auth/otp',
+      AppConstants.sendOtpEndpoint,
       data: model.toJson(),
     );
 
@@ -81,6 +76,4 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       (response) => Right(true),
     );
   }
-
-  
 }

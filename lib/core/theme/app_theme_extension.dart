@@ -13,6 +13,7 @@ class AppThemeExtension extends ThemeExtension<AppThemeExtension> {
   final Color whiteColor;
   final Color tertiaryColor;
   final Color errorColor;
+  final Color textSubtle;
          
 
   const AppThemeExtension({
@@ -27,6 +28,7 @@ class AppThemeExtension extends ThemeExtension<AppThemeExtension> {
     required this.whiteColor,
     required this.tertiaryColor,
     required this.errorColor,
+    required this.textSubtle,
   });
 
   // Copy method (for updating values dynamically, e.g. dark mode)
@@ -47,6 +49,7 @@ class AppThemeExtension extends ThemeExtension<AppThemeExtension> {
       whiteColor: whiteColor,
       tertiaryColor: tertiaryColor,
       errorColor: errorColor,
+      textSubtle: textSubtle,
     );
   }
 
@@ -66,6 +69,7 @@ class AppThemeExtension extends ThemeExtension<AppThemeExtension> {
       whiteColor: Color.lerp(whiteColor, other.whiteColor, t) ?? whiteColor,
       tertiaryColor: Color.lerp(tertiaryColor, other.tertiaryColor, t) ?? tertiaryColor,
       errorColor: Color.lerp(errorColor, other.errorColor, t) ?? errorColor,
+      textSubtle: Color.lerp(textSubtle, other.textSubtle, t) ?? textSubtle,
     );
   }
 }

@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:kit/core/di/getIt.dart';
 import 'package:kit/core/extensions/context.dart';
 import 'package:kit/core/router/app_routes.dart';
+import 'package:kit/core/utils/auth_token_services.dart';
 import 'package:kit/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:kit/features/home/presentation/widgets/home_app_bar.dart';
 import 'package:kit/features/home/presentation/widgets/welcome_section.dart';
@@ -58,12 +59,16 @@ class _HomePageState extends State<HomePage> {
     _messagingService.onMessageOpenedApp.listen(_handleMessage);
   }
 
-  void _navigateToNewContactSchedule(BuildContext context) {
-    context.read<AuthBloc>().add(const AuthEvent.logoutRequested());
+  Future<void> _navigateToNewContactSchedule(BuildContext context) async {
+    await getIt<AuthTokenServices>()
+        .deleteBothToken();
+    if (context.mounted) {
+      context.read<AuthBloc>().add(CheckAuthStatus());
+    }
   }
 
-  void _toggleLanguage() {
-    context.read<LocaleBloc>().add(const LocaleEvent.toggleLocale());
+  void _toggleLanguage(BuildContext context) {
+    context.read<AuthBloc>().add(LogoutRequested());
   }
 
   @override
@@ -71,8 +76,8 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: HomeAppBar(
         title: context.locale.hello('Xander Dson'),
-        onAnalyticsPressed:()=>  _navigateToNewContactSchedule(context),
-        onAddPressed: _toggleLanguage,
+        onAnalyticsPressed:() async => await _navigateToNewContactSchedule(context),
+        onAddPressed:() => _toggleLanguage(context),
       ),
       body: const WelcomeSection(),
     );

@@ -1,3 +1,4 @@
+import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
 
 import '../repositories/auth_repository.dart';
@@ -8,7 +9,7 @@ class LogoutUseCase {
 
   LogoutUseCase(this.repository);
 
-  Future<void> call() async {
+  Future<Either<String, bool>> call() async {
     return await repository.logout();
   }
 }

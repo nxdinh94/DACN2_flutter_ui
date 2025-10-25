@@ -2,17 +2,22 @@
 
 class AppConstants {
   static const String appName = 'Keep In Touch';
-  static const String baseUrl = 'https://api.kit.com';
+  static const String baseUrl = 'http://192.168.2.14:4000/';
   
   // API endpoints
-  static const String authEndpoint = '/auth';
-  static const String contactsEndpoint = '/contacts';
-  static const String messagesEndpoint = '/messages';
+  static const String loginEndpoint = 'api/auth/login';
+  static const String registerEndpoint = 'api/auth/register';
+  static const String logoutEndpoint = 'api/auth/logout';
+  static const String refreshTokenEndpoint = 'api/auth/refresh-token';
+  static const String sendOtpEndpoint = 'api/auth/send-otp';
   
   // Storage keys
   static const String tokenKey = 'auth_token';
-  static const String userKey = 'user_data';
+  static const String refreshTokenKey = 'refresh_token';
+  static const String accessTokenKey = 'access_token';
   static const String fcmTokenKey = 'fcm_token';
+
+
 }
 
 class AppUtils {

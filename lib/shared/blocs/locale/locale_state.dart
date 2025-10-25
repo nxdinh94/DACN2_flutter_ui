@@ -7,3 +7,4 @@ abstract class LocaleState with _$LocaleState {
     required Locale locale,
   }) = _LocaleState;
 }
+  

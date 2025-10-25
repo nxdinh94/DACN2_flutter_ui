@@ -1,5 +1,8 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
+import 'package:kit/core/utils/auth_token_services.dart';
+import 'package:kit/features/auth/domain/entities/auth_token_entity.dart';
+import 'package:kit/features/auth/domain/entities/login.dart';
 import 'package:kit/features/auth/domain/entities/register.dart';
 import 'package:kit/features/auth/domain/entities/send_otp.dart';
 import '../../domain/entities/user.dart';
@@ -9,30 +12,46 @@ import '../datasources/auth_remote_data_source.dart';
 @Injectable(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource remoteDataSource;
+  final AuthTokenServices authTokenServices;
 
   AuthRepositoryImpl({
     required this.remoteDataSource,
+    required this.authTokenServices,
   });
 
   @override
-  Future<User> login(String email, String password) async {
-    final user = await remoteDataSource.login(email, password);
-    // Store user data and token
-
-    return user;
+  Future<Either<String, bool>> login(Login model) async {
+    final result = await remoteDataSource.login(model);
+    return result.fold(
+      (error) => Left(error),
+      (authTokenDto) async {
+        print('Access Token: ${authTokenDto.accessToken}');
+        await authTokenServices.saveAccessToken(authTokenDto.accessToken);
+        await authTokenServices.saveRefreshToken(authTokenDto.refreshToken);
+        return Right(true);
+      },
+    );
   }
 
   @override
   Future<Either<String, bool>> register(Register model) async {
     final user = await remoteDataSource.register(model);
-    
     return user.fold((e) => Left(e), (isRegistered) => Right(isRegistered));
   }
 
   @override
-  Future<void> logout() async {
-    await remoteDataSource.logout();
+  Future<Either<String, bool>> logout() async {
 
+    String refreshToken = await authTokenServices.getRefreshToken() ?? '';
+
+    final result = await remoteDataSource.logout(refreshToken);
+    return result.fold(
+      (error) => Left(error),
+      (isLoggedOut) async {
+        await authTokenServices.deleteBothToken();
+        return Right(isLoggedOut);
+      },
+    );
   }
 
   @override

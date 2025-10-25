@@ -1,6 +1,7 @@
+import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
-
-import '../entities/user.dart';
+import 'package:kit/features/auth/domain/entities/auth_token_entity.dart';
+import 'package:kit/features/auth/domain/entities/login.dart';
 import '../repositories/auth_repository.dart';
 
 @injectable
@@ -9,7 +10,7 @@ class LoginUseCase {
 
   LoginUseCase(this.repository);
 
-  Future<User> call(String email, String password) async {
-    return await repository.login(email, password);
+  Future<Either<String, bool>> call(Login model) async {
+    return await repository.login(model);
   }
 }

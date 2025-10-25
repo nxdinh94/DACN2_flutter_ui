@@ -29,7 +29,10 @@ class MyApp extends StatelessWidget {
       ],
       child: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
-          AppRoutes.appRouter.refresh();
+          // if(state is AuthUnauthenticated || state is AuthUnauthenticated) {
+          //   print('Auth state changed: $state, refreshing router');
+          //   AppRoutes.appRouter.refresh();
+          // }
         },
         child: BlocBuilder<LocaleBloc, LocaleState>(
           builder: (BuildContext context, LocaleState state) {

@@ -23,7 +23,7 @@ class _SendOtpScreenState extends State<SendOtpScreen> {
   }
   @override
   void initState() {
-    _emailController = TextEditingController(text: 'nguyenxuandinh336livee@gmail.com');
+    _emailController = TextEditingController(text: 'nguyenxuandinh336@gmail.com');
     super.initState();
   }
   @override
@@ -99,8 +99,8 @@ class _SendOtpScreenState extends State<SendOtpScreen> {
             BlocBuilder<AuthBloc, AuthState>(
               builder: (BuildContext context, AuthState state) {
                 String textError = '';
-                if(state is AuthError) {
-                  textError = state.message;
+                if(state is AuthError && state.sentOptMessage != null) {
+                  textError = state.sentOptMessage!;
                 }
                 return AppTextField(
                   controller: _emailController,
@@ -143,6 +143,9 @@ class _AppTextFieldState extends State<AppTextField> {
       onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
       decoration: InputDecoration(
         hintText: widget.hintText ?? 'Email',
+        hintStyle: context.textStyle.bodyLarge?.copyWith(
+          color: context.appTheme.textSubtle,
+        ),
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: context.appTheme.borderColor, width: 1),
         ),

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kit/app.dart';
+import 'package:kit/features/auth/presentation/pages/login_option_screen.dart';
 import 'package:kit/features/auth/presentation/pages/login_screen.dart';
 import 'package:kit/features/auth/presentation/pages/register_screen.dart';
 import 'package:kit/features/auth/presentation/pages/send_otp_screen.dart';
@@ -24,8 +25,9 @@ class GoRouterRefreshStream extends ChangeNotifier {
   }
 }
 
-  class AppRoutes {
+class AppRoutes {
   static const String splash = '/';
+  static const String loginOptions = '/login-options';
   static const String login = '/login';
   static const String register = '/register';
   static const String sendOtp = '/send-otp';
@@ -39,17 +41,22 @@ class GoRouterRefreshStream extends ChangeNotifier {
   static final GoRouter appRouter = GoRouter(
     initialLocation: home,
     redirect: (context, state) {
-    final isLoggedIn = context.read<AuthBloc>().state is AuthAuthenticated;
-    final isGoingToLoginOrOtp =
-        state.matchedLocation == AppRoutes.login ||
-        state.matchedLocation == AppRoutes.sendOtp ||
-        state.matchedLocation == '${AppRoutes.sendOtp}${AppRoutes.register}';
+      final authState = context.read<AuthBloc>().state;
+      final isGoingToLoginOrOtp =
+          state.matchedLocation == AppRoutes.login ||
+          state.matchedLocation == AppRoutes.loginOptions ||
+          state.matchedLocation == AppRoutes.sendOtp ||
+          state.matchedLocation == '${AppRoutes.sendOtp}${AppRoutes.register}';
 
-    if (!isLoggedIn && !isGoingToLoginOrOtp) {
-      return AppRoutes.login;
-    }
-    return null;
-  },
+      if (authState is AuthUnauthenticated && !isGoingToLoginOrOtp) {
+        return AppRoutes.loginOptions;
+      }
+      if (authState is AuthAuthenticated && isGoingToLoginOrOtp) {
+        return AppRoutes.home;
+      }
+      print('No redirection needed');
+      return null;
+    },
 
     refreshListenable: GoRouterRefreshStream(getIt<AuthBloc>().stream),
     routes: <RouteBase>[
@@ -75,6 +82,12 @@ class GoRouterRefreshStream extends ChangeNotifier {
             },
           ),
         ]
+      ),
+      GoRoute(
+        path: loginOptions,
+        builder: (BuildContext context, GoRouterState state) {
+          return const LoginOptionScreen();
+        },
       ),
       GoRoute(
         path: login,
