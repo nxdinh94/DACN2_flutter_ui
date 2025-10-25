@@ -42,6 +42,7 @@ class AppRoutes {
     initialLocation: home,
     redirect: (context, state) {
       final authState = context.read<AuthBloc>().state;
+      
       final isGoingToLoginOrOtp =
           state.matchedLocation == AppRoutes.login ||
           state.matchedLocation == AppRoutes.loginOptions ||

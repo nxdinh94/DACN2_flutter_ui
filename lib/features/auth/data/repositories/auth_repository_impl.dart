@@ -1,5 +1,6 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
+import 'package:kit/core/logger/logger.dart';
 import 'package:kit/core/utils/auth_token_services.dart';
 import 'package:kit/features/auth/domain/entities/login.dart';
 import 'package:kit/features/auth/domain/entities/register.dart';
@@ -13,6 +14,8 @@ class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource remoteDataSource;
   final AuthTokenServices authTokenServices;
 
+  final AppLogger _appLogger = AppLogger();
+
   AuthRepositoryImpl({
     required this.remoteDataSource,
     required this.authTokenServices,
@@ -24,7 +27,7 @@ class AuthRepositoryImpl implements AuthRepository {
     return result.fold(
       (error) => Left(error),
       (authTokenDto) async {
-        print('Access Token: ${authTokenDto.accessToken}');
+        _appLogger.info('Access Token: ${authTokenDto.accessToken}');
         await authTokenServices.saveAccessToken(authTokenDto.accessToken);
         await authTokenServices.saveRefreshToken(authTokenDto.refreshToken);
         return Right(true);
@@ -55,8 +58,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<User?> getCurrentUser() async {
-
-
+    throw Exception('');
   }
 
   @override
