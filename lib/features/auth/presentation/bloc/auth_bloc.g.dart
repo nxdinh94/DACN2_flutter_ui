@@ -68,6 +68,52 @@ Map<String, dynamic> _$AuthLogoutToJson(AuthLogout instance) =>
       'runtimeType': instance.$type,
     };
 
+AuthLoginValidation _$AuthLoginValidationFromJson(Map<String, dynamic> json) =>
+    AuthLoginValidation(
+      email: json['email'] as String?,
+      password: json['password'] as String?,
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$AuthLoginValidationToJson(
+  AuthLoginValidation instance,
+) => <String, dynamic>{
+  'email': instance.email,
+  'password': instance.password,
+  'runtimeType': instance.$type,
+};
+
+AuthRegisterValidation _$AuthRegisterValidationFromJson(
+  Map<String, dynamic> json,
+) => AuthRegisterValidation(
+  password: json['password'] as String?,
+  confirmPassword: json['confirmPassword'] as String?,
+  name: json['name'] as String?,
+  code: json['code'] as String?,
+  $type: json['runtimeType'] as String?,
+);
+
+Map<String, dynamic> _$AuthRegisterValidationToJson(
+  AuthRegisterValidation instance,
+) => <String, dynamic>{
+  'password': instance.password,
+  'confirmPassword': instance.confirmPassword,
+  'name': instance.name,
+  'code': instance.code,
+  'runtimeType': instance.$type,
+};
+
+AuthSendOtpEmailValidation _$AuthSendOtpEmailValidationFromJson(
+  Map<String, dynamic> json,
+) => AuthSendOtpEmailValidation(
+  email: json['email'] as String?,
+  $type: json['runtimeType'] as String?,
+);
+
+Map<String, dynamic> _$AuthSendOtpEmailValidationToJson(
+  AuthSendOtpEmailValidation instance,
+) => <String, dynamic>{'email': instance.email, 'runtimeType': instance.$type};
+
 AuthError _$AuthErrorFromJson(Map<String, dynamic> json) => AuthError(
   sentOptMessage: json['sentOptMessage'] as String?,
   registerMessage: json['registerMessage'] as String?,

@@ -14,7 +14,6 @@ abstract class Register with _$Register {
     required String name,
     required String password,
     required String confirmPassword,
-    String? phoneNumber,
     required String code,
   }) = _Register;
 

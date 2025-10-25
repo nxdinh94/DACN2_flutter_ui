@@ -9,7 +9,7 @@ class AppConstants {
   static const String registerEndpoint = 'api/auth/register';
   static const String logoutEndpoint = 'api/auth/logout';
   static const String refreshTokenEndpoint = 'api/auth/refresh-token';
-  static const String sendOtpEndpoint = 'api/auth/send-otp';
+  static const String sendOtpEndpoint = 'api/auth/otp';
   
   // Storage keys
   static const String tokenKey = 'auth_token';

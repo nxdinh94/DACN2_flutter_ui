@@ -1,7 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:kit/features/auth/domain/entities/auth_token_entity.dart';
 import 'package:kit/features/auth/domain/entities/login.dart';
 import 'package:kit/features/auth/domain/entities/register.dart';
 import 'package:kit/features/auth/domain/entities/send_otp.dart';
@@ -38,11 +37,9 @@ class AuthBloc extends HydratedBloc <AuthEvent, AuthState> {
         case SendOtpRequested(:final email):
           await _onSendOtpRequested(email, emit);
           break;
-        case RegisterRequested(:final name, :final email, :final password, :final confirmPassword, :final phoneNumber, :final code):
-          await _onRegisterRequested(name, email, password, confirmPassword, phoneNumber, code, emit);
+        case RegisterRequested(:final name, :final email, :final password, :final confirmPassword, :final code):
+          await _onRegisterRequested(name, email, password, confirmPassword, code, emit);
           break;
-        case CheckAuthStatus():
-          await _onCheckAuthStatus(emit);
       }
     });
   }
@@ -51,6 +48,20 @@ class AuthBloc extends HydratedBloc <AuthEvent, AuthState> {
     String email,
     Emitter<AuthState> emit,
   ) async {
+
+    // Validation input fields
+    if (email.isEmpty) {
+      emit(AuthState.sendOtpEmailValidation(
+        email: 'Email cannot be empty',
+      ));
+      return;
+    }
+    if(!_validateEmail(email)) {
+      emit(AuthState.sendOtpEmailValidation(
+        email: 'Invalid email format',
+      ));
+      return;
+    }
     emit(const AuthState.otpSent(isLoading: true));
   
     final result = await registerUseCase.sendOtp(SendOtp(email: email, type: AuthType.REGISTER.name));
@@ -68,10 +79,39 @@ class AuthBloc extends HydratedBloc <AuthEvent, AuthState> {
     String email,
     String password,
     String confirmPassword,
-    String phoneNumber,
     String code,
     Emitter<AuthState> emit,
   ) async {
+    
+    // Validation input fields
+    if (name.isEmpty || password.isEmpty || confirmPassword.isEmpty || code.isEmpty) {
+      emit(AuthState.registerValidation(
+        name: name.isEmpty ? 'Name cannot be empty' : null,
+        password: password.isEmpty ? 'Password cannot be empty' : null,
+        confirmPassword: confirmPassword.isEmpty ? 'Confirm Password cannot be empty' : null,
+        code: code.isEmpty ? 'Verification code cannot be empty' : null,
+      ));
+      return;
+    }
+    if(!_validatePassword(password)) {
+      emit(AuthState.registerValidation(
+        name: null,
+        password: 'Password must be at least 6 characters',
+        confirmPassword: null,
+        code: null,
+      ));
+      return;
+    }
+    if (confirmPassword != password) {
+      emit(AuthState.registerValidation(
+        name: null,
+        password: null,
+        confirmPassword: 'Passwords do not match',
+        code: null,
+      ));
+      return;
+    }
+
     emit(const AuthState.register(isLoading: true));
    
     final result = await registerUseCase.register(
@@ -80,13 +120,12 @@ class AuthBloc extends HydratedBloc <AuthEvent, AuthState> {
         email: email,
         password: password,
         confirmPassword: confirmPassword,
-        phoneNumber: phoneNumber,
         code: code,
       ),
     );
     result.fold(
       (error) {
-        return emit(AuthState.error(registerMessage: error, loginMessage: null, logoutMessage: null, sentOptMessage: null));
+        return emit(AuthState.registerValidation(code: error));
       },
       (success) => emit(const AuthState.register(isLoading: false)),
     );
@@ -98,6 +137,23 @@ class AuthBloc extends HydratedBloc <AuthEvent, AuthState> {
     String password,
     Emitter<AuthState> emit,
   ) async {
+
+    // Validation input fields
+    if (email.isEmpty || password.isEmpty) {
+      emit(AuthState.loginValidation(
+        email: email.isEmpty ? 'Email cannot be empty' : null,
+        password: password.isEmpty ? 'Password cannot be empty' : null,
+      ));
+      return;
+    }
+    if(!_validateEmail(email) || !_validatePassword(password)) {
+      emit(AuthState.loginValidation(
+        email: !_validateEmail(email) ? 'Invalid email format' : null,
+        password: !_validatePassword(password) ? 'Password must be at least 6 characters' : null,
+      ));
+      return;
+    }
+
     emit(const AuthState.login(isLoading: true));
     
     final result = await loginUseCase(
@@ -120,10 +176,7 @@ class AuthBloc extends HydratedBloc <AuthEvent, AuthState> {
   ) async {
     final result = await logoutUseCase();
     result.fold(
-      (error) {
-        print('Logout error1: $error');
-        emit(AuthState.error(logoutMessage: error, loginMessage: null, registerMessage: null, sentOptMessage: null));
-      },
+      (error) => emit(AuthState.error(logoutMessage: error, loginMessage: null, registerMessage: null, sentOptMessage: null)),
       (success) => emit(const AuthState.unauthenticated()),
     );
   }
@@ -133,6 +186,14 @@ class AuthBloc extends HydratedBloc <AuthEvent, AuthState> {
   ) async {
     // Check authentication status logic here
     emit(const AuthState.unauthenticated());
+  }
+  bool _validateEmail(String email) {
+    final regex = RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$');
+    return regex.hasMatch(email);
+  }
+
+  bool _validatePassword(String password) {
+    return password.length >= 6;
   }
   
   @override

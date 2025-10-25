@@ -18,7 +18,6 @@ sealed class AuthEvent with _$AuthEvent {
     required String email,
     required String password,
     required String confirmPassword,
-    required String phoneNumber,
     required String code,
   }) = RegisterRequested;
   const factory AuthEvent.checkAuthStatus() = CheckAuthStatus;

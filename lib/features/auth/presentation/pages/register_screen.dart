@@ -4,9 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:kit/core/extensions/context.dart';
 import 'package:kit/core/router/app_routes.dart';
 import 'package:kit/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:kit/features/auth/presentation/pages/send_otp_screen.dart';
 import 'package:kit/shared/constants/app_assets.dart';
 import 'package:kit/shared/widgets/app_button.dart';
+import 'package:kit/shared/widgets/app_textfield.dart';
 import 'package:kit/shared/widgets/toast.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -21,7 +21,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _passwordController = TextEditingController(text: "Dinh@#@fdfd2");
   final TextEditingController _fullNameController = TextEditingController(text: "Nguyen Xuan Dinh");
   final TextEditingController _confirmPasswordController = TextEditingController(text: "Dinh@#@fdfd2");
-  final TextEditingController _phoneNumberController = TextEditingController(text: "0987654321");
 
   @override
   void dispose() {
@@ -29,14 +28,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
     _verificationCodeController.dispose();
     _fullNameController.dispose();
     _confirmPasswordController.dispose();
-    _phoneNumberController.dispose();
     super.dispose();
   }
   void _handleNextButton(BuildContext context) {
     context.read<AuthBloc>().add(
       RegisterRequested(
         email: GoRouterState.of(context).extra! as String,
-        phoneNumber: _phoneNumberController.text.trim(),
         password: _passwordController.text.trim(),
         confirmPassword: _confirmPasswordController.text.trim(),
         name: _fullNameController.text.trim(),
@@ -67,21 +64,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
           );
          },
         listener: (BuildContext context, AuthState state) { 
-          state.maybeWhen(
+          state.whenOrNull(
             register: (isLoading) {
-              if(isLoading) {
-                return;
-              }
+              if(isLoading) return;
               showToast('Registration successful. Please login.');
               context.push(AppRoutes.login);
             },
-            error: (sentOptMessage, registerMessage, loginMessage, logoutMessage) {
-              final message = registerMessage;
-              if(message != null) {
-                showToast(message);
-              }
-            },
-            orElse: () => null,
           );
          },
       ),
@@ -129,49 +117,67 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ],
                 ),
-                child: Column(
-                  spacing: 12,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Column(
+                child: BlocBuilder<AuthBloc, AuthState>(
+                  
+                  builder: (BuildContext context, AuthState state) {
+                    String ? codeError;
+                    String ? nameError;
+                    String ? passwordError;
+                    String ? confirmPasswordError;
+                    state.whenOrNull(
+                      registerValidation: (password, confirmPassword, name, code) {
+                        passwordError = password;
+                        confirmPasswordError = confirmPassword;
+                        nameError = name;
+                        codeError = code;
+                      },
+                    );
+                    return Column(
+                      spacing: 12,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(
-                            'We have sent a verification code to', 
-                            textAlign: TextAlign.center,
-                            style: context.textStyle.bodyMedium,
-                          ),
-                          Text(
-                            GoRouterState.of(context).extra! as String, textAlign: TextAlign.center,
-                            style: context.textStyle.bodyLarge?.copyWith(
-                              fontWeight: FontWeight.w600,
-                              color: context.appTheme.tertiaryColor,
-                            ),
-                          ),
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                                'We have sent a verification code to', 
+                                textAlign: TextAlign.center,
+                                style: context.textStyle.bodyMedium,
+                              ),
+                              Text(
+                                GoRouterState.of(context).extra! as String, textAlign: TextAlign.center,
+                                style: context.textStyle.bodyLarge?.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  color: context.appTheme.tertiaryColor,
+                                ),
+                              ),
+                          ],
+                        ),
+                        
+                        AppTextField(
+                          controller: _verificationCodeController,
+                          hintText: 'Verification Code',
+                          errorText: codeError,
+                        ),
+                        AppTextField(
+                          controller: _fullNameController,
+                          hintText: 'Full Name',
+                          errorText: nameError,
+                        ),
+                        AppTextField(
+                          controller: _passwordController,
+                          hintText: 'Password',
+                          errorText: passwordError,
+                        ),
+                        AppTextField(
+                          controller: _confirmPasswordController,
+                          hintText: 'Confirm Password',
+                          errorText: confirmPasswordError,
+                        ),
                       ],
-                    ),
-                    
-                    AppTextField(
-                      controller: _verificationCodeController,
-                      hintText: 'Verification Code',
-                    ),
-                    AppTextField(
-                      controller: _fullNameController,
-                      hintText: 'Full Name',
-                    ),
-                    AppTextField(
-                      controller: _phoneNumberController,
-                      hintText: 'Phone Number',
-                    ),
-                    AppTextField(
-                      controller: _passwordController,
-                      hintText: 'Password',
-                    ),
-                    AppTextField(
-                      controller: _confirmPasswordController,
-                      hintText: 'Confirm Password',
-                    ),
-                  ],
+                  );
+                
+                  },
                 ),
               ),
           

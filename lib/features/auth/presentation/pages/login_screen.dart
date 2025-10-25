@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kit/core/extensions/context.dart';
 import 'package:kit/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:kit/features/auth/presentation/pages/send_otp_screen.dart';
 import 'package:kit/shared/constants/app_assets.dart';
 import 'package:kit/shared/widgets/app_button.dart';
+import 'package:kit/shared/widgets/app_textfield.dart';
 import 'package:kit/shared/widgets/toast.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -49,16 +49,15 @@ class _LoginScreenState extends State<LoginScreen> {
         centerTitle: true,
         surfaceTintColor: context.appTheme.surfaceColor,
       ),
-      // resizeToAvoidBottomInset: false,
       floatingActionButton: BlocConsumer<AuthBloc, AuthState>(
         builder: (BuildContext context, AuthState state) { 
           bool isLoading = state is AuthLogin && state.isLoading == true;
           return SizedBox(
-            width: 76, height: 36,
+            width: 76, 
+            height: 36,
             child: AppButton.elevated(
               onPressed: ()=> _handleLogin(context), 
               text: 'Login',
-              borderColor: context.appTheme.primaryColor,
               padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 0),
               isDisabled: isLoading,
             ),
@@ -78,7 +77,6 @@ class _LoginScreenState extends State<LoginScreen> {
               showToast( 'Login successful');
             },
             orElse: () {},
-
           );
          },
       ),
@@ -126,19 +124,35 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ],
                 ),
-                child: Column(
-                  spacing: 12,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    AppTextField(
-                      controller: _emailController,
-                      hintText: 'Email',
-                    ),
-                    AppTextField(
-                      controller: _passwordController,
-                      hintText: 'Password',
-                    ),
-                  ],
+                child: BlocBuilder<AuthBloc, AuthState>(
+                  builder: (BuildContext context, AuthState state) {
+                    String ? emailError;
+                    String ? passwordError;
+
+                    state.whenOrNull(
+                      loginValidation: (email, password) {
+                        emailError = email;
+                        passwordError = password;
+                      },
+                    );
+                    return Column(
+                      spacing: 12,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        AppTextField(
+                          controller: _emailController,
+                          hintText: 'Email',
+                          errorText: emailError,
+                        ),
+                        AppTextField(
+                          controller: _passwordController,
+                          hintText: 'Password',
+                          errorText: passwordError,
+                        ),
+                      ],
+                  );
+                
+                  },
                 ),
               ),
           

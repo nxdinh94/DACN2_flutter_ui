@@ -11,7 +11,6 @@ _Register _$RegisterFromJson(Map<String, dynamic> json) => _Register(
   name: json['name'] as String,
   password: json['password'] as String,
   confirmPassword: json['confirmPassword'] as String,
-  phoneNumber: json['phoneNumber'] as String?,
   code: json['code'] as String,
 );
 
@@ -20,6 +19,5 @@ Map<String, dynamic> _$RegisterToJson(_Register instance) => <String, dynamic>{
   'name': instance.name,
   'password': instance.password,
   'confirmPassword': instance.confirmPassword,
-  'phoneNumber': instance.phoneNumber,
   'code': instance.code,
 };

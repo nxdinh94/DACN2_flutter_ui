@@ -1,6 +1,5 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
-import 'package:kit/features/auth/domain/entities/auth_token_entity.dart';
 import 'package:kit/features/auth/domain/entities/login.dart';
 import '../repositories/auth_repository.dart';
 

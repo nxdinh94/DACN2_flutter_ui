@@ -10,7 +10,6 @@ import 'package:kit/core/utils/auth_token_services.dart';
 import 'package:kit/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:kit/features/home/presentation/widgets/home_app_bar.dart';
 import 'package:kit/features/home/presentation/widgets/welcome_section.dart';
-import 'package:kit/shared/blocs/locale/locale_bloc.dart';
 import 'package:kit/shared/services/firebase_messaging_service.dart';
 
 /// Home page of the application

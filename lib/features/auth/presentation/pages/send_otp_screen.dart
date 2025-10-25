@@ -6,6 +6,7 @@ import 'package:kit/core/router/app_routes.dart';
 import 'package:kit/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:kit/shared/constants/app_assets.dart';
 import 'package:kit/shared/widgets/app_button.dart';
+import 'package:kit/shared/widgets/app_textfield.dart';
 
 class SendOtpScreen extends StatefulWidget {
   const SendOtpScreen({super.key});
@@ -98,73 +99,26 @@ class _SendOtpScreenState extends State<SendOtpScreen> {
             ),
             BlocBuilder<AuthBloc, AuthState>(
               builder: (BuildContext context, AuthState state) {
-                String textError = '';
+                String ? textError;
+
+                if(state is AuthSendOtpEmailValidation && state.email != null) {
+                  textError = state.email!;
+                }
+
                 if(state is AuthError && state.sentOptMessage != null) {
                   textError = state.sentOptMessage!;
                 }
+
                 return AppTextField(
                   controller: _emailController,
                   hintText: 'Email',
-                  errorText: textError.isEmpty ? null : textError,
+                  errorText: textError,
                 );
               },
             ),
           ],
         ),
       )
-    );
-  }
-}
-
-class AppTextField extends StatefulWidget {
-  const AppTextField({
-    super.key, required this.controller, this.hintText,
-    this.keyboardType = TextInputType.name,
-    this.errorText,
-  });
-
-  final TextEditingController controller;
-  final String? hintText;
-  final TextInputType ? keyboardType;
-  final String? errorText;
-
-
-  @override
-  State<AppTextField> createState() => _AppTextFieldState();
-}
-
-class _AppTextFieldState extends State<AppTextField> {
-  
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      controller: widget.controller,
-      keyboardType: widget.keyboardType,
-      onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
-      decoration: InputDecoration(
-        hintText: widget.hintText ?? 'Email',
-        hintStyle: context.textStyle.bodyLarge?.copyWith(
-          color: context.appTheme.textSubtle,
-        ),
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: context.appTheme.borderColor, width: 1),
-        ),
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: context.appTheme.primaryColor, width: 2),
-        ),
-        contentPadding: EdgeInsets.zero,
-        
-        errorStyle: context.textStyle.bodySmall?.copyWith(
-          color: context.appTheme.errorColor,
-        ),
-        errorText: widget.errorText,
-        errorBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: context.appTheme.errorColor, width: 1),
-        ),
-        focusedErrorBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: context.appTheme.errorColor, width: 1),
-        ),
-      ),
     );
   }
 }

@@ -50,7 +50,7 @@ class AppButton extends StatelessWidget {
     this.onPressed,
     this.backgroundColor = AppTheme.primaryColor,
     this.textColor = AppTheme.onPrimaryColor,
-    this.borderColor = AppTheme.borderColor,
+    this.borderColor = Colors.transparent,
     this.fontSize,
     this.fontWeight,
     this.iconSize,
@@ -66,7 +66,7 @@ class AppButton extends StatelessWidget {
     this.onPressed,
     this.backgroundColor = AppTheme.primaryColor,
     this.textColor = AppTheme.onPrimaryColor,
-    this.borderColor = AppTheme.borderColor,
+    this.borderColor = Colors.transparent,
     this.fontSize,
     this.fontWeight,
     this.iconSize,
@@ -111,7 +111,7 @@ class AppButton extends StatelessWidget {
     );
 
     switch (_type) {
-      // ✅ ElevatedButton (unchanged)
+      // ElevatedButton (unchanged)
       case _AppButtonType.elevated:
         return ElevatedButton(
           onPressed: isDisabled ? null : onPressed,
@@ -131,7 +131,7 @@ class AppButton extends StatelessWidget {
           child: child,
         );
 
-      // ✅ OutlinedButton (converted to .styleFrom)
+      // OutlinedButton (converted to .styleFrom)
       case _AppButtonType.outlined:
         return OutlinedButton(
           onPressed: isDisabled ? null : onPressed,
