@@ -59,11 +59,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _navigateToNewContactSchedule(BuildContext context) async {
-    await getIt<AuthTokenServices>()
-        .deleteBothToken();
-    if (context.mounted) {
-      context.read<AuthBloc>().add(CheckAuthStatus());
-    }
+    
   }
 
   void _toggleLanguage(BuildContext context) {

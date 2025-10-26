@@ -13,6 +13,7 @@ dependencies:
   flutter_native_splash: ^2.4.7
   flutter_launcher_icons: ^0.14.4
   flutter_secure_storage: ^9.2.4
+  flutter_isolate: ^2.1.0
   fluttertoast: ^9.0.0
   flutter_svg: ^2.2.1
   # State Management
