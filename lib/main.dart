@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:kit/core/di/getIt.dart';
+import 'package:kit/shared/services/firebase_messaging_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -51,15 +52,14 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  await _setupNotifications();
-  await _setupFirebaseMessaging();
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: kIsWeb
         ? HydratedStorageDirectory.web
         : HydratedStorageDirectory((await getTemporaryDirectory()).path),
   );
   configureDependencies();
-
+  await _setupNotifications();
+  await _setupFirebaseMessaging();
   runApp(const MyApp());
 }
 
@@ -90,22 +90,13 @@ Future<void> _setupNotifications() async {
 }
 
 Future<void> _setupFirebaseMessaging() async {
-  FirebaseMessaging messaging = FirebaseMessaging.instance;
+  final firebaseMessaging = getIt<FirebaseMessagingService>();
 
-  NotificationSettings settings = await messaging.requestPermission(
-    alert: true,
-    announcement: false,
-    badge: true,
-    carPlay: false,
-    criticalAlert: false,
-    provisional: false,
-    sound: true,
-  );
+  NotificationSettings settings = await firebaseMessaging.requestPermission();
 
   if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-    
     try {
-      final fcmToken = await FirebaseMessaging.instance.getToken();
+      final fcmToken = await firebaseMessaging.getToken();
       final pref = await SharedPreferences.getInstance();
       final String? existingToken = pref.getString('fcmToken');
       if (existingToken == null) {

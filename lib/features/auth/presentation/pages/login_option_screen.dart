@@ -74,8 +74,8 @@ class _LoginOptionScreenState extends State<LoginOptionScreen> {
                 text: 'Create account',
                 fontWeight: FontWeight.w600,
                 textColor: context.appTheme.onPrimaryColor,
-                backgroundColor: context.appTheme.primaryColor,
-                borderColor: context.appTheme.blackColor,
+                backgroundColor: context.appTheme.secondaryColor,
+                borderColor: context.appTheme.secondaryColor,
               ),
 
               Padding(
@@ -92,7 +92,7 @@ class _LoginOptionScreenState extends State<LoginOptionScreen> {
                     TextSpan(
                       text: 'Login',
                       style: context.textStyle.bodyMedium?.copyWith(
-                        color: context.appTheme.tertiaryColor,
+                        color: context.appTheme.primaryColor,
                         fontWeight: FontWeight.w600,
                       ),
                       recognizer: TapGestureRecognizer()

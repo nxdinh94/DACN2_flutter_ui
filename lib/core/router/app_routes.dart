@@ -4,11 +4,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kit/app.dart';
 import 'package:kit/features/auth/presentation/pages/login_option_screen.dart';
 import 'package:kit/features/auth/presentation/pages/login_screen.dart';
 import 'package:kit/features/auth/presentation/pages/register_screen.dart';
 import 'package:kit/features/auth/presentation/pages/send_otp_screen.dart';
+import 'package:kit/features/create_post/presentation/screens/create_post.dart';
 import 'package:kit/features/home/presentation/pages/home_page.dart';
 
 import '../../features/auth/presentation/bloc/auth_bloc.dart';
@@ -26,12 +26,12 @@ class GoRouterRefreshStream extends ChangeNotifier {
 }
 
 class AppRoutes {
-  static const String splash = '/';
-  static const String loginOptions = '/login-options';
+  static const String home = '/';
+  static const String loginOptions = '/login_options';
   static const String login = '/login';
   static const String register = '/register';
-  static const String sendOtp = '/send-otp';
-  static const String home = '/home';
+  static const String sendOtp = '/send_otp';
+  static const String createPost = '/create_post';
   static const String contacts = '/contacts';
   static const String contactDetail = '/contact-detail';
   static const String chat = '/chat';
@@ -64,11 +64,16 @@ class AppRoutes {
       GoRoute(
         path: home,
         builder: (BuildContext context, GoRouterState state) {
-          return HomePage(
-            analytics: MyApp.analytics,
-            observer: MyApp.observer,
-          );
+          return HomePage();
         },
+        routes: [
+          GoRoute(
+            path: createPost,
+            builder: (BuildContext context, GoRouterState state) {
+              return const CreatePost();
+            },
+          ),
+        ],
       ),
       GoRoute(
         path: sendOtp,

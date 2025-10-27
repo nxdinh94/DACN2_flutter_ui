@@ -3,16 +3,16 @@ import 'package:kit/core/theme/app_theme_extension.dart';
 import 'package:kit/core/theme/text_theme.dart';
 
 class AppTheme {
-  static const Color primaryColor = Colors.black87;
+  static const Color primaryColor = Color(0xFF1DA1F2);
   static const Color onPrimaryColor = Colors.white;
-  static const Color onSecondaryColor = Colors.black87;
-  static const Color secondaryColor = Color.fromARGB(255, 233, 233, 233);
+  static const Color onSecondaryColor = Colors.white;
+  static const Color secondaryColor = Color(0xFF14171A);
   static const Color surfaceColor = Colors.white;
   static const Color onSurfaceColor = Colors.black87;
   static const Color borderColor = Color(0xFFC4C6C9);
   static const Color blackColor = Colors.black;
   static const Color whiteColor = Colors.white;
-  static const Color tertiaryColor = Color.fromARGB(255, 15, 46, 245);
+  static const Color tertiaryColor = Color.fromARGB(255, 48, 139, 244);
   static const Color errorColor = Color(0xffb00020);
   static const Color textSubtle = Color.fromARGB(255, 168, 173, 168);
 

@@ -20,7 +20,11 @@ class FirebaseMessagingService {
   Future<NotificationSettings> requestPermission() async {
     return await _firebaseMessaging.requestPermission(
       alert: true,
+      announcement: false,
       badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
       sound: true,
     );
   }

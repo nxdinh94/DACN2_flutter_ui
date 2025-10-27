@@ -148,7 +148,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 GoRouterState.of(context).extra! as String, textAlign: TextAlign.center,
                                 style: context.textStyle.bodyLarge?.copyWith(
                                   fontWeight: FontWeight.w600,
-                                  color: context.appTheme.tertiaryColor,
+                                  color: context.appTheme.primaryColor,
                                 ),
                               ),
                           ],
