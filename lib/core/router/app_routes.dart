@@ -1,9 +1,10 @@
-// App routes configuration
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kit/core/di/getIt.dart';
+import 'package:kit/core/extensions/context.dart';
+import 'package:kit/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:kit/features/auth/presentation/pages/login_option_screen.dart';
 import 'package:kit/features/auth/presentation/pages/login_screen.dart';
 import 'package:kit/features/auth/presentation/pages/register_screen.dart';
@@ -11,8 +12,7 @@ import 'package:kit/features/auth/presentation/pages/send_otp_screen.dart';
 import 'package:kit/features/create_post/presentation/screens/create_post.dart';
 import 'package:kit/features/home/presentation/pages/home_page.dart';
 
-import '../../features/auth/presentation/bloc/auth_bloc.dart';
-import '../di/getIt.dart';
+
 class GoRouterRefreshStream extends ChangeNotifier {
   GoRouterRefreshStream(Stream<dynamic> stream) {
     _sub = stream.listen((_) => notifyListeners());
@@ -27,81 +27,182 @@ class GoRouterRefreshStream extends ChangeNotifier {
 
 class AppRoutes {
   static const String home = '/';
+  static const String createPost = '/create_post';
+  static const String settings = '/settings';
   static const String loginOptions = '/login_options';
   static const String login = '/login';
   static const String register = '/register';
   static const String sendOtp = '/send_otp';
-  static const String createPost = '/create_post';
-  static const String contacts = '/contacts';
-  static const String contactDetail = '/contact-detail';
-  static const String chat = '/chat';
-  static const String settings = '/settings';
 
-  /// The route configuration.
+  static const String notification = '/notification';
+
+  static final _rootNavigatorKey = GlobalKey<NavigatorState>();
+  static final _shellNavigatorHomeKey =
+      GlobalKey<NavigatorState>(debugLabel: 'shellHome');
+  static final _shellNavigatorNotificationKey =
+      GlobalKey<NavigatorState>(debugLabel: 'shellNotification');
+
+  /// Router config
   static final GoRouter appRouter = GoRouter(
     initialLocation: home,
+    navigatorKey: _rootNavigatorKey,
+    refreshListenable: GoRouterRefreshStream(getIt<AuthBloc>().stream),
     redirect: (context, state) {
       final authState = context.read<AuthBloc>().state;
-      
-      final isGoingToLoginOrOtp =
-          state.matchedLocation == AppRoutes.login ||
-          state.matchedLocation == AppRoutes.loginOptions ||
-          state.matchedLocation == AppRoutes.sendOtp ||
-          state.matchedLocation == '${AppRoutes.sendOtp}${AppRoutes.register}';
 
-      if (authState is AuthUnauthenticated && !isGoingToLoginOrOtp) {
-        return AppRoutes.loginOptions;
+      final isAuthRoute = [
+        loginOptions,
+        login,
+        register,
+        sendOtp,
+      ].contains(state.matchedLocation);
+
+      if (authState is AuthUnauthenticated && !isAuthRoute) {
+        return loginOptions;
       }
-      if (authState is AuthAuthenticated && isGoingToLoginOrOtp) {
-        return AppRoutes.home;
+
+      if (authState is AuthAuthenticated && isAuthRoute) {
+        return home;
       }
-      print('No redirection needed');
+
       return null;
     },
-
-    refreshListenable: GoRouterRefreshStream(getIt<AuthBloc>().stream),
-    routes: <RouteBase>[
-      GoRoute(
-        path: home,
-        builder: (BuildContext context, GoRouterState state) {
-          return HomePage();
+    routes: [
+      // 🏠 HOME SHELL
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigationShell) {
+          return ScaffoldWithNestedNavigation(navigationShell: navigationShell);
         },
-        routes: [
-          GoRoute(
-            path: createPost,
-            builder: (BuildContext context, GoRouterState state) {
-              return const CreatePost();
-            },
+        branches: [
+          StatefulShellBranch(
+            navigatorKey: _shellNavigatorHomeKey,
+            routes: [
+              GoRoute(
+                path: home,
+                pageBuilder: (context, state) => slideTransitionPage(
+                  child: const HomePage(),
+                ),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            navigatorKey: _shellNavigatorNotificationKey,
+            routes: [
+              GoRoute(
+                path: notification,
+                pageBuilder: (context, state) => slideTransitionPage(
+                  child: const NotificationPage(),
+                ),
+              ),
+            ],
           ),
         ],
       ),
       GoRoute(
-        path: sendOtp,
-        builder: (BuildContext context, GoRouterState state) {
-          return const SendOtpScreen();
-        },
-        routes: [
-          GoRoute(
-            path: register,
-            builder: (BuildContext context, GoRouterState state) {
-              return RegisterScreen();
-            },
-          ),
-        ]
+        path: createPost,
+        pageBuilder: (context, state) => slideTransitionPage(
+          child: const CreatePost(),
+        ),
       ),
       GoRoute(
         path: loginOptions,
-        builder: (BuildContext context, GoRouterState state) {
-          return const LoginOptionScreen();
-        },
+        pageBuilder: (context, state) =>
+            slideTransitionPage(child: const LoginOptionScreen()),
       ),
       GoRoute(
         path: login,
-        builder: (BuildContext context, GoRouterState state) {
-          return const LoginScreen();
-        },
+        pageBuilder: (context, state) =>
+            slideTransitionPage(child: const LoginScreen()),
+      ),
+      GoRoute(
+        path: sendOtp,
+        pageBuilder: (context, state) =>
+            slideTransitionPage(child: const SendOtpScreen()),
+        routes: [
+          GoRoute(
+            path: register,
+            pageBuilder: (context, state) =>
+                slideTransitionPage(child: const RegisterScreen()),
+          ),
+        ],
       ),
     ],
   );
 }
 
+
+class ScaffoldWithNestedNavigation extends StatelessWidget {
+  const ScaffoldWithNestedNavigation({
+    Key? key,
+    required this.navigationShell,
+  }) : super(key: key ?? const ValueKey('ScaffoldWithNestedNavigation'));
+  final StatefulNavigationShell navigationShell;
+
+  void _goBranch(int index) {
+    navigationShell.goBranch(
+      index,
+      // A common pattern when using bottom navigation bars is to support
+      // navigating to the initial location when tapping the item that is
+      // already active. This example demonstrates how to support this behavior,
+      // using the initialLocation parameter of goBranch.
+      initialLocation: index == navigationShell.currentIndex,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: navigationShell,
+      bottomNavigationBar: DecoratedBox(
+        decoration: BoxDecoration(
+          border: Border(
+            top: BorderSide(color: context.appTheme.borderColor, width: 0.5),
+          ),
+        ),
+        child: BottomNavigationBar(
+          backgroundColor: Colors.transparent, 
+          elevation: 0,
+          currentIndex: navigationShell.currentIndex,
+          showUnselectedLabels: false,
+          showSelectedLabels: false,
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+            BottomNavigationBarItem(icon: Icon(Icons.notifications), label: 'Notifications'),
+          ],
+          onTap: _goBranch,
+        ),
+      )
+
+    );
+  }
+}
+
+CustomTransitionPage<T> slideTransitionPage<T>({
+  required Widget child,
+  Duration duration = const Duration(milliseconds: 400),
+}) {
+  return CustomTransitionPage<T>(
+    key: ValueKey(child.hashCode),
+    transitionDuration: duration,
+    child: child,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(1.0, 0.0);
+      const end = Offset.zero;
+      final tween = Tween(begin: begin, end: end)
+          .chain(CurveTween(curve: Curves.easeInOut));
+
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
+}
+class NotificationPage extends StatelessWidget {
+  const NotificationPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}
