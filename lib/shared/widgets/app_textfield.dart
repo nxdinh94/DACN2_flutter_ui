@@ -3,15 +3,23 @@ import 'package:kit/core/extensions/context.dart';
 
 class AppTextField extends StatefulWidget {
   const AppTextField({
-    super.key, required this.controller, this.hintText,
+    super.key, 
+    required this.controller, 
+    this.hintText,
     this.keyboardType = TextInputType.name,
     this.errorText,
+    this.minLines,
+    this.maxLines,
+    this.border,
   });
 
   final TextEditingController controller;
   final String? hintText;
   final TextInputType ? keyboardType;
   final String? errorText;
+  final int? minLines;
+  final int? maxLines;
+  final InputBorder ? border;
 
 
   @override
@@ -26,16 +34,18 @@ class _AppTextFieldState extends State<AppTextField> {
       controller: widget.controller,
       keyboardType: widget.keyboardType,
       onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
+      minLines: widget.minLines,
+      maxLines: widget.maxLines,
       decoration: InputDecoration(
         hintText: widget.hintText ?? 'Email',
         hintStyle: context.textStyle.bodyLarge?.copyWith(
           color: context.appTheme.textSubtle,
         ),
-        enabledBorder: UnderlineInputBorder(
+        enabledBorder: widget.border ?? UnderlineInputBorder(
           borderSide: BorderSide(color: context.appTheme.borderColor, width: 1),
         ),
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: context.appTheme.primaryColor, width: 2),
+        focusedBorder: widget.border ?? UnderlineInputBorder(
+          borderSide: BorderSide(color: context.appTheme.secondaryColor, width: 2),
         ),
         contentPadding: EdgeInsets.zero,
         
@@ -43,10 +53,10 @@ class _AppTextFieldState extends State<AppTextField> {
           color: context.appTheme.errorColor,
         ),
         errorText: widget.errorText,
-        errorBorder: UnderlineInputBorder(
+        errorBorder: widget.border ?? UnderlineInputBorder(
           borderSide: BorderSide(color: context.appTheme.errorColor, width: 1),
         ),
-        focusedErrorBorder: UnderlineInputBorder(
+        focusedErrorBorder: widget.border ?? UnderlineInputBorder(
           borderSide: BorderSide(color: context.appTheme.errorColor, width: 1),
         ),
       ),
