@@ -16,4 +16,20 @@ class Debounce {
   void dispose() {
     _timer?.cancel();
   }
+    /// For asynchronous callbacks (like API calls)
+  Future<void> callAsync(Future<void> Function() callback) async {
+    _timer?.cancel();
+    final completer = Completer<void>();
+
+    _timer = Timer(delay, () async {
+      try {
+        await callback();
+        completer.complete();
+      } catch (e, st) {
+        completer.completeError(e, st);
+      }
+    });
+
+    return completer.future;
+  }
 }
