@@ -14,7 +14,8 @@ class AppTheme {
   static const Color whiteColor = Colors.white;
   static const Color tertiaryColor = Color.fromARGB(255, 48, 139, 244);
   static const Color errorColor = Color(0xffb00020);
-  static const Color textSubtle = Color.fromARGB(255, 168, 173, 168);
+  static const Color successColor = Color(0xff28a745);
+  static const Color textSubtle = Color.fromARGB(255, 134, 137, 134);
 
 
   static ThemeData get lightTheme {
@@ -86,6 +87,7 @@ class AppTheme {
           tertiaryColor: tertiaryColor,
           errorColor: errorColor,
           textSubtle: textSubtle,
+          successColor: successColor,
         ),
       ],
 
@@ -113,6 +115,7 @@ class AppTheme {
           tertiaryColor: tertiaryColor,
           errorColor: errorColor,
           textSubtle: textSubtle,
+          successColor: successColor,
         ),
       ],
     );

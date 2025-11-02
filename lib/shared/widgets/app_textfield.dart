@@ -11,6 +11,8 @@ class AppTextField extends StatefulWidget {
     this.minLines,
     this.maxLines,
     this.border,
+    this.fillColor,
+    this.onChanged
   });
 
   final TextEditingController controller;
@@ -20,6 +22,8 @@ class AppTextField extends StatefulWidget {
   final int? minLines;
   final int? maxLines;
   final InputBorder ? border;
+  final Color ? fillColor;
+  final void Function(String)? onChanged;
 
 
   @override
@@ -36,7 +40,10 @@ class _AppTextFieldState extends State<AppTextField> {
       onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
       minLines: widget.minLines,
       maxLines: widget.maxLines,
+      onChanged: widget.onChanged,
+      cursorColor: context.appTheme.primaryColor,
       decoration: InputDecoration(
+        fillColor: widget.fillColor,
         hintText: widget.hintText ?? 'Email',
         hintStyle: context.textStyle.bodyLarge?.copyWith(
           color: context.appTheme.textSubtle,

@@ -1,4 +1,8 @@
-// Common utility functions and constants
+import 'dart:async';
+import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:kit/shared/constants/enum/file_type.dart';
+import 'package:video_player/video_player.dart';
 
 class AppConstants {
   static const String appName = 'Keep In Touch';
@@ -43,4 +47,60 @@ class AppUtils {
       return 'Just now';
     }
   }
+
+  static FileType getFileType(File file) {
+    final extension = file.path.toLowerCase();
+    if (extension.endsWith('.jpg') ||
+        extension.endsWith('.jpeg') ||
+        extension.endsWith('.png') ||
+        extension.endsWith('.gif') ||
+        extension.endsWith('.webp')) {
+      return FileType.image;
+    } else if (extension.endsWith('.mp4') ||
+        extension.endsWith('.mov') ||
+        extension.endsWith('.mkv') ||
+        extension.endsWith('.avi')) {
+      return FileType.video;
+    } else {
+      return FileType.other;
+    }
+  }
+
+  static Future<Size> getMediaSize(File file) async {
+    final fileType = getFileType(file);
+    // Ảnh
+    if (fileType == FileType.image) {
+      final completer = Completer<Size>();
+      final img = Image.file(file);
+      img.image.resolve(const ImageConfiguration()).addListener(
+        ImageStreamListener((info, _) {
+          completer.complete(
+            Size(
+              info.image.width.toDouble(),
+              info.image.height.toDouble(),
+            ),
+          );
+        }),
+      );
+      return completer.future;
+    }
+
+    // Video
+    else if (fileType == FileType.video) {
+      final controller = VideoPlayerController.file(file);
+      await controller.initialize();
+      final size = Size(
+        controller.value.size.width,
+        controller.value.size.height,
+      );
+      await controller.dispose();
+      print('Video size: $size');
+      return size;
+    }
+    else {
+      throw UnsupportedError('Unsupported file type: ${file.path}');
+    }
+  }
+
 }
+

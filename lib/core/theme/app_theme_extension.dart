@@ -14,6 +14,7 @@ class AppThemeExtension extends ThemeExtension<AppThemeExtension> {
   final Color tertiaryColor;
   final Color errorColor;
   final Color textSubtle;
+  final Color successColor;
          
 
   const AppThemeExtension({
@@ -29,27 +30,40 @@ class AppThemeExtension extends ThemeExtension<AppThemeExtension> {
     required this.tertiaryColor,
     required this.errorColor,
     required this.textSubtle,
+    required this.successColor,
   });
 
   // Copy method (for updating values dynamically, e.g. dark mode)
   @override
   AppThemeExtension copyWith({
-    Color? brandColor,
+    Color? primaryColor,
+    Color? secondaryColor,
+    Color? onPrimaryColor,
+    Color? onSecondaryColor,
+    Color? onSurfaceColor,
+    Color? surfaceColor,
+    Color? borderColor,
+    Color? blackColor,
+    Color? whiteColor,
+    Color? tertiaryColor,
+    Color? errorColor,
+    Color? textSubtle,
     Color? successColor,
   }) {
     return AppThemeExtension(
-      primaryColor: primaryColor,
-      secondaryColor: secondaryColor,
-      onPrimaryColor: onPrimaryColor,
-      onSecondaryColor: onSecondaryColor,
-      onSurfaceColor: onSurfaceColor,
-      surfaceColor: surfaceColor,
-      borderColor: borderColor,
-      blackColor: blackColor,
-      whiteColor: whiteColor,
-      tertiaryColor: tertiaryColor,
-      errorColor: errorColor,
-      textSubtle: textSubtle,
+      primaryColor: primaryColor ?? this.primaryColor,
+      secondaryColor: secondaryColor ?? this.secondaryColor,
+      onPrimaryColor: onPrimaryColor ?? this.onPrimaryColor,
+      onSecondaryColor: onSecondaryColor ?? this.onSecondaryColor,
+      onSurfaceColor: onSurfaceColor ?? this.onSurfaceColor,
+      surfaceColor: surfaceColor ?? this.surfaceColor,
+      borderColor: borderColor ?? this.borderColor,
+      blackColor: blackColor ?? this.blackColor,
+      whiteColor: whiteColor ?? this.whiteColor,
+      tertiaryColor: tertiaryColor ?? this.tertiaryColor,
+      errorColor: errorColor ?? this.errorColor,
+      textSubtle: textSubtle ?? this.textSubtle,
+      successColor: successColor ?? this.successColor,
     );
   }
 
@@ -70,6 +84,7 @@ class AppThemeExtension extends ThemeExtension<AppThemeExtension> {
       tertiaryColor: Color.lerp(tertiaryColor, other.tertiaryColor, t) ?? tertiaryColor,
       errorColor: Color.lerp(errorColor, other.errorColor, t) ?? errorColor,
       textSubtle: Color.lerp(textSubtle, other.textSubtle, t) ?? textSubtle,
+      successColor: Color.lerp(successColor, other.successColor, t) ?? successColor,
     );
   }
 }

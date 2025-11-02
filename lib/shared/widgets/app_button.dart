@@ -21,6 +21,7 @@ class AppButton extends StatelessWidget {
   final double? iconSize;
   final String? iconPath; // could be an asset path
   final Color? iconColor;
+  final OutlinedBorder? shape;
 
   final EdgeInsetsGeometry padding;
 
@@ -42,6 +43,7 @@ class AppButton extends StatelessWidget {
     this.iconColor,
     this.isDisabled = false,
     this.padding = const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
+    this.shape,
   }) : _type = _AppButtonType.elevated;
 
   const AppButton.outlined({
@@ -57,7 +59,8 @@ class AppButton extends StatelessWidget {
     this.iconPath,
     this.iconColor,
     this.isDisabled = false,
-    this.padding = const EdgeInsets.symmetric(vertical: 12, horizontal: 0)
+    this.padding = const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
+    this.shape,
   }) : _type = _AppButtonType.outlined;
 
   const AppButton.text({
@@ -74,7 +77,24 @@ class AppButton extends StatelessWidget {
     this.iconColor,
     this.isDisabled = false,
     this.padding = const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
+    this.shape,
   }) : _type = _AppButtonType.text;
+  const AppButton.icon({
+    super.key,
+    this.text,
+    this.onPressed,
+    this.backgroundColor = AppTheme.primaryColor,
+    this.textColor = AppTheme.onPrimaryColor,
+    this.borderColor = Colors.transparent,
+    this.fontSize,
+    this.fontWeight,
+    this.iconSize,
+    this.iconPath,
+    this.iconColor,
+    this.isDisabled = false,
+    this.padding = const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
+    this.shape,
+  }) : _type = _AppButtonType.icon;
 
   @override
   Widget build(BuildContext context) {  
@@ -85,20 +105,17 @@ class AppButton extends StatelessWidget {
     );
 
     final Widget? iconWidget = iconPath != null
-        ? Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: iconPath!.contains('svg')
-                ? AppSvg(
-                    size: iconSize,
-                    color: iconColor ?? textColor,
-                    iconPath: iconPath!,
-                  )
-                : Image.asset(
-                    iconPath!,
-                    width: iconSize ?? 24,
-                    height: iconSize ?? 24,
-                  ),
-          )
+        ? iconPath!.contains('svg')
+            ? AppSvg(
+                size: iconSize,
+                color: iconColor ?? textColor,
+                iconPath: iconPath!,
+              )
+            : Image.asset(
+                iconPath!,
+                width: iconSize ?? 24,
+                height: iconSize ?? 24,
+              )
         : null;
 
     final Widget child = Row(
@@ -120,7 +137,7 @@ class AppButton extends StatelessWidget {
             disabledBackgroundColor: backgroundColor.withValues(alpha: 0.4),
             foregroundColor: textColor,
             disabledForegroundColor: textColor.withValues(alpha: 0.4),
-            shape: RoundedRectangleBorder(
+            shape: shape ?? RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(60),
               side: BorderSide(color: isDisabled ? borderColor.withValues(alpha: 0.1) : borderColor,)
             ),
@@ -140,7 +157,7 @@ class AppButton extends StatelessWidget {
             foregroundColor: textColor,
             backgroundColor: backgroundColor,
             side: BorderSide(color: isDisabled ? borderColor.withValues(alpha: 0.4) : borderColor, width: 1),
-            shape: RoundedRectangleBorder(
+            shape: shape ?? RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(60),
             ),
             padding: padding,
@@ -154,7 +171,7 @@ class AppButton extends StatelessWidget {
           style: TextButton.styleFrom(
             foregroundColor: textColor,
             backgroundColor: Colors.transparent,
-            shape: RoundedRectangleBorder(
+            shape: shape ?? RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(60),
             ),
             side: BorderSide(color: isDisabled ? borderColor.withValues(alpha: 0.4) : borderColor, width: 1),
@@ -162,9 +179,22 @@ class AppButton extends StatelessWidget {
           ),
           child: child,
         );
+      case _AppButtonType.icon:
+        return IconButton(
+          onPressed: isDisabled ? null : onPressed,
+          icon: child,
+          color: iconColor ?? textColor,
+          disabledColor: textColor.withValues(alpha: 0.4),
+          padding: EdgeInsets.zero,
+          iconSize: iconSize ?? 24,
+          style: IconButton.styleFrom(
+            backgroundColor: backgroundColor,
+            padding: EdgeInsets.zero,
+          ),
+        );
     }
   }
 
 }
 
-enum _AppButtonType { elevated, outlined, text }
+enum _AppButtonType { elevated, outlined, text, icon }
