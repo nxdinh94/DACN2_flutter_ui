@@ -1,6 +1,4 @@
 import 'dart:isolate';
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_isolate/flutter_isolate.dart';
 import 'package:kit/core/extensions/context.dart';
@@ -24,8 +22,8 @@ void computeLargeNumber(SendPort sendPort)async {
       () async {
         for (int i = 0; i < 100; i++) {
           print('timeDelay: $timeDelay');
-          await Future.delayed(Duration(milliseconds: timeDelay));
           sendPort.send(i);
+          await Future.delayed(Duration(milliseconds: timeDelay));
         }
         receivePort.close();
       }();
@@ -50,7 +48,6 @@ class _WelcomeSectionState extends State<WelcomeSection> {
   FlutterIsolate? _isolate;
   @override
   void dispose() {
-    // TODO: implement dispose
     _isolate?.kill(priority: Isolate.immediate);
     super.dispose();
   }
@@ -94,10 +91,12 @@ class _WelcomeSectionState extends State<WelcomeSection> {
                     }
 
                     if(message is int && message == 5){ //stop isolate when reaching 45 
-                      workerSendPort!.send('boost_speed'); return; 
+                      workerSendPort!.send('boost_speed'); 
+                      return; 
                     } 
                     if(message is SendPort){ //sendPort to isolate 
-                      workerSendPort = message; workerSendPort!.send('start'); return; 
+                      workerSendPort = message; workerSendPort!.send('start'); 
+                      return; 
                     } 
                     if(message == 99){ 
                       setState(() { isPerform = false; }); 

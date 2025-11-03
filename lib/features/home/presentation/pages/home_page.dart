@@ -1,80 +1,85 @@
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kit/core/di/getIt.dart';
 import 'package:kit/core/extensions/context.dart';
 import 'package:kit/core/router/app_routes.dart';
-import 'package:kit/core/utils/auth_token_services.dart';
 import 'package:kit/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:kit/features/home/presentation/widgets/home_app_bar.dart';
-import 'package:kit/features/home/presentation/widgets/welcome_section.dart';
-import 'package:kit/shared/services/firebase_messaging_service.dart';
+import 'package:kit/features/home/presentation/pages/following_tab.dart';
+import 'package:kit/features/home/presentation/pages/for_you_tab.dart';
+import 'package:kit/shared/constants/app_assets.dart';
 
-/// Home page of the application
-/// 
-/// Displays welcome message and provides navigation to other features.
-/// Handles Firebase messaging for chat notifications.
 class HomePage extends StatefulWidget {
-  const HomePage({
-    super.key,
-    required this.analytics,
-    required this.observer,
-  });
-
-  final FirebaseAnalytics analytics;
-  final FirebaseAnalyticsObserver observer;
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  late final FirebaseMessagingService _messagingService;
-
-  @override
-  void initState() {
-    super.initState();
-    _messagingService = getIt<FirebaseMessagingService>();
-    _setupInteractedMessage();
-  }
-
-  /// Handles incoming messages from Firebase Cloud Messaging
-  void _handleMessage(RemoteMessage message) {
-    if (message.data['type'] == 'chat') {
-      context.push(AppRoutes.chat);
-    }
-  }
-
-  /// Sets up Firebase messaging for app interactions
-  Future<void> _setupInteractedMessage() async {
-    final initialMessage = await _messagingService.getInitialMessage();
-
-    if (initialMessage != null) {
-      _handleMessage(initialMessage);
-    }
-
-    _messagingService.onMessageOpenedApp.listen(_handleMessage);
-  }
-
-  Future<void> _navigateToNewContactSchedule(BuildContext context) async {
-    
-  }
-
-  void _toggleLanguage(BuildContext context) {
-    context.read<AuthBloc>().add(LogoutRequested());
-  }
+  bool _floatHeaderSlivers = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: HomeAppBar(
-        title: context.locale.hello('Xander Dson'),
-        onAnalyticsPressed:() async => await _navigateToNewContactSchedule(context),
-        onAddPressed:() => _toggleLanguage(context),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.push(AppRoutes.createPost);
+        },
+        shape: CircleBorder(),
+        backgroundColor: context.appTheme.primaryColor,
+        child: Icon(Icons.add, size: 32, color: context.appTheme.onPrimaryColor),
       ),
-      body: const WelcomeSection(),
+      body: DefaultTabController(
+        length: 2,
+        child: NestedScrollView(
+          floatHeaderSlivers: _floatHeaderSlivers, 
+          physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()), 
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return [
+              SliverAppBar(
+                elevation: 2,
+                backgroundColor: context.appTheme.surfaceColor,
+                title: InkWell(
+                  onTap: () {
+                    context.read<AuthBloc>().add(LogoutRequested());
+                  },
+                  child: Image.asset(
+                    AppAssets.appLogo,
+                    width: 120,
+                    height: 120,
+                  ),
+                ),
+                centerTitle: true,
+                bottom: TabBar(
+                  indicatorColor: context.appTheme.primaryColor,
+                  indicatorSize: TabBarIndicatorSize.label,
+                  indicatorAnimation: TabIndicatorAnimation.linear,
+                  unselectedLabelStyle: context.textStyle.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w400,
+                    color: context.appTheme.textSubtle,
+                  ),
+                  labelStyle: context.textStyle.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w700,
+                    color: context.appTheme.onSurfaceColor,
+                  ),
+                  labelPadding: EdgeInsets.zero,
+                  overlayColor: WidgetStateProperty.all(Colors.transparent),
+                  tabs: const [
+                    Tab(text: 'For you', height: 36),
+                    Tab(text: 'Following', height: 36),
+                  ],
+                ),
+              ),
+            ];
+          },
+          body: TabBarView(
+            children: [
+              ForYouTab(),
+              FollowingTab(),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

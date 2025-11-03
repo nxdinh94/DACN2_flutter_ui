@@ -1,7 +1,20 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:kit/core/extensions/context.dart';
+import 'package:kit/core/utils/debounce.dart';
+import 'package:kit/features/create_post/presentation/bloc/create_post_bloc.dart';
+import 'package:kit/features/create_post/presentation/widget/create_post_bottom_sheet.dart';
+import 'package:kit/features/create_post/presentation/widget/selected_media_item.dart';
+import 'package:kit/shared/constants/app_assets.dart';
+import 'package:kit/shared/constants/enum/post_view_scope_enum.dart';
+import 'package:kit/shared/widgets/app_bottom_sheet.dart';
 import 'package:kit/shared/widgets/app_button.dart';
+import 'package:kit/shared/widgets/app_svg.dart';
 import 'package:kit/shared/widgets/app_textfield.dart';
+import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
 class CreatePost extends StatefulWidget {
   const CreatePost({super.key});
@@ -12,62 +25,256 @@ class CreatePost extends StatefulWidget {
 
 class _CreatePostState extends State<CreatePost> {
   final TextEditingController _controller = TextEditingController();
+  final ImagePicker picker = ImagePicker();
+  final Debounce _debounce = Debounce(const Duration(milliseconds: 300));
+
+  Future<void> pickImagesAndVideos(BuildContext context, {required List<AssetEntity> selectedAssets}) async {
+    try {
+      final List<AssetEntity>? assets = await AssetPicker.pickAssets(
+        context,
+        pickerConfig: AssetPickerConfig(
+          maxAssets: 4, // Giới hạn số lượng ảnh + video có thể chọn
+          requestType: RequestType.common, // 🔥 Cho phép chọn cả ảnh + video
+          themeColor: context.appTheme.primaryColor, // Màu chủ đề của picker
+          gridCount: 4, // số cột hiển thị
+          selectedAssets: selectedAssets,
+        ),
+      );
+      if (!context.mounted) return;
+      if (assets == null || assets.isEmpty) return; // Người dùng hủy chọn
+      print('Picked ${assets.length} assets.');
+      context.read<CreatePostBloc>().add(CollectingDataEvent(mediaAssetEntities: assets));
+    } catch (e, st) {
+      debugPrint('Error picking media: $e\n$st');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to pick media: $e')),
+      );
+    }
+  }
 
   @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<CreatePostBloc>().add(CollectingDataEvent());
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _debounce.dispose();
+    super.dispose();
+  }
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: CustomScrollView(
-        physics: const BouncingScrollPhysics(
-          parent: AlwaysScrollableScrollPhysics(),
-        ),
-        slivers: [
-          // ✅ SliverAppBar
-          SliverAppBar(
-            pinned: true,
-            elevation: 0,
-            backgroundColor: context.appTheme.surfaceColor,
-            leadingWidth: 90,
-            leading: Padding(
-              padding: const EdgeInsets.only(left: 7.0),
-              child: AppButton.text(
-                onPressed: () => Navigator.of(context).pop(),
-                text: 'Cancel',
-                textColor: context.appTheme.onSurfaceColor,
-                fontSize: 14
-              ),
-            ),
-            actions: [
-              Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: AppButton.elevated(
-                  onPressed: () {
-                    // Handle post creation
+    return BlocListener<CreatePostBloc, CreatePostState>(
+      listener: (BuildContext context, CreatePostState state) {
+        if (state is! CreatePostCollectingData) {
+          context.pop();
+        }
+      },
+      child: Scaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked, // Or any other location
+        floatingActionButton: BlocBuilder<CreatePostBloc, CreatePostState>(
+          builder: (BuildContext context, CreatePostState state) {
+
+            String icon = PostViewScope.everyone.iconPath;
+            String name = PostViewScope.everyone.name;
+
+            if (state is CreatePostCollectingData) {
+              icon = state.viewScope.iconPath;
+              name = state.viewScope.name;
+            }
+
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // View Scope
+                InkWell(
+                  onTap: (){
+                    showAppBottomSheet(
+                      context: context,
+                      initialExpand: 0.6,
+                      child: CreatePostBottomSheet(),
+                    );
                   },
-                  text: 'Post',
-                  backgroundColor: context.appTheme.primaryColor,
-                  padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
-                  fontSize: 14,
+
+                  child: Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: context.appTheme.surfaceColor,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      spacing: 8,
+                      children: [
+                        AppSvg(iconPath: icon, size: 12,),
+                        Text(name, style: context.textStyle.bodySmall
+                              ?.copyWith(color: context.appTheme.primaryColor),)
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(0),
+                  decoration: BoxDecoration(
+                    border: Border(top: BorderSide(
+                      color: context.appTheme.borderColor,
+                      width: 0.5,
+                    )),
+                  ),
+                  child: Row( 
+                    children: [
+                      SizedBox(
+                        width: 40,
+                        height: 40,
+                        child: AppButton.icon(
+                          onPressed: () async {
+                            final selectedAssets = <AssetEntity>[];
+                              if (state is CreatePostCollectingData && state.mediaAssetEntities != null) {
+                                selectedAssets.addAll(state.mediaAssetEntities!);
+                              }
+                            _debounce.callAsync(() async {
+                                await pickImagesAndVideos(context, selectedAssets: selectedAssets);
+                                if(!context.mounted) return;
+                            });
+                          },
+                          iconPath: AppAssets.imageSvg,
+                          iconColor: context.appTheme.primaryColor,
+                          iconSize: 16,
+                          backgroundColor: Colors.transparent,
+                          padding: const EdgeInsets.all(0),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
+        body: CustomScrollView(
+          physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics(),
+          ),
+          slivers: [
+            // SliverAppBar
+            BlocBuilder<CreatePostBloc, CreatePostState>(
+              builder: (BuildContext context, CreatePostState state) {
+                final isCollectingData = state is CreatePostCollectingData
+                  && ((state.content != null && state.content!.isNotEmpty)
+                  || (state.mediaAssetEntities != null && state.mediaAssetEntities!.isNotEmpty));
+
+                return SliverAppBar(
+                  pinned: true,
+                  elevation: 0,
+                  backgroundColor: context.appTheme.surfaceColor,
+                  leadingWidth: 90,
+                  leading: AppButton.text(
+                    onPressed: () {
+                      context.pop();
+                    },
+                    text: 'Cancel',
+                    textColor: context.appTheme.onSurfaceColor,
+                    fontSize: 14
+                  ),
+                  actions: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 16.0),
+                      child: AppButton.elevated(
+                        isDisabled: !isCollectingData,
+                        onPressed: () {
+                          // Handle post creation
+                          context.read<CreatePostBloc>().add(StartPostEvent());
+                        },
+                        text: 'Post',
+                        backgroundColor: context.appTheme.primaryColor,
+                        padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 12),
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
+      
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Column(
+                  spacing: 16,
+                  children: [
+                    AppTextField(
+                      controller: _controller,
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null, // grow dynamically
+                      hintText: 'What\'s on your mind?',
+                      border: InputBorder.none,
+                      onChanged: (value) {
+                        context.read<CreatePostBloc>().add(CollectingDataEvent(content: value));
+                      },
+                    ),
+                    BlocBuilder<CreatePostBloc, CreatePostState>(
+                      builder: (BuildContext context, CreatePostState state) {
+                        if(state is CreatePostCollectingData &&  state.mediaAssetEntities != null ) {
+                          int imageLength = state.mediaAssetEntities!.length;
+                          
+                          // Safety check: ensure mediaFiles exists and has same length
+                          if (state.mediaFiles == null || 
+                              state.mediaFiles!.length != imageLength) {
+                            return const SizedBox.shrink();
+                          }
+                          
+                          if(imageLength == 1) {
+                            final mediaFile = state.mediaFiles!.first;
+                            if (mediaFile == null) {
+                              return const SizedBox.shrink();
+                            }
+                            return SelectedMediaItem(
+                              mediaAssetEntities: state.mediaAssetEntities!.first,
+                              mediaFile: mediaFile,
+                              maxHeight: 420,
+                            );
+                          }
+                          if(imageLength == 0) {
+                            return const SizedBox.shrink();
+                          }
+                          return SizedBox(
+                            height: 200,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: state.mediaAssetEntities?.length ?? 0,
+                              itemBuilder: (context, index) {
+                                final mediaFile = state.mediaFiles![index];
+                                if (mediaFile == null) {
+                                  return const SizedBox.shrink();
+                                }
+                                return Padding(
+                                  padding: const EdgeInsets.only(right: 8.0),
+                                  child: SelectedMediaItem(
+                                    mediaAssetEntities: state.mediaAssetEntities![index],
+                                    mediaFile: mediaFile,
+                                    maxHeight: 200,
+                                    isMultipleMedia: true,
+                                  ),
+                                );
+                              },
+                            ),
+                          );
+                        }
+                        return const SizedBox.shrink();
+                      },
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
-
-          // ✅ SliverToBoxAdapter allows normal widgets inside a sliver layout
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: AppTextField(
-                controller: _controller,
-                keyboardType: TextInputType.multiline,
-                maxLines: null, // grow dynamically
-                minLines: 40,
-                hintText: 'What\'s on your mind?',
-                border: InputBorder.none,
-              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 }
+

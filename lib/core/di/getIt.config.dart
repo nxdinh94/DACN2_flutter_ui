@@ -23,6 +23,10 @@ import '../../features/auth/domain/usecases/login_usecase.dart' as _i188;
 import '../../features/auth/domain/usecases/logout_usecase.dart' as _i48;
 import '../../features/auth/domain/usecases/register_usecase.dart' as _i941;
 import '../../features/auth/presentation/bloc/auth_bloc.dart' as _i797;
+import '../../features/create_post/presentation/bloc/cache_thumbnail_video.dart'
+    as _i800;
+import '../../features/create_post/presentation/bloc/create_post_bloc.dart'
+    as _i491;
 import '../../shared/blocs/locale/locale_bloc.dart' as _i190;
 import '../../shared/services/firebase_messaging_service.dart' as _i751;
 import '../logger/logger.dart' as _i512;
@@ -38,14 +42,16 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final firebaseModule = _$FirebaseModule();
+    gh.factory<_i491.CreatePostBloc>(() => _i491.CreatePostBloc());
     gh.factory<_i190.LocaleBloc>(() => _i190.LocaleBloc());
-    gh.lazySingleton<_i512.AppLogger>(() => _i512.AppLogger());
+    gh.factory<_i800.CacheThumbnailVideo>(() => _i800.CacheThumbnailVideo());
     gh.lazySingleton<_i892.FirebaseMessaging>(
       () => firebaseModule.firebaseMessaging,
     );
     gh.lazySingleton<_i558.FlutterSecureStorage>(
       () => firebaseModule.secureStorage,
     );
+    gh.lazySingleton<_i512.AppLogger>(() => _i512.AppLogger());
     gh.lazySingleton<_i751.FirebaseMessagingService>(
       () => _i751.FirebaseMessagingService(gh<_i892.FirebaseMessaging>()),
     );
