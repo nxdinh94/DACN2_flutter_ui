@@ -12,10 +12,18 @@ dependencies:
   fpdart: ^1.1.1
   flutter_native_splash: ^2.4.7
   flutter_launcher_icons: ^0.14.4
+  animation_list: ^3.1.0
   flutter_secure_storage: ^9.2.4
+  modal_bottom_sheet: ^3.0.0
+  image_picker: ^1.2.0
+  wechat_assets_picker: ^9.8.0
+  video_player: ^2.10.0
+  video_thumbnail: ^0.5.3
   flutter_isolate: ^2.1.0
   fluttertoast: ^9.0.0
   flutter_svg: ^2.2.1
+  flutter_markdown: ^0.7.3
+
   # State Management
   flutter_bloc: ^9.1.1
   hydrated_bloc: ^10.1.1
@@ -51,6 +59,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: any
+  haptic_feedback: ^0.5.1+1
 
 dev_dependencies:
   flutter_test:
