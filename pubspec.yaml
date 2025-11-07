@@ -23,6 +23,7 @@ dependencies:
   fluttertoast: ^9.0.0
   flutter_svg: ^2.2.1
   flutter_markdown: ^0.7.3
+  flutter_animate: ^4.5.2
 
   # State Management
   flutter_bloc: ^9.1.1

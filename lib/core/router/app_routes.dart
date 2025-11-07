@@ -10,6 +10,7 @@ import 'package:kit/features/auth/presentation/pages/login_screen.dart';
 import 'package:kit/features/auth/presentation/pages/register_screen.dart';
 import 'package:kit/features/auth/presentation/pages/send_otp_screen.dart';
 import 'package:kit/features/create_post/presentation/screens/create_post.dart';
+import 'package:kit/features/create_post/presentation/widget/preview_image.dart';
 import 'package:kit/features/home/presentation/pages/home_page.dart';
 
 
@@ -33,6 +34,8 @@ class AppRoutes {
   static const String login = '/login';
   static const String register = '/register';
   static const String sendOtp = '/send_otp';
+
+  static const String createPostPreview = '$createPost/preview';
 
   static const String notification = '/notification';
 
@@ -103,6 +106,18 @@ class AppRoutes {
         pageBuilder: (context, state) => slideTransitionPage(
           child: const CreatePost(),
         ),
+        routes: [
+          GoRoute(
+            path: '$createPostPreview/:mediaPath',
+            name: createPostPreview,
+            pageBuilder: (context, state) {
+              final mediaPath = state.pathParameters['mediaPath'] ?? '';
+              return scaleTransitionPage(
+                child:  PreviewImage(imagePath: mediaPath),
+              );
+            },
+          ),
+        ]
       ),
       GoRoute(
         path: loginOptions,
@@ -198,6 +213,36 @@ CustomTransitionPage<T> slideTransitionPage<T>({
     },
   );
 }
+
+CustomTransitionPage<T> scaleTransitionPage<T>({
+  required Widget child,
+  Duration duration = const Duration(milliseconds: 400),
+  Curve curve = Curves.easeInOut,
+}) {
+  return CustomTransitionPage<T>(
+    key: ValueKey(child.hashCode),
+    transitionDuration: duration,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      // Dùng Tween<double> để scale
+      final scaleTween = Tween<double>(begin: 0.9, end: 1.0)
+          .chain(CurveTween(curve: curve));
+
+      final fadeTween = Tween<double>(begin: 0.0, end: 1.0)
+          .chain(CurveTween(curve: curve));
+
+      return FadeTransition(
+        opacity: animation.drive(fadeTween),
+        child: ScaleTransition(
+          scale: animation.drive(scaleTween),
+          child: child,
+        ),
+      );
+    },
+    child: child,
+  );
+}
+
+
 class NotificationPage extends StatelessWidget {
   const NotificationPage({super.key});
 

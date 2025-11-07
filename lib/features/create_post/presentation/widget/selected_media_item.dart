@@ -4,7 +4,9 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kit/core/extensions/context.dart';
+import 'package:kit/core/router/app_routes.dart';
 import 'package:kit/core/utils/app_utils.dart';
 import 'package:kit/features/create_post/presentation/bloc/create_post_bloc.dart';
 import 'package:kit/shared/constants/app_assets.dart';
@@ -71,43 +73,53 @@ class _SelectedMediaItemState extends State<SelectedMediaItem> with AutomaticKee
 
                 var newWidth =  widget.isMultipleMedia? imgWidth * bestRatio : constraints.maxWidth,
                     newHeight = widget.isMultipleMedia? widget.maxHeight : imgHeight * bestRatio;
-                return ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: AppUtils.getFileType(widget.mediaFile) == FileType.image
-                    ? Image.file(
-                        widget.mediaFile,
-                        fit: BoxFit.cover,
-                        width: newWidth,
-                        height: newHeight,
-                      )
-                    : FutureBuilder<Uint8List?>(
-                        future: widget.mediaAssetEntities.thumbnailDataWithSize(ThumbnailSize(newWidth.toInt(), newHeight.toInt())),
-                        builder: (context, snap) {
-                          if (!snap.hasData) {
-                              return SizedBox(
-                                width: newWidth,
-                                height: newHeight,
-                                child: const Center(
-                                  child: CircularProgressIndicator()
-                                ),
-                              );
-                          }
-                          return SizedBox(
-                            width: newWidth,
-                            height: newHeight,
-                            child: Stack(
-                              fit: StackFit.expand,
-                              children: [
-                                Image.memory(snap.data!, fit: BoxFit.cover),
-                                const Align(
-                                  alignment: Alignment.center,
-                                  child: Icon(Icons.play_circle_fill, color: Colors.white, size: 36),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      )
+                return InkWell(
+                  onTap: () {
+                    context.goNamed(
+                      AppRoutes.createPostPreview,
+                      pathParameters: {
+                        'mediaPath': widget.mediaFile.path,
+                      },
+                    );
+                  },
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: AppUtils.getFileType(widget.mediaFile) == FileType.image
+                      ? Image.file(
+                          widget.mediaFile,
+                          fit: BoxFit.cover,
+                          width: newWidth,
+                          height: newHeight,
+                        )
+                      : FutureBuilder<Uint8List?>(
+                          future: widget.mediaAssetEntities.thumbnailDataWithSize(ThumbnailSize(newWidth.toInt(), newHeight.toInt())),
+                          builder: (context, snap) {
+                            if (!snap.hasData) {
+                                return SizedBox(
+                                  width: newWidth,
+                                  height: newHeight,
+                                  child: const Center(
+                                    child: CircularProgressIndicator()
+                                  ),
+                                );
+                            }
+                            return SizedBox(
+                              width: newWidth,
+                              height: newHeight,
+                              child: Stack(
+                                fit: StackFit.expand,
+                                children: [
+                                  Image.memory(snap.data!, fit: BoxFit.cover),
+                                  const Align(
+                                    alignment: Alignment.center,
+                                    child: Icon(Icons.play_circle_fill, color: Colors.white, size: 36),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        )
+                  ),
                 );
               },
             );

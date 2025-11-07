@@ -10,7 +10,7 @@ This is a step-by-step of how to use Firebase Cloud Messaging (FCM) to send push
 | State	 | Description |
 |-----:|---------------|
 |Foreground|When the application is open, in view and in use.|
-|Background|When the application is open, but in the background (minimized). This typically occurs when the user has pressed the "home" button on the device, has switched to another app using the app switcher, or has the application open in a different tab (web).|
+|Background|When the application is open, but in the background (minimized). This typically occurs when the user has pressed the "home" button on the device, has switched to another app using the app switcher, or has the aplication open in a different tab (web).|
 |Terminated|When the device is locked or the application is not running.|
 
 
