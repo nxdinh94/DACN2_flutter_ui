@@ -19,9 +19,9 @@ class DioClient {
   DioClient({required this.authTokenServices}) {
     _dio = Dio();
     _dio.options = BaseOptions(
-      connectTimeout: const Duration(seconds: 10),
-      receiveTimeout: const Duration(seconds: 10),
-      sendTimeout: const Duration(seconds: 10),
+      connectTimeout: const Duration(seconds: 20),
+      receiveTimeout: const Duration(seconds: 20),
+      sendTimeout: const Duration(seconds: 20),
       responseType: ResponseType.json,
       baseUrl: AppConstants.baseUrl
     );
@@ -121,21 +121,53 @@ class DioClient {
     );
   }
 
-  Future<Response> get(
+  /// Helper method to handle errors consistently across all HTTP methods
+  Exception _handleError(Object error, String method, String path) {
+    if (error is DioException) {
+      _logger.error('$method request failed: $path', error: error);
+      
+      switch (error.type) {
+        case DioExceptionType.connectionTimeout:
+        case DioExceptionType.sendTimeout:
+        case DioExceptionType.receiveTimeout:
+          return Exception('Request timeout. Please check your internet connection and try again.');
+        
+        case DioExceptionType.connectionError:
+          return Exception('Network error. Please check your internet connection.');
+        
+        case DioExceptionType.badResponse:
+          final statusCode = error.response?.statusCode;
+          final message = error.response?.data?['message'] ?? 'Server error occurred.';
+          return Exception('Server error ($statusCode): $message');
+        
+        case DioExceptionType.cancel:
+          return Exception('Request was cancelled.');
+        
+        case DioExceptionType.badCertificate:
+          return Exception('Security certificate error.');
+        
+        case DioExceptionType.unknown:
+          return Exception('An unexpected error occurred. Please try again.');
+      }
+    }
+    
+    _logger.error('$method request failed: $path', error: error);
+    return error is Exception ? error : Exception(error.toString());
+  }
+
+  Future<Either<Exception, Response>> get(
     String path, {
     Map<String, dynamic>? queryParameters,
     Options? options,
   }) async {
-    try {
-      return await _dio.get(
+    return TaskEither<Exception, Response>.tryCatch(
+      () async => await _dio.get(
         path,
         queryParameters: queryParameters,
         options: options,
-      );
-    } catch (e) {
-      _logger.error('GET request failed: $path', error: e);
-      rethrow;
-    }
+      ),
+      (error, stackTrace) => _handleError(error, 'GET', path),
+    ).run();
   }
 
   Future<Either<Exception, Response>> post(
@@ -151,46 +183,58 @@ class DioClient {
         queryParameters: queryParameters,
         options: options,
       ),
-      (error, stackTrace) {
-        // Optional: log or transform DioException to your own Failure type
-        return error is Exception ? error : Exception(error.toString());
-      },
+      (error, stackTrace) => _handleError(error, 'POST', path),
     ).run();
   }
 
-  Future<Response> put(
-    String path, {
-      dynamic data, Map<String, dynamic>? queryParameters, Options? options,
-    }) async {
-    try {
-      return await _dio.put(
-        path,
-        data: data,
-        queryParameters: queryParameters,
-        options: options,
-      );
-    } catch (e) {
-      _logger.error('PUT request failed: $path', error: e);
-      rethrow;
-    }
-  }
-
-  Future<Response> delete(
+  Future<Either<Exception, Response>> put(
     String path, {
     dynamic data,
     Map<String, dynamic>? queryParameters,
     Options? options,
   }) async {
-    try {
-      return await _dio.delete(
+    return TaskEither<Exception, Response>.tryCatch(
+      () async => await _dio.put(
         path,
         data: data,
         queryParameters: queryParameters,
         options: options,
-      );
-    } catch (e) {
-      _logger.error('DELETE request failed: $path', error: e);
-      rethrow;
-    }
+      ),
+      (error, stackTrace) => _handleError(error, 'PUT', path),
+    ).run();
+  }
+
+  Future<Either<Exception, Response>> patch(
+    String path, {
+    dynamic data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+  }) async {
+    return TaskEither<Exception, Response>.tryCatch(
+      () async => await _dio.patch(
+        path,
+        data: data,
+        queryParameters: queryParameters,
+        options: options,
+      ),
+      (error, stackTrace) => _handleError(error, 'PATCH', path),
+    ).run();
+  }
+
+  Future<Either<Exception, Response>> delete(
+    String path, {
+    dynamic data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+  }) async {
+    return TaskEither<Exception, Response>.tryCatch(
+      () async => await _dio.delete(
+        path,
+        data: data,
+        queryParameters: queryParameters,
+        options: options,
+      ),
+      (error, stackTrace) => _handleError(error, 'DELETE', path),
+    ).run();
   }
 }
