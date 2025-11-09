@@ -18,6 +18,12 @@ class AppConstants {
   static const String uploadImage = '/api/media/image/upload';
   static const String uploadVideo = '/api/media/video/upload';
 
+  // Hive key
+  static const String hiveDataBase = 'Linggo';
+  static const String hiveUserInfoBox = 'user_info';
+  static const String hiveSettingsBox = 'settings';
+  static const String hiveThemeModeBox = 'theme_mode';
+
   
   // Storage keys
   static const String tokenKey = 'auth_token';
