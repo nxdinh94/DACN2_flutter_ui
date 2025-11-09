@@ -6,6 +6,7 @@ import 'package:kit/core/router/app_routes.dart';
 import 'package:kit/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:kit/features/home/presentation/pages/following_tab.dart';
 import 'package:kit/features/home/presentation/pages/for_you_tab.dart';
+import 'package:kit/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:kit/shared/constants/app_assets.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,6 +18,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool _floatHeaderSlivers = true;
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<ProfileBloc>().add(const ProfileEvents.getProfile());
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +59,19 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 centerTitle: true,
+                leading: Transform.scale(
+                  scale: 0.7, // Giảm kích thước toàn bộ widget
+                  child: InkWell(
+                    onTap: () {
+                      context.push(AppRoutes.profile);
+                    },
+                    child: CircleAvatar(
+                      backgroundImage: NetworkImage(
+                        'https://velle.vn/wp-content/uploads/2025/06/Avatar-Anime-Nu-Cute-10.jpg',
+                      ),
+                    ),
+                  ),
+                ),
                 bottom: TabBar(
                   indicatorColor: context.appTheme.primaryColor,
                   indicatorSize: TabBarIndicatorSize.label,
@@ -72,11 +94,14 @@ class _HomePageState extends State<HomePage> {
               ),
             ];
           },
-          body: TabBarView(
-            children: [
-              ForYouTab(),
-              FollowingTab(),
-            ],
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+            child: TabBarView(
+              children: [
+                ForYouTab(),
+                FollowingTab(),
+              ],
+            ),
           ),
         ),
       ),

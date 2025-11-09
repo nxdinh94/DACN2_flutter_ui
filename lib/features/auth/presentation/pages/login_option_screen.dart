@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:kit/core/di/getIt.dart';
 import 'package:kit/core/extensions/context.dart';
 import 'package:kit/core/router/app_routes.dart';
-import 'package:kit/core/utils/auth_token_services.dart';
 import 'package:kit/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:kit/shared/constants/app_assets.dart';
 import 'package:kit/shared/widgets/app_button.dart';
@@ -49,17 +48,7 @@ class _LoginOptionScreenState extends State<LoginOptionScreen> {
               ),
               AppButton.elevated(
                 onPressed: ()async {
-                  // Storage storage = HydratedBloc.storage;
-                  // await storage.clear();
-                  await getIt<AuthTokenServices>()
-                  .getAccessToken()
-                  .then((token) {
-                    if (token != null && token.isNotEmpty) {
-                      print('token: $token');
-                    } else {
-                      print('No token found');
-                    }
-                  });
+                  
                 },
                 text: 'Continue with Google',
                 fontWeight: FontWeight.w600,

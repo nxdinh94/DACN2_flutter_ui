@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:kit/core/extensions/context.dart';
 
 import '../constants/app_colors.dart';
 
@@ -167,7 +168,7 @@ class AppNetworkImage extends StatelessWidget {
           placeholder: placeholder != null
               ? (context, url) => placeholder!
               : (showLoadingIndicator
-                  ? (context, url) => _buildLoadingWidget()
+                  ? (context, url) => _buildLoadingWidget( context)
                   : null),
           errorWidget: errorWidget != null
               ? (context, url, error) => errorWidget!
@@ -182,7 +183,7 @@ class AppNetworkImage extends StatelessWidget {
   }
 
   /// Builds the loading indicator widget
-  Widget _buildLoadingWidget() {
+  Widget _buildLoadingWidget(BuildContext context) {
     return Center(
       child: SizedBox(
         width: 24,
@@ -190,7 +191,7 @@ class AppNetworkImage extends StatelessWidget {
         child: CircularProgressIndicator(
           strokeWidth: 2,
           valueColor: AlwaysStoppedAnimation<Color>(
-            loadingIndicatorColor ?? AppColors.primary,
+            loadingIndicatorColor ?? context.appTheme.primaryColor,
           ),
         ),
       ),

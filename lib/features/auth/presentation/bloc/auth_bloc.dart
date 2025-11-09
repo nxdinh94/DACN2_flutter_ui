@@ -116,7 +116,7 @@ class AuthBloc extends HydratedBloc <AuthEvent, AuthState> {
    
     final result = await registerUseCase.register(
       Register(
-        name: name,
+        fullName: name,
         email: email,
         password: password,
         confirmPassword: confirmPassword,

@@ -8,6 +8,7 @@ import 'package:kit/core/theme/app_theme.dart';
 import 'package:kit/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:kit/features/create_post/presentation/bloc/cache_thumbnail_video.dart';
 import 'package:kit/features/create_post/presentation/bloc/create_post_bloc.dart';
+import 'package:kit/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:kit/shared/blocs/locale/locale_bloc.dart';
 import 'package:kit/shared/l10n/app_localizations.dart';
 
@@ -34,37 +35,31 @@ class MyApp extends StatelessWidget {
         BlocProvider<CacheThumbnailVideo>(
           create: (context) => getIt<CacheThumbnailVideo>()
         ),
+        BlocProvider<ProfileBloc>(
+          create: (context) => getIt<ProfileBloc>()
+        ),
       ],
-      child: BlocListener<AuthBloc, AuthState>(
-        listener: (context, state) {
-          // if(state is AuthUnauthenticated || state is AuthUnauthenticated) {
-          //   print('Auth state changed: $state, refreshing router');
-            // AppRoutes.appRouter.refresh();
-          // }
+      child: BlocBuilder<LocaleBloc, LocaleState>(
+        builder: (BuildContext context, LocaleState state) {
+          return MaterialApp.router(
+            locale: state.locale,
+            routerConfig: AppRoutes.appRouter,
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
+            themeMode: ThemeMode.light,
+            supportedLocales: const [
+              Locale('en'), // English
+              Locale('vi'), // Vietnamese
+            ],
+            debugShowCheckedModeBanner: false,
+          );
         },
-        child: BlocBuilder<LocaleBloc, LocaleState>(
-          builder: (BuildContext context, LocaleState state) {
-            return MaterialApp.router(
-              locale: state.locale,
-              routerConfig: AppRoutes.appRouter,
-              localizationsDelegates: const [
-                AppLocalizations.delegate,
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-              ],
-              theme: AppTheme.lightTheme,
-              darkTheme: AppTheme.darkTheme,
-              themeMode: ThemeMode.light,
-              supportedLocales: const [
-                Locale('en'), // English
-                Locale('vi'), // Vietnamese
-              ],
-              debugShowCheckedModeBanner: false,
-            );
-          },
-        )
-
       ),
     );
   }

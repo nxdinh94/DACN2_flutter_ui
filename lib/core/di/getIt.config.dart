@@ -27,10 +27,19 @@ import '../../features/create_post/presentation/bloc/cache_thumbnail_video.dart'
     as _i800;
 import '../../features/create_post/presentation/bloc/create_post_bloc.dart'
     as _i491;
+import '../../features/profile/data_source/local/profile_local_data_source.dart'
+    as _i911;
+import '../../features/profile/data_source/remote/profile_remote_data_source.dart'
+    as _i156;
+import '../../features/profile/data_source/repository/profile_repository.dart'
+    as _i741;
+import '../../features/profile/presentation/bloc/profile_bloc.dart' as _i469;
 import '../../shared/blocs/locale/locale_bloc.dart' as _i190;
 import '../../shared/services/firebase_messaging_service.dart' as _i751;
+import '../../shared/services/upload_media.dart' as _i182;
 import '../logger/logger.dart' as _i512;
 import '../network/dio_client.dart' as _i667;
+import '../network/hive_client.dart' as _i980;
 import '../utils/auth_token_services.dart' as _i822;
 import 'module.dart' as _i946;
 
@@ -42,9 +51,9 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final firebaseModule = _$FirebaseModule();
+    gh.factory<_i800.CacheThumbnailVideo>(() => _i800.CacheThumbnailVideo());
     gh.factory<_i491.CreatePostBloc>(() => _i491.CreatePostBloc());
     gh.factory<_i190.LocaleBloc>(() => _i190.LocaleBloc());
-    gh.factory<_i800.CacheThumbnailVideo>(() => _i800.CacheThumbnailVideo());
     gh.lazySingleton<_i892.FirebaseMessaging>(
       () => firebaseModule.firebaseMessaging,
     );
@@ -52,6 +61,10 @@ extension GetItInjectableX on _i174.GetIt {
       () => firebaseModule.secureStorage,
     );
     gh.lazySingleton<_i512.AppLogger>(() => _i512.AppLogger());
+    gh.lazySingleton<_i980.HiveClient>(() => _i980.HiveClient());
+    gh.factory<_i911.ProfileLocalDataSource>(
+      () => _i911.ProfileLocalDataSourceImpl(gh<_i980.HiveClient>()),
+    );
     gh.lazySingleton<_i751.FirebaseMessagingService>(
       () => _i751.FirebaseMessagingService(gh<_i892.FirebaseMessaging>()),
     );
@@ -60,6 +73,21 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i667.DioClient>(
       () => _i667.DioClient(authTokenServices: gh<_i822.AuthTokenServices>()),
+    );
+    gh.factory<_i182.UploadMediaService>(
+      () => _i182.UploadMediaServiceImpl(gh<_i667.DioClient>()),
+    );
+    gh.factory<_i156.ProfileRemoteDataSource>(
+      () => _i156.ProfileRemoteDataSourceImpl(gh<_i667.DioClient>()),
+    );
+    gh.factory<_i741.ProfileRepository>(
+      () => _i741.ProfileRepositoryImpl(
+        gh<_i156.ProfileRemoteDataSource>(),
+        gh<_i182.UploadMediaService>(),
+      ),
+    );
+    gh.factory<_i469.ProfileBloc>(
+      () => _i469.ProfileBloc(profileRepository: gh<_i741.ProfileRepository>()),
     );
     gh.factory<_i107.AuthRemoteDataSource>(
       () => _i107.AuthRemoteDataSourceImpl(dioClient: gh<_i667.DioClient>()),
