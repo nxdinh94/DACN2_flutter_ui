@@ -11,7 +11,7 @@ part 'register.g.dart';
 abstract class Register with _$Register {
   const factory Register({
     required String email,
-    required String name,
+    required String fullName,
     required String password,
     required String confirmPassword,
     required String code,

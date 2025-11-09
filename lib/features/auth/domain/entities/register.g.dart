@@ -8,7 +8,7 @@ part of 'register.dart';
 
 _Register _$RegisterFromJson(Map<String, dynamic> json) => _Register(
   email: json['email'] as String,
-  name: json['name'] as String,
+  fullName: json['fullName'] as String,
   password: json['password'] as String,
   confirmPassword: json['confirmPassword'] as String,
   code: json['code'] as String,
@@ -16,7 +16,7 @@ _Register _$RegisterFromJson(Map<String, dynamic> json) => _Register(
 
 Map<String, dynamic> _$RegisterToJson(_Register instance) => <String, dynamic>{
   'email': instance.email,
-  'name': instance.name,
+  'fullName': instance.fullName,
   'password': instance.password,
   'confirmPassword': instance.confirmPassword,
   'code': instance.code,
