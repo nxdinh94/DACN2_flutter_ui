@@ -14,13 +14,16 @@ class AppConstants {
   static const String logoutEndpoint = 'api/auth/logout';
   static const String refreshTokenEndpoint = 'api/auth/refresh-token';
   static const String sendOtpEndpoint = 'api/auth/otp';
+  static const String userProfileEndpoint = 'api/user/me';
+  static const String uploadImage = '/api/media/image/upload';
+  static const String uploadVideo = '/api/media/video/upload';
+
   
   // Storage keys
   static const String tokenKey = 'auth_token';
   static const String refreshTokenKey = 'refresh_token';
   static const String accessTokenKey = 'access_token';
   static const String fcmTokenKey = 'fcm_token';
-
 
 }
 
@@ -94,7 +97,6 @@ class AppUtils {
         controller.value.size.height,
       );
       await controller.dispose();
-      print('Video size: $size');
       return size;
     }
     else {

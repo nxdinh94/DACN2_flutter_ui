@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kit/core/extensions/context.dart';
 import 'package:kit/shared/widgets/app_svg.dart';
 
 import '../../core/theme/app_theme.dart';
@@ -142,9 +143,10 @@ class AppButton extends StatelessWidget {
               side: BorderSide(color: isDisabled ? borderColor.withValues(alpha: 0.1) : borderColor,)
             ),
             side:BorderSide(color: isDisabled ? borderColor.withValues(alpha: 0.1) : borderColor,),
-            minimumSize: Size.zero, // Set this
+            minimumSize: Size.zero,
             padding: padding,
-            elevation: 0
+            elevation: 0,
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
           ),
           child: child,
         );
@@ -155,12 +157,15 @@ class AppButton extends StatelessWidget {
           onPressed: isDisabled ? null : onPressed,
           style: OutlinedButton.styleFrom(
             foregroundColor: textColor,
-            backgroundColor: backgroundColor,
+            backgroundColor: context.appTheme.surfaceColor,
             side: BorderSide(color: isDisabled ? borderColor.withValues(alpha: 0.4) : borderColor, width: 1),
             shape: shape ?? RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(60),
             ),
+            textStyle: context.textStyle.bodyMedium,
             padding: padding,
+            minimumSize: Size.zero,
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
           ),
           child: child,
         );
@@ -170,12 +175,14 @@ class AppButton extends StatelessWidget {
           onPressed: isDisabled ? null : onPressed,
           style: TextButton.styleFrom(
             foregroundColor: textColor,
-            backgroundColor: Colors.transparent,
+            backgroundColor: backgroundColor,
             shape: shape ?? RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(60),
             ),
             side: BorderSide(color: isDisabled ? borderColor.withValues(alpha: 0.4) : borderColor, width: 1),
             padding: padding,
+            minimumSize: Size.zero,
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
           ),
           child: child,
         );

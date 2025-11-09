@@ -12,7 +12,8 @@ class AppTextField extends StatefulWidget {
     this.maxLines,
     this.border,
     this.fillColor,
-    this.onChanged
+    this.onChanged,
+    this.textColor,
   });
 
   final TextEditingController controller;
@@ -23,6 +24,7 @@ class AppTextField extends StatefulWidget {
   final int? maxLines;
   final InputBorder ? border;
   final Color ? fillColor;
+  final Color ? textColor;
   final void Function(String)? onChanged;
 
 
@@ -42,6 +44,9 @@ class _AppTextFieldState extends State<AppTextField> {
       maxLines: widget.maxLines,
       onChanged: widget.onChanged,
       cursorColor: context.appTheme.primaryColor,
+      style: context.textStyle.bodyLarge?.copyWith(
+        color: widget.textColor ?? context.appTheme.onSurfaceColor,
+      ),
       decoration: InputDecoration(
         fillColor: widget.fillColor,
         hintText: widget.hintText ?? 'Email',

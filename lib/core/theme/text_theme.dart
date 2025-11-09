@@ -10,13 +10,13 @@ TextTheme getAppTextTheme() {
       color: AppTheme.onSurfaceColor
     ),
     titleMedium: TextStyle(
-      fontSize: 20,
+      fontSize: 18,
       fontWeight: FontWeight.w600,
       color: AppTheme.onSurfaceColor
     ),
     titleSmall: TextStyle(
-      fontSize: 18,
-      fontWeight: FontWeight.w500,
+      fontSize: 16,
+      fontWeight: FontWeight.w600,
       color: AppTheme.onSurfaceColor
     ),
 

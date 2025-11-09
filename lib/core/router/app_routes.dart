@@ -12,6 +12,7 @@ import 'package:kit/features/auth/presentation/pages/send_otp_screen.dart';
 import 'package:kit/features/create_post/presentation/screens/create_post.dart';
 import 'package:kit/features/create_post/presentation/widget/preview_image.dart';
 import 'package:kit/features/home/presentation/pages/home_page.dart';
+import 'package:kit/features/profile/presentation/profile_screen.dart';
 
 
 class GoRouterRefreshStream extends ChangeNotifier {
@@ -38,6 +39,8 @@ class AppRoutes {
   static const String createPostPreview = '$createPost/preview';
 
   static const String notification = '/notification';
+  static const String profile = '/profile';
+  
 
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
   static final _shellNavigatorHomeKey =
@@ -84,6 +87,12 @@ class AppRoutes {
                 path: home,
                 pageBuilder: (context, state) => slideTransitionPage(
                   child: const HomePage(),
+                ),
+              ),
+              GoRoute(
+                path: profile,
+                pageBuilder: (context, state) => slideTransitionPage(
+                  child: const ProfilePage(),
                 ),
               ),
             ],
