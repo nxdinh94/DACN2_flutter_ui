@@ -84,6 +84,7 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i741.ProfileRepositoryImpl(
         gh<_i156.ProfileRemoteDataSource>(),
         gh<_i182.UploadMediaService>(),
+        gh<_i911.ProfileLocalDataSource>(),
       ),
     );
     gh.factory<_i469.ProfileBloc>(

@@ -1,7 +1,10 @@
 
+import 'dart:io';
+
 import 'package:hive/hive.dart';
 import 'package:injectable/injectable.dart';
 import 'package:kit/core/utils/app_utils.dart';
+import 'package:path_provider/path_provider.dart';
 
 @lazySingleton
 class HiveClient {
@@ -15,13 +18,15 @@ class HiveClient {
   ];
 
   BoxCollection? _boxCollection;
+  Directory? tempDir;
 
   /// Initialize and open the box collection
   Future<BoxCollection> _getBoxCollection() async {
+    tempDir ??= await getTemporaryDirectory();
     _boxCollection ??= await BoxCollection.open(
       _databaseName,
       Set.from(_boxNames),
-      path: './',
+      path: tempDir!.path,
     );
     return _boxCollection!;
   }
