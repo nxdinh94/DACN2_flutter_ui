@@ -8,6 +8,7 @@ import 'package:kit/features/home/presentation/pages/following_tab.dart';
 import 'package:kit/features/home/presentation/pages/for_you_tab.dart';
 import 'package:kit/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:kit/shared/constants/app_assets.dart';
+import 'package:kit/shared/widgets/network_image.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -65,11 +66,17 @@ class _HomePageState extends State<HomePage> {
                     onTap: () {
                       context.push(AppRoutes.profile);
                     },
-                    child: CircleAvatar(
-                      backgroundImage: NetworkImage(
-                        'https://velle.vn/wp-content/uploads/2025/06/Avatar-Anime-Nu-Cute-10.jpg',
-                      ),
-                    ),
+                    child: BlocBuilder<ProfileBloc, ProfileState>(
+                      builder: (context, state) {
+                        final avatarUrl = state.mapOrNull(
+                          loaded: (profileState) => profileState.userInfo.avatar,
+                        );
+                        return AppNetworkImage.avatar(
+                          imageUrl: avatarUrl ?? 'https://www.shutterstock.com/image-vector/default-avatar-profile-icon-vector-600nw-1745180411.jpg',
+                          size: 70,
+                        );
+                      },
+                    )
                   ),
                 ),
                 bottom: TabBar(

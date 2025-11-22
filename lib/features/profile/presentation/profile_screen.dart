@@ -195,21 +195,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       const SizedBox(height: 12),
                       Text(
-                        'CEO of SpaceX, Tesla & X (Twitter)',
+                        userInfo != null && userInfo.bio != null
+                          ? userInfo.bio! : 'No bio available.',
                         style: context.textStyle.bodyMedium,
-                      ),
-                      const SizedBox(height: 12),
-                      Row(
-                        children: [
-                            Icon(Icons.link, size: 16, color: context.appTheme.primaryColor),
-                          const SizedBox(width: 4),
-                          Text(
-                            'x.com',
-                            style: context.textStyle.bodyMedium?.copyWith(
-                              color: context.appTheme.primaryColor,
-                            ),
-                          ),
-                        ],
                       ),
                       const SizedBox(height: 12),
                       Row(

@@ -13,6 +13,7 @@ import 'package:kit/features/create_post/presentation/screens/create_post.dart';
 import 'package:kit/features/create_post/presentation/widget/preview_image.dart';
 import 'package:kit/features/home/presentation/pages/home_page.dart';
 import 'package:kit/features/profile/presentation/profile_screen.dart';
+import 'package:kit/features/settings/presentation/pages/settings_page.dart';
 
 
 class GoRouterRefreshStream extends ChangeNotifier {
@@ -47,6 +48,8 @@ class AppRoutes {
       GlobalKey<NavigatorState>(debugLabel: 'shellHome');
   static final _shellNavigatorNotificationKey =
       GlobalKey<NavigatorState>(debugLabel: 'shellNotification');
+  static final _shellNavigatorSettingsKey =
+      GlobalKey<NavigatorState>(debugLabel: 'shellSettings');
 
   /// Router config
   static final GoRouter appRouter = GoRouter(
@@ -104,6 +107,17 @@ class AppRoutes {
                 path: notification,
                 pageBuilder: (context, state) => slideTransitionPage(
                   child: const NotificationPage(),
+                ),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            navigatorKey: _shellNavigatorSettingsKey,
+            routes: [
+              GoRoute(
+                path: settings,
+                pageBuilder: (context, state) => slideTransitionPage(
+                  child: const SettingsPage(),
                 ),
               ),
             ],
@@ -192,6 +206,7 @@ class ScaffoldWithNestedNavigation extends StatelessWidget {
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
             BottomNavigationBarItem(icon: Icon(Icons.notifications), label: 'Notifications'),
+            BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
           ],
           onTap: _goBranch,
         ),
