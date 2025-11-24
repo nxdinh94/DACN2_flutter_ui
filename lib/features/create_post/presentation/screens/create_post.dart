@@ -133,9 +133,9 @@ class _CreatePostState extends State<CreatePost> {
                         child: AppButton.icon(
                           onPressed: () async {
                             final selectedAssets = <AssetEntity>[];
-                              if (state is CreatePostCollectingData && state.mediaAssetEntities != null) {
-                                selectedAssets.addAll(state.mediaAssetEntities!);
-                              }
+                            if (state is CreatePostCollectingData && state.mediaAssetEntities != null) {
+                              selectedAssets.addAll(state.mediaAssetEntities!);
+                            }
                             _debounce.callAsync(() async {
                                 await pickImagesAndVideos(context, selectedAssets: selectedAssets);
                                 if(!context.mounted) return;
@@ -171,14 +171,19 @@ class _CreatePostState extends State<CreatePost> {
                   pinned: true,
                   elevation: 0,
                   backgroundColor: context.appTheme.surfaceColor,
+                  surfaceTintColor: context.appTheme.surfaceColor,
                   leadingWidth: 90,
-                  leading: AppButton.text(
-                    onPressed: () {
-                      context.pop();
-                    },
-                    text: 'Cancel',
-                    textColor: context.appTheme.onSurfaceColor,
-                    fontSize: 14
+                  leading: Center(
+                    child: AppButton.text(
+                      onPressed: () {
+                        context.pop();
+                      },
+                      text: 'Cancel',
+                      textColor: context.appTheme.onSurfaceColor,
+                      fontSize: 14,
+                      padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 0),
+                      backgroundColor: Colors.transparent,
+                    ),
                   ),
                   actions: [
                     Padding(
