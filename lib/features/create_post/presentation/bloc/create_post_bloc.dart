@@ -1,6 +1,8 @@
 
+import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -73,9 +75,9 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     Emitter<CreatePostState> emit,
   ) {
     final data = state.mapOrNull(collectingData: (value) => value);
-    if (data == null) print('No data collected for the post.');
+    if (data == null) debugPrint('No data collected for the post.');
     else {
-      print('Starting post with content: ${data.content}, '
+      log('Starting post with content: ${data.content}, '
           'media: ${data.mediaAssetEntities?.length ?? 0}, '
           'viewScope: ${data.viewScope}');
     }
