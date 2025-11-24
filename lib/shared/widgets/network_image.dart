@@ -60,6 +60,8 @@ class AppNetworkImage extends StatelessWidget {
   /// Optional shape for the image container
   final BoxShape shape;
 
+  final VoidCallback? onTap;
+
   const AppNetworkImage({
     super.key,
     required this.imageUrl,
@@ -77,6 +79,7 @@ class AppNetworkImage extends StatelessWidget {
     this.loadingIndicatorColor,
     this.alignment = Alignment.center,
     this.shape = BoxShape.rectangle,
+    this.onTap,
   });
 
   /// Factory constructor for circular avatar images
@@ -86,6 +89,7 @@ class AppNetworkImage extends StatelessWidget {
     double size = 40,
     Color? backgroundColor,
     IconData errorIcon = Icons.person_outline,
+    VoidCallback  ? onTap,
   }) {
     return AppNetworkImage(
       key: key,
@@ -96,6 +100,7 @@ class AppNetworkImage extends StatelessWidget {
       shape: BoxShape.circle,
       backgroundColor: backgroundColor,
       errorIcon: errorIcon,
+      onTap: onTap,
     );
   }
 
@@ -108,6 +113,7 @@ class AppNetworkImage extends StatelessWidget {
     double borderRadius = 8,
     BoxFit fit = BoxFit.cover,
     Color? backgroundColor,
+    VoidCallback? onTap,
   }) {
     return AppNetworkImage(
       key: key,
@@ -117,6 +123,7 @@ class AppNetworkImage extends StatelessWidget {
       fit: fit,
       borderRadius: BorderRadius.circular(borderRadius),
       backgroundColor: backgroundColor,
+      onTap: onTap,
     );
   }
 
@@ -127,6 +134,7 @@ class AppNetworkImage extends StatelessWidget {
     double? height,
     BoxFit fit = BoxFit.cover,
     double borderRadius = 0,
+    VoidCallback? onTap,
   }) {
     return AppNetworkImage(
       key: key,
@@ -137,6 +145,7 @@ class AppNetworkImage extends StatelessWidget {
       borderRadius: borderRadius > 0
           ? BorderRadius.circular(borderRadius)
           : null,
+      onTap: onTap,
     );
   }
 
@@ -147,36 +156,39 @@ class AppNetworkImage extends StatelessWidget {
       return _buildErrorWidget();
     }
 
-    return Container(
-      width: width,
-      height: height,
-      decoration: BoxDecoration(
-        color: backgroundColor ?? AppColors.lightGray.withAlpha((0.1 * 255).round()),
-        borderRadius: shape == BoxShape.rectangle ? borderRadius : null,
-        shape: shape,
-      ),
-      child: ClipRRect(
-        borderRadius: shape == BoxShape.rectangle
-            ? (borderRadius ?? BorderRadius.zero)
-            : BorderRadius.circular((width ?? height ?? 0) / 2),
-        child: CachedNetworkImage(
-          imageUrl: imageUrl!,
-          width: width,
-          height: height,
-          fit: fit,
-          alignment: alignment,
-          placeholder: placeholder != null
-              ? (context, url) => placeholder!
-              : (showLoadingIndicator
-                  ? (context, url) => _buildLoadingWidget( context)
-                  : null),
-          errorWidget: errorWidget != null
-              ? (context, url, error) => errorWidget!
-              : (context, url, error) => _buildErrorWidget(),
-          fadeInDuration: const Duration(milliseconds: 300),
-          fadeOutDuration: const Duration(milliseconds: 300),
-          memCacheWidth: null,
-          memCacheHeight: null,
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        width: width,
+        height: height,
+        decoration: BoxDecoration(
+          color: backgroundColor ?? AppColors.lightGray.withAlpha((0.1 * 255).round()),
+          borderRadius: shape == BoxShape.rectangle ? borderRadius : null,
+          shape: shape,
+        ),
+        child: ClipRRect(
+          borderRadius: shape == BoxShape.rectangle
+              ? (borderRadius ?? BorderRadius.zero)
+              : BorderRadius.circular((width ?? height ?? 0) / 2),
+          child: CachedNetworkImage(
+            imageUrl: imageUrl!,
+            width: width,
+            height: height,
+            fit: fit,
+            alignment: alignment,
+            placeholder: placeholder != null
+                ? (context, url) => placeholder!
+                : (showLoadingIndicator
+                    ? (context, url) => _buildLoadingWidget( context)
+                    : null),
+            errorWidget: errorWidget != null
+                ? (context, url, error) => errorWidget!
+                : (context, url, error) => _buildErrorWidget(),
+            fadeInDuration: const Duration(milliseconds: 300),
+            fadeOutDuration: const Duration(milliseconds: 300),
+            memCacheWidth: null,
+            memCacheHeight: null,
+          ),
         ),
       ),
     );

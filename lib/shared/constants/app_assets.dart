@@ -12,4 +12,5 @@ class AppAssets {
   static const String globalSvg = 'assets/svgs/global.svg';
   static const String verifiedCheckSvg = 'assets/svgs/verified_check.svg';
   static const String tickSvg = 'assets/svgs/tick.svg';
+  static const String backSvg = 'assets/svgs/arrow_back.svg';
 }

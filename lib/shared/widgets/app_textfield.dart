@@ -14,6 +14,7 @@ class AppTextField extends StatefulWidget {
     this.fillColor,
     this.onChanged,
     this.textColor,
+    this.readOnly = false,
   });
 
   final TextEditingController controller;
@@ -26,6 +27,7 @@ class AppTextField extends StatefulWidget {
   final Color ? fillColor;
   final Color ? textColor;
   final void Function(String)? onChanged;
+  final bool readOnly;
 
 
   @override
@@ -37,6 +39,7 @@ class _AppTextFieldState extends State<AppTextField> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      readOnly: widget.readOnly,
       controller: widget.controller,
       keyboardType: widget.keyboardType,
       onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),

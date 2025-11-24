@@ -11,7 +11,11 @@ import 'package:kit/features/auth/presentation/pages/register_screen.dart';
 import 'package:kit/features/auth/presentation/pages/send_otp_screen.dart';
 import 'package:kit/features/create_post/presentation/screens/create_post.dart';
 import 'package:kit/features/create_post/presentation/widget/preview_image.dart';
+import 'package:kit/features/home/presentation/pages/for_you_tab.dart';
 import 'package:kit/features/home/presentation/pages/home_page.dart';
+import 'package:kit/features/home/presentation/pages/media_view.dart';
+import 'package:kit/features/home/presentation/pages/view_specific_post.dart';
+import 'package:kit/features/notification/presentations/screens/notification_screen.dart';
 import 'package:kit/features/profile/presentation/profile_screen.dart';
 import 'package:kit/features/settings/presentation/pages/settings_page.dart';
 
@@ -41,6 +45,9 @@ class AppRoutes {
 
   static const String notification = '/notification';
   static const String profile = '/profile';
+
+  static const String feedMediaView = '/feed_media_view';
+  static const String viewSpecificPost = '/view_specific_post';
   
 
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -75,7 +82,7 @@ class AppRoutes {
       }
 
       return null;
-    },
+    },  
     routes: [
       // 🏠 HOME SHELL
       StatefulShellRoute.indexedStack(
@@ -92,12 +99,38 @@ class AppRoutes {
                   child: const HomePage(),
                 ),
               ),
+
+              
               GoRoute(
                 path: profile,
                 pageBuilder: (context, state) => slideTransitionPage(
                   child: const ProfilePage(),
                 ),
               ),
+              GoRoute(
+                path: viewSpecificPost,
+                pageBuilder: (context, state){
+
+                  final medias = state.extra != null && (state.extra as Map).containsKey('medias')
+                      ? (state.extra as Map)['medias'] as List<GalleryExampleItem>
+                      : <GalleryExampleItem>[];
+                  final contents = state.extra != null && (state.extra as Map).containsKey('contents')
+                      ? (state.extra as Map)['contents'] as String
+                      : null;
+                  final tags = state.extra != null && (state.extra as Map).containsKey('tags')
+                      ? (state.extra as Map)['tags'] as List<String>
+                      : null;
+
+                  return slideTransitionPage(
+                    child: ViewSpecificPost(
+                      medias: medias,
+                      contents: contents,
+                      tags: tags,
+                    ),
+                  );
+                },
+              ),
+
             ],
           ),
           StatefulShellBranch(
@@ -106,7 +139,7 @@ class AppRoutes {
               GoRoute(
                 path: notification,
                 pageBuilder: (context, state) => slideTransitionPage(
-                  child: const NotificationPage(),
+                  child: NotificationScreen(),
                 ),
               ),
             ],
@@ -141,6 +174,22 @@ class AppRoutes {
             },
           ),
         ]
+      ),
+      GoRoute(
+        path: feedMediaView,
+        pageBuilder: (context, state){
+          final mediaUrls = state.extra != null && (state.extra as Map).containsKey('mediaUrls')
+              ? (state.extra as Map)['mediaUrls'] as List<GalleryExampleItem>
+              : <GalleryExampleItem>[];
+          final initialIndex = state.extra != null && (state.extra as Map).containsKey('initialIndex')
+              ? (state.extra as Map)['initialIndex'] as int
+              : 0;
+          return scaleTransitionPage(
+            child: MediaView(
+              mediaUrls: mediaUrls,
+              initialIndex: initialIndex,
+          ));
+        }
       ),
       GoRoute(
         path: loginOptions,
@@ -240,7 +289,7 @@ CustomTransitionPage<T> slideTransitionPage<T>({
 
 CustomTransitionPage<T> scaleTransitionPage<T>({
   required Widget child,
-  Duration duration = const Duration(milliseconds: 400),
+  Duration duration = const Duration(milliseconds: 200),
   Curve curve = Curves.easeInOut,
 }) {
   return CustomTransitionPage<T>(
@@ -266,12 +315,3 @@ CustomTransitionPage<T> scaleTransitionPage<T>({
   );
 }
 
-
-class NotificationPage extends StatelessWidget {
-  const NotificationPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
-}
