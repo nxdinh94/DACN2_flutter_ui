@@ -6,7 +6,7 @@ import 'package:video_player/video_player.dart';
 
 class AppConstants {
   static const String appName = 'Keep In Touch';
-  static const String baseUrl = 'http://192.168.1.12:4000/';
+  static const String baseUrl = 'http://192.168.2.15:4000/';
   
   // API endpoints
   static const String loginEndpoint = 'api/auth/login';
