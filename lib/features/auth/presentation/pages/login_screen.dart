@@ -59,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
               onPressed: ()=> _handleLogin(context), 
               text: 'Login',
               padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 0),
-              backgroundColor: context.appTheme.secondaryColor, 
+              backgroundColor: context.appTheme.primaryColor, 
               isDisabled: isLoading,
             ),
           );

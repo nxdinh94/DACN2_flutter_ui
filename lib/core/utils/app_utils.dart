@@ -110,5 +110,27 @@ class AppUtils {
     }
   }
 
+  static  Future<String?> validateImage(String filePath)async{
+     // Validate file exists
+      final file = File(filePath);
+      if (!await file.exists()) {
+        return 'File does not exist';
+      }
+
+      // Validate file size (max 2MB)
+      final fileSize = await file.length();
+      const maxSizeInBytes = 2 * 1024 * 1024; // 2MB
+      if (fileSize > maxSizeInBytes) {
+        return 'File size exceeds 2MB limit';
+      }
+
+      // Validate file type
+      final extension = filePath.toLowerCase();
+      final validExtensions = ['.jpg', '.jpeg', '.png', '.webp', '.gif'];
+      if (!validExtensions.any((ext) => extension.endsWith(ext))) {
+        return 'Invalid file type. Supported formats: JPEG, PNG, WEBP, GIF';
+      }
+      return null;
+  }
 }
 

@@ -20,26 +20,6 @@ class UploadMediaServiceImpl implements UploadMediaService {
   @override
   Future<Either<String, String>> uploadImage(String filePath) async {
     try {
-      // Validate file exists
-      final file = File(filePath);
-      if (!await file.exists()) {
-        return const Left('File does not exist');
-      }
-
-      // Validate file size (max 2MB)
-      final fileSize = await file.length();
-      const maxSizeInBytes = 2 * 1024 * 1024; // 2MB
-      if (fileSize > maxSizeInBytes) {
-        return const Left('File size exceeds 2MB limit');
-      }
-
-      // Validate file type
-      final extension = filePath.toLowerCase();
-      final validExtensions = ['.jpg', '.jpeg', '.png', '.webp', '.gif'];
-      if (!validExtensions.any((ext) => extension.endsWith(ext))) {
-        return const Left('Invalid file type. Supported formats: JPEG, PNG, WEBP, GIF');
-      }
-
       // Create form data with the actual file
       final formData = FormData.fromMap({
         'image': await MultipartFile.fromFile(
@@ -56,7 +36,6 @@ class UploadMediaServiceImpl implements UploadMediaService {
       return result.fold(
         (error) => Left('Failed to upload image: $error'),
         (res) {
-          print('Uploaded image URL: ${res.data['data']['url']}');
           return Right(res.data['data']['url']);
         },
       );

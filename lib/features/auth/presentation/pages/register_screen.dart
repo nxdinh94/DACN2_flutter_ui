@@ -60,7 +60,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               text: 'Create account',
               padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 0),
               isDisabled: isLoading,
-              backgroundColor: context.appTheme.surfaceColor,
+              backgroundColor: context.appTheme.primaryColor,
             ),
           );
          },

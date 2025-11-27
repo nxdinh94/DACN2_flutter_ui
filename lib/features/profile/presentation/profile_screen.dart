@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kit/core/extensions/context.dart';
 import 'package:kit/core/extensions/date_extension.dart';
+import 'package:kit/core/utils/app_utils.dart';
 import 'package:kit/features/profile/data_source/model/update_profile_request.dart';
 import 'package:kit/features/profile/data_source/repository/user_info_entity.dart';
 import 'package:kit/features/profile/presentation/bloc/profile_bloc.dart';
@@ -277,6 +280,7 @@ class _EditProfileBottomSheetState extends State<EditProfileBottomSheet> {
     super.initState();
   }
 
+ 
   Future<void> _pickImage({required bool isAvatar, required BuildContext context}) async {
     final ImagePicker picker = ImagePicker();
     
@@ -287,18 +291,23 @@ class _EditProfileBottomSheetState extends State<EditProfileBottomSheet> {
         maxHeight: 1920,
         imageQuality: 100,
       );
-
       if (image != null && context.mounted) {
-        context.read<ProfileBloc>().add(
-          UpdateProfile(
-            updateProfileRequest: UpdateProfileRequest(
-              avatar: isAvatar ? image.path : null,
-              cover: isAvatar ? null : image.path,
-            ),
-          ));
+        final result = await AppUtils.validateImage(image.path);
+        if(!context.mounted) return;
+        if (result == null) {
+          final updateRequest = isAvatar
+            ? UpdateProfileRequest(avatar: image.path)
+            : UpdateProfileRequest(cover: image.path);
+          context.read<ProfileBloc>().add(
+            UpdateProfile(updateProfileRequest: updateRequest)
+          );
+        } else {
+          showToast(result);
+        }
+        
       }
     } catch (e) {
-      debugPrint('Error picking image: $e');
+      showToast('Error picking image: $e');
     }
   }
 
