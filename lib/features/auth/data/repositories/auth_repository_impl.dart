@@ -48,7 +48,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
     final result = await remoteDataSource.logout(refreshToken);
     return result.fold(
-      (error) => Left(error),
+      (error) => Left('Logout went wrong'),
       (isLoggedOut) async {
         await authTokenServices.deleteBothToken();
         return Right(isLoggedOut);
