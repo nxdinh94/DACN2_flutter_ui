@@ -6,7 +6,9 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:kit/shared/constants/enum/post_view_scope_enum.dart';
+import 'package:kit/features/create_post/domain/entities/create_post_request.dart';
+import 'package:kit/features/create_post/domain/usecases/create_post_usecase.dart';
+import 'package:kit/shared/constants/enum/post_view_scope.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
 part 'create_post_bloc.freezed.dart';
@@ -15,7 +17,9 @@ part 'create_post_state.dart';
 
 @injectable
 class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
-  CreatePostBloc() : super(const CreatePostState.initial()) {
+  final CreatePostUseCase createPostUseCase;
+
+  CreatePostBloc(this.createPostUseCase) : super(const CreatePostState.initial()) {
     on<CollectingDataEvent>(_onCollectingData);
     on<StartPostEvent>(_onStartPost);
     on<RemoveAnSelectedImageEvent>(_onRemoveAnSelectedImage);
@@ -73,13 +77,39 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
   void _onStartPost(
     StartPostEvent event,
     Emitter<CreatePostState> emit,
-  ) {
+  ) async {
     final data = state.mapOrNull(collectingData: (value) => value);
-    if (data == null) debugPrint('No data collected for the post.');
-    else {
-      log('Starting post with content: ${data.content}, '
-          'media: ${data.mediaAssetEntities?.length ?? 0}, '
-          'viewScope: ${data.viewScope}');
+    if (data == null) {
+      debugPrint('No data collected for the post.');
+      return;
+    }
+
+    emit(const CreatePostState.loading());
+
+    try {
+      final request = CreatePostRequest(
+        content: data.content ?? '',
+        visibility: data.viewScope.value,
+        language: 'en',
+        difficulty: 'BEGINNER',
+        topics: [],
+      );
+
+      final result = await createPostUseCase.execute(request);
+
+      result.fold(
+        (error) {
+          log('Error creating post: $error');
+          emit(CreatePostState.error(message: error));
+        },
+        (post) {
+          log('Post created successfully');
+          emit(const CreatePostState.success());
+        },
+      );
+    } catch (e) {
+      log('Exception creating post: $e');
+      emit(CreatePostState.error(message: e.toString()));
     }
   }
 

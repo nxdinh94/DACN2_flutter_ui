@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kit/core/extensions/context.dart';
 import 'package:kit/features/create_post/presentation/bloc/create_post_bloc.dart';
 import 'package:kit/features/create_post/presentation/widget/tick_success.dart';
-import 'package:kit/shared/constants/enum/post_view_scope_enum.dart';
+import 'package:kit/shared/constants/enum/post_view_scope.dart';
 import 'package:kit/shared/widgets/app_svg.dart';
 
 class CreatePostBottomSheet extends StatelessWidget {

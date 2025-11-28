@@ -9,11 +9,12 @@ import 'package:kit/features/create_post/presentation/bloc/create_post_bloc.dart
 import 'package:kit/features/create_post/presentation/widget/create_post_bottom_sheet.dart';
 import 'package:kit/features/create_post/presentation/widget/selected_media_item.dart';
 import 'package:kit/shared/constants/app_assets.dart';
-import 'package:kit/shared/constants/enum/post_view_scope_enum.dart';
+import 'package:kit/shared/constants/enum/post_view_scope.dart';
 import 'package:kit/shared/widgets/app_bottom_sheet.dart';
 import 'package:kit/shared/widgets/app_button.dart';
 import 'package:kit/shared/widgets/app_svg.dart';
 import 'package:kit/shared/widgets/app_textfield.dart';
+import 'package:kit/shared/widgets/toast.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
 class CreatePost extends StatefulWidget {
@@ -69,8 +70,26 @@ class _CreatePostState extends State<CreatePost> {
   Widget build(BuildContext context) {
     return BlocListener<CreatePostBloc, CreatePostState>(
       listener: (BuildContext context, CreatePostState state) {
-        if (state is! CreatePostCollectingData) {
+        if (state is CreatePostLoading) {
+          // Show loading indicator
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) => const Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        } else if (state is CreatePostSuccess) {
+          // Dismiss loading dialog if showing
+          Navigator.of(context, rootNavigator: true).pop();
+          showToast('Post created successfully!');
+          // Close create post screen
           context.pop();
+        } else if (state is CreatePostError) {
+          // Dismiss loading dialog if showing
+          Navigator.of(context, rootNavigator: true).pop();
+          // Show error message
+          showToast('Error: ${state.message}');
         }
       },
       child: Scaffold(
@@ -78,8 +97,8 @@ class _CreatePostState extends State<CreatePost> {
         floatingActionButton: BlocBuilder<CreatePostBloc, CreatePostState>(
           builder: (BuildContext context, CreatePostState state) {
 
-            String icon = PostViewScope.everyone.iconPath;
-            String name = PostViewScope.everyone.name;
+            String icon = PostViewScope.PUBLIC.iconPath;
+            String name = PostViewScope.PUBLIC.name;
 
             if (state is CreatePostCollectingData) {
               icon = state.viewScope.iconPath;

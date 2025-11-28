@@ -17,6 +17,6 @@ abstract class CreatePostState with _$CreatePostState {
     List<AssetEntity>? mediaAssetEntities,
     List<File?>? mediaFiles,
     List<Uint8List>? cachedThumbnails,
-    @Default(PostViewScope.everyone) PostViewScope viewScope
+    @Default(PostViewScope.PUBLIC) PostViewScope viewScope
   }) = CreatePostCollectingData;
 }

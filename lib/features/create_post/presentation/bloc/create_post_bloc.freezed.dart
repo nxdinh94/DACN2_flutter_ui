@@ -187,7 +187,7 @@ return removeAnSelectedImage(_that.media);case _:
 
 
 class CollectingDataEvent implements CreatePostEvent {
-  const CollectingDataEvent({this.content, final  List<AssetEntity>? mediaAssetEntities, final  List<File?>? mediaFiles, this.viewScope = PostViewScope.everyone}): _mediaAssetEntities = mediaAssetEntities,_mediaFiles = mediaFiles;
+  const CollectingDataEvent({this.content, final  List<AssetEntity>? mediaAssetEntities, final  List<File?>? mediaFiles, this.viewScope = PostViewScope.PUBLIC}): _mediaAssetEntities = mediaAssetEntities,_mediaFiles = mediaFiles;
   
 
  final  String? content;
@@ -751,7 +751,7 @@ as String,
 
 
 class CreatePostCollectingData implements CreatePostState {
-  const CreatePostCollectingData({this.content, final  List<AssetEntity>? mediaAssetEntities, final  List<File?>? mediaFiles, final  List<Uint8List>? cachedThumbnails, this.viewScope = PostViewScope.everyone}): _mediaAssetEntities = mediaAssetEntities,_mediaFiles = mediaFiles,_cachedThumbnails = cachedThumbnails;
+  const CreatePostCollectingData({this.content, final  List<AssetEntity>? mediaAssetEntities, final  List<File?>? mediaFiles, final  List<Uint8List>? cachedThumbnails, this.viewScope = PostViewScope.PUBLIC}): _mediaAssetEntities = mediaAssetEntities,_mediaFiles = mediaFiles,_cachedThumbnails = cachedThumbnails;
   
 
  final  String? content;

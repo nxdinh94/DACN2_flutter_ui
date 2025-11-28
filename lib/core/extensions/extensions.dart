@@ -32,3 +32,9 @@ extension DateTimeExtensions on DateTime {
     }
   }
 }
+
+extension MapExtensions<K, V> on Map<K, V> {
+  Map<K, V> get removeNullValues{
+    return this..removeWhere((key, value) => value == null);
+  }
+}

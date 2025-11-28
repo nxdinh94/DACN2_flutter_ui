@@ -272,14 +272,6 @@ class _EditProfileBottomSheetState extends State<EditProfileBottomSheet> {
   final TextEditingController _locationController = TextEditingController();
   final TextEditingController _websiteController = TextEditingController();
   final TextEditingController _birthDateController = TextEditingController();
-
-  @override
-  void initState() {
-
-
-    super.initState();
-  }
-
  
   Future<void> _pickImage({required bool isAvatar, required BuildContext context}) async {
     final ImagePicker picker = ImagePicker();

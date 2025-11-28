@@ -17,7 +17,7 @@ class AppConstants {
   static const String userProfileEndpoint = 'api/user/me';
   static const String uploadImage = '/api/media/image/upload';
   static const String uploadVideo = '/api/media/video/upload';
-
+  static const String createPostEndpoint = '/api/post';
   // Hive key
   static const String hiveDataBase = 'Linggo';
   static const String hiveUserInfoBox = 'user_info';
