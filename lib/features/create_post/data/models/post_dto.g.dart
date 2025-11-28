@@ -29,6 +29,17 @@ _PostDto _$PostDtoFromJson(Map<String, dynamic> json) => _PostDto(
   inReplyToUserId: json['inReplyToUserId'] as String?,
   repostOfId: json['repostOfId'] as String?,
   quoteOfId: json['quoteOfId'] as String?,
+  inReplyToPost: json['inReplyToPost'] == null
+      ? null
+      : ReferencedPostDto.fromJson(
+          json['inReplyToPost'] as Map<String, dynamic>,
+        ),
+  repostOf: json['repostOf'] == null
+      ? null
+      : ReferencedPostDto.fromJson(json['repostOf'] as Map<String, dynamic>),
+  quoteOf: json['quoteOf'] == null
+      ? null
+      : ReferencedPostDto.fromJson(json['quoteOf'] as Map<String, dynamic>),
   deletedAt: json['deletedAt'] == null
       ? null
       : DateTime.parse(json['deletedAt'] as String),
@@ -66,6 +77,9 @@ Map<String, dynamic> _$PostDtoToJson(_PostDto instance) => <String, dynamic>{
   'inReplyToUserId': instance.inReplyToUserId,
   'repostOfId': instance.repostOfId,
   'quoteOfId': instance.quoteOfId,
+  'inReplyToPost': instance.inReplyToPost,
+  'repostOf': instance.repostOf,
+  'quoteOf': instance.quoteOf,
   'deletedAt': instance.deletedAt?.toIso8601String(),
   'createdAt': instance.createdAt.toIso8601String(),
   'updatedAt': instance.updatedAt.toIso8601String(),
@@ -73,6 +87,20 @@ Map<String, dynamic> _$PostDtoToJson(_PostDto instance) => <String, dynamic>{
   'hashtags': instance.hashtags,
   'mentions': instance.mentions,
 };
+
+_ReferencedPostDto _$ReferencedPostDtoFromJson(Map<String, dynamic> json) =>
+    _ReferencedPostDto(
+      id: json['id'] as String,
+      content: json['content'] as String,
+      user: PostUserDto.fromJson(json['user'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$ReferencedPostDtoToJson(_ReferencedPostDto instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'content': instance.content,
+      'user': instance.user,
+    };
 
 _PostUserDto _$PostUserDtoFromJson(Map<String, dynamic> json) => _PostUserDto(
   id: json['id'] as String,

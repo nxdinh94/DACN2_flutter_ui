@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PostDto {
 
- String get id; String get userId; String get content; String? get contentJson; String get visibility; int get likeCount; int get commentCount; int get shareCount; int get viewCount; int get repostCount; int get quoteCount; int get mentionCount; String get language; String get difficulty; List<String> get topics; bool get isReported; bool get isPinned; bool get isFeatured; String? get inReplyToPostId; String? get inReplyToUserId; String? get repostOfId; String? get quoteOfId; DateTime? get deletedAt; DateTime get createdAt; DateTime get updatedAt; PostUserDto get user; List<HashtagDto> get hashtags; List<MentionDto> get mentions;
+ String get id; String get userId; String get content; String? get contentJson; String get visibility; int get likeCount; int get commentCount; int get shareCount; int get viewCount; int get repostCount; int get quoteCount; int get mentionCount; String get language; String get difficulty; List<String> get topics; bool get isReported; bool get isPinned; bool get isFeatured; String? get inReplyToPostId; String? get inReplyToUserId; String? get repostOfId; String? get quoteOfId; ReferencedPostDto? get inReplyToPost; ReferencedPostDto? get repostOf; ReferencedPostDto? get quoteOf; DateTime? get deletedAt; DateTime get createdAt; DateTime get updatedAt; PostUserDto get user; List<HashtagDto> get hashtags; List<MentionDto> get mentions;
 /// Create a copy of PostDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $PostDtoCopyWith<PostDto> get copyWith => _$PostDtoCopyWithImpl<PostDto>(this as
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PostDto&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.content, content) || other.content == content)&&(identical(other.contentJson, contentJson) || other.contentJson == contentJson)&&(identical(other.visibility, visibility) || other.visibility == visibility)&&(identical(other.likeCount, likeCount) || other.likeCount == likeCount)&&(identical(other.commentCount, commentCount) || other.commentCount == commentCount)&&(identical(other.shareCount, shareCount) || other.shareCount == shareCount)&&(identical(other.viewCount, viewCount) || other.viewCount == viewCount)&&(identical(other.repostCount, repostCount) || other.repostCount == repostCount)&&(identical(other.quoteCount, quoteCount) || other.quoteCount == quoteCount)&&(identical(other.mentionCount, mentionCount) || other.mentionCount == mentionCount)&&(identical(other.language, language) || other.language == language)&&(identical(other.difficulty, difficulty) || other.difficulty == difficulty)&&const DeepCollectionEquality().equals(other.topics, topics)&&(identical(other.isReported, isReported) || other.isReported == isReported)&&(identical(other.isPinned, isPinned) || other.isPinned == isPinned)&&(identical(other.isFeatured, isFeatured) || other.isFeatured == isFeatured)&&(identical(other.inReplyToPostId, inReplyToPostId) || other.inReplyToPostId == inReplyToPostId)&&(identical(other.inReplyToUserId, inReplyToUserId) || other.inReplyToUserId == inReplyToUserId)&&(identical(other.repostOfId, repostOfId) || other.repostOfId == repostOfId)&&(identical(other.quoteOfId, quoteOfId) || other.quoteOfId == quoteOfId)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.user, user) || other.user == user)&&const DeepCollectionEquality().equals(other.hashtags, hashtags)&&const DeepCollectionEquality().equals(other.mentions, mentions));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PostDto&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.content, content) || other.content == content)&&(identical(other.contentJson, contentJson) || other.contentJson == contentJson)&&(identical(other.visibility, visibility) || other.visibility == visibility)&&(identical(other.likeCount, likeCount) || other.likeCount == likeCount)&&(identical(other.commentCount, commentCount) || other.commentCount == commentCount)&&(identical(other.shareCount, shareCount) || other.shareCount == shareCount)&&(identical(other.viewCount, viewCount) || other.viewCount == viewCount)&&(identical(other.repostCount, repostCount) || other.repostCount == repostCount)&&(identical(other.quoteCount, quoteCount) || other.quoteCount == quoteCount)&&(identical(other.mentionCount, mentionCount) || other.mentionCount == mentionCount)&&(identical(other.language, language) || other.language == language)&&(identical(other.difficulty, difficulty) || other.difficulty == difficulty)&&const DeepCollectionEquality().equals(other.topics, topics)&&(identical(other.isReported, isReported) || other.isReported == isReported)&&(identical(other.isPinned, isPinned) || other.isPinned == isPinned)&&(identical(other.isFeatured, isFeatured) || other.isFeatured == isFeatured)&&(identical(other.inReplyToPostId, inReplyToPostId) || other.inReplyToPostId == inReplyToPostId)&&(identical(other.inReplyToUserId, inReplyToUserId) || other.inReplyToUserId == inReplyToUserId)&&(identical(other.repostOfId, repostOfId) || other.repostOfId == repostOfId)&&(identical(other.quoteOfId, quoteOfId) || other.quoteOfId == quoteOfId)&&(identical(other.inReplyToPost, inReplyToPost) || other.inReplyToPost == inReplyToPost)&&(identical(other.repostOf, repostOf) || other.repostOf == repostOf)&&(identical(other.quoteOf, quoteOf) || other.quoteOf == quoteOf)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.user, user) || other.user == user)&&const DeepCollectionEquality().equals(other.hashtags, hashtags)&&const DeepCollectionEquality().equals(other.mentions, mentions));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hashAll([runtimeType,id,userId,content,contentJson,visibility,likeCount,commentCount,shareCount,viewCount,repostCount,quoteCount,mentionCount,language,difficulty,const DeepCollectionEquality().hash(topics),isReported,isPinned,isFeatured,inReplyToPostId,inReplyToUserId,repostOfId,quoteOfId,deletedAt,createdAt,updatedAt,user,const DeepCollectionEquality().hash(hashtags),const DeepCollectionEquality().hash(mentions)]);
+int get hashCode => Object.hashAll([runtimeType,id,userId,content,contentJson,visibility,likeCount,commentCount,shareCount,viewCount,repostCount,quoteCount,mentionCount,language,difficulty,const DeepCollectionEquality().hash(topics),isReported,isPinned,isFeatured,inReplyToPostId,inReplyToUserId,repostOfId,quoteOfId,inReplyToPost,repostOf,quoteOf,deletedAt,createdAt,updatedAt,user,const DeepCollectionEquality().hash(hashtags),const DeepCollectionEquality().hash(mentions)]);
 
 @override
 String toString() {
-  return 'PostDto(id: $id, userId: $userId, content: $content, contentJson: $contentJson, visibility: $visibility, likeCount: $likeCount, commentCount: $commentCount, shareCount: $shareCount, viewCount: $viewCount, repostCount: $repostCount, quoteCount: $quoteCount, mentionCount: $mentionCount, language: $language, difficulty: $difficulty, topics: $topics, isReported: $isReported, isPinned: $isPinned, isFeatured: $isFeatured, inReplyToPostId: $inReplyToPostId, inReplyToUserId: $inReplyToUserId, repostOfId: $repostOfId, quoteOfId: $quoteOfId, deletedAt: $deletedAt, createdAt: $createdAt, updatedAt: $updatedAt, user: $user, hashtags: $hashtags, mentions: $mentions)';
+  return 'PostDto(id: $id, userId: $userId, content: $content, contentJson: $contentJson, visibility: $visibility, likeCount: $likeCount, commentCount: $commentCount, shareCount: $shareCount, viewCount: $viewCount, repostCount: $repostCount, quoteCount: $quoteCount, mentionCount: $mentionCount, language: $language, difficulty: $difficulty, topics: $topics, isReported: $isReported, isPinned: $isPinned, isFeatured: $isFeatured, inReplyToPostId: $inReplyToPostId, inReplyToUserId: $inReplyToUserId, repostOfId: $repostOfId, quoteOfId: $quoteOfId, inReplyToPost: $inReplyToPost, repostOf: $repostOf, quoteOf: $quoteOf, deletedAt: $deletedAt, createdAt: $createdAt, updatedAt: $updatedAt, user: $user, hashtags: $hashtags, mentions: $mentions)';
 }
 
 
@@ -48,11 +48,11 @@ abstract mixin class $PostDtoCopyWith<$Res>  {
   factory $PostDtoCopyWith(PostDto value, $Res Function(PostDto) _then) = _$PostDtoCopyWithImpl;
 @useResult
 $Res call({
- String id, String userId, String content, String? contentJson, String visibility, int likeCount, int commentCount, int shareCount, int viewCount, int repostCount, int quoteCount, int mentionCount, String language, String difficulty, List<String> topics, bool isReported, bool isPinned, bool isFeatured, String? inReplyToPostId, String? inReplyToUserId, String? repostOfId, String? quoteOfId, DateTime? deletedAt, DateTime createdAt, DateTime updatedAt, PostUserDto user, List<HashtagDto> hashtags, List<MentionDto> mentions
+ String id, String userId, String content, String? contentJson, String visibility, int likeCount, int commentCount, int shareCount, int viewCount, int repostCount, int quoteCount, int mentionCount, String language, String difficulty, List<String> topics, bool isReported, bool isPinned, bool isFeatured, String? inReplyToPostId, String? inReplyToUserId, String? repostOfId, String? quoteOfId, ReferencedPostDto? inReplyToPost, ReferencedPostDto? repostOf, ReferencedPostDto? quoteOf, DateTime? deletedAt, DateTime createdAt, DateTime updatedAt, PostUserDto user, List<HashtagDto> hashtags, List<MentionDto> mentions
 });
 
 
-$PostUserDtoCopyWith<$Res> get user;
+$ReferencedPostDtoCopyWith<$Res>? get inReplyToPost;$ReferencedPostDtoCopyWith<$Res>? get repostOf;$ReferencedPostDtoCopyWith<$Res>? get quoteOf;$PostUserDtoCopyWith<$Res> get user;
 
 }
 /// @nodoc
@@ -65,7 +65,7 @@ class _$PostDtoCopyWithImpl<$Res>
 
 /// Create a copy of PostDto
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? userId = null,Object? content = null,Object? contentJson = freezed,Object? visibility = null,Object? likeCount = null,Object? commentCount = null,Object? shareCount = null,Object? viewCount = null,Object? repostCount = null,Object? quoteCount = null,Object? mentionCount = null,Object? language = null,Object? difficulty = null,Object? topics = null,Object? isReported = null,Object? isPinned = null,Object? isFeatured = null,Object? inReplyToPostId = freezed,Object? inReplyToUserId = freezed,Object? repostOfId = freezed,Object? quoteOfId = freezed,Object? deletedAt = freezed,Object? createdAt = null,Object? updatedAt = null,Object? user = null,Object? hashtags = null,Object? mentions = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? userId = null,Object? content = null,Object? contentJson = freezed,Object? visibility = null,Object? likeCount = null,Object? commentCount = null,Object? shareCount = null,Object? viewCount = null,Object? repostCount = null,Object? quoteCount = null,Object? mentionCount = null,Object? language = null,Object? difficulty = null,Object? topics = null,Object? isReported = null,Object? isPinned = null,Object? isFeatured = null,Object? inReplyToPostId = freezed,Object? inReplyToUserId = freezed,Object? repostOfId = freezed,Object? quoteOfId = freezed,Object? inReplyToPost = freezed,Object? repostOf = freezed,Object? quoteOf = freezed,Object? deletedAt = freezed,Object? createdAt = null,Object? updatedAt = null,Object? user = null,Object? hashtags = null,Object? mentions = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
@@ -89,7 +89,10 @@ as bool,inReplyToPostId: freezed == inReplyToPostId ? _self.inReplyToPostId : in
 as String?,inReplyToUserId: freezed == inReplyToUserId ? _self.inReplyToUserId : inReplyToUserId // ignore: cast_nullable_to_non_nullable
 as String?,repostOfId: freezed == repostOfId ? _self.repostOfId : repostOfId // ignore: cast_nullable_to_non_nullable
 as String?,quoteOfId: freezed == quoteOfId ? _self.quoteOfId : quoteOfId // ignore: cast_nullable_to_non_nullable
-as String?,deletedAt: freezed == deletedAt ? _self.deletedAt : deletedAt // ignore: cast_nullable_to_non_nullable
+as String?,inReplyToPost: freezed == inReplyToPost ? _self.inReplyToPost : inReplyToPost // ignore: cast_nullable_to_non_nullable
+as ReferencedPostDto?,repostOf: freezed == repostOf ? _self.repostOf : repostOf // ignore: cast_nullable_to_non_nullable
+as ReferencedPostDto?,quoteOf: freezed == quoteOf ? _self.quoteOf : quoteOf // ignore: cast_nullable_to_non_nullable
+as ReferencedPostDto?,deletedAt: freezed == deletedAt ? _self.deletedAt : deletedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
@@ -99,6 +102,42 @@ as List<MentionDto>,
   ));
 }
 /// Create a copy of PostDto
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$ReferencedPostDtoCopyWith<$Res>? get inReplyToPost {
+    if (_self.inReplyToPost == null) {
+    return null;
+  }
+
+  return $ReferencedPostDtoCopyWith<$Res>(_self.inReplyToPost!, (value) {
+    return _then(_self.copyWith(inReplyToPost: value));
+  });
+}/// Create a copy of PostDto
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$ReferencedPostDtoCopyWith<$Res>? get repostOf {
+    if (_self.repostOf == null) {
+    return null;
+  }
+
+  return $ReferencedPostDtoCopyWith<$Res>(_self.repostOf!, (value) {
+    return _then(_self.copyWith(repostOf: value));
+  });
+}/// Create a copy of PostDto
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$ReferencedPostDtoCopyWith<$Res>? get quoteOf {
+    if (_self.quoteOf == null) {
+    return null;
+  }
+
+  return $ReferencedPostDtoCopyWith<$Res>(_self.quoteOf!, (value) {
+    return _then(_self.copyWith(quoteOf: value));
+  });
+}/// Create a copy of PostDto
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -189,10 +228,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String userId,  String content,  String? contentJson,  String visibility,  int likeCount,  int commentCount,  int shareCount,  int viewCount,  int repostCount,  int quoteCount,  int mentionCount,  String language,  String difficulty,  List<String> topics,  bool isReported,  bool isPinned,  bool isFeatured,  String? inReplyToPostId,  String? inReplyToUserId,  String? repostOfId,  String? quoteOfId,  DateTime? deletedAt,  DateTime createdAt,  DateTime updatedAt,  PostUserDto user,  List<HashtagDto> hashtags,  List<MentionDto> mentions)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String userId,  String content,  String? contentJson,  String visibility,  int likeCount,  int commentCount,  int shareCount,  int viewCount,  int repostCount,  int quoteCount,  int mentionCount,  String language,  String difficulty,  List<String> topics,  bool isReported,  bool isPinned,  bool isFeatured,  String? inReplyToPostId,  String? inReplyToUserId,  String? repostOfId,  String? quoteOfId,  ReferencedPostDto? inReplyToPost,  ReferencedPostDto? repostOf,  ReferencedPostDto? quoteOf,  DateTime? deletedAt,  DateTime createdAt,  DateTime updatedAt,  PostUserDto user,  List<HashtagDto> hashtags,  List<MentionDto> mentions)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PostDto() when $default != null:
-return $default(_that.id,_that.userId,_that.content,_that.contentJson,_that.visibility,_that.likeCount,_that.commentCount,_that.shareCount,_that.viewCount,_that.repostCount,_that.quoteCount,_that.mentionCount,_that.language,_that.difficulty,_that.topics,_that.isReported,_that.isPinned,_that.isFeatured,_that.inReplyToPostId,_that.inReplyToUserId,_that.repostOfId,_that.quoteOfId,_that.deletedAt,_that.createdAt,_that.updatedAt,_that.user,_that.hashtags,_that.mentions);case _:
+return $default(_that.id,_that.userId,_that.content,_that.contentJson,_that.visibility,_that.likeCount,_that.commentCount,_that.shareCount,_that.viewCount,_that.repostCount,_that.quoteCount,_that.mentionCount,_that.language,_that.difficulty,_that.topics,_that.isReported,_that.isPinned,_that.isFeatured,_that.inReplyToPostId,_that.inReplyToUserId,_that.repostOfId,_that.quoteOfId,_that.inReplyToPost,_that.repostOf,_that.quoteOf,_that.deletedAt,_that.createdAt,_that.updatedAt,_that.user,_that.hashtags,_that.mentions);case _:
   return orElse();
 
 }
@@ -210,10 +249,10 @@ return $default(_that.id,_that.userId,_that.content,_that.contentJson,_that.visi
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String userId,  String content,  String? contentJson,  String visibility,  int likeCount,  int commentCount,  int shareCount,  int viewCount,  int repostCount,  int quoteCount,  int mentionCount,  String language,  String difficulty,  List<String> topics,  bool isReported,  bool isPinned,  bool isFeatured,  String? inReplyToPostId,  String? inReplyToUserId,  String? repostOfId,  String? quoteOfId,  DateTime? deletedAt,  DateTime createdAt,  DateTime updatedAt,  PostUserDto user,  List<HashtagDto> hashtags,  List<MentionDto> mentions)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String userId,  String content,  String? contentJson,  String visibility,  int likeCount,  int commentCount,  int shareCount,  int viewCount,  int repostCount,  int quoteCount,  int mentionCount,  String language,  String difficulty,  List<String> topics,  bool isReported,  bool isPinned,  bool isFeatured,  String? inReplyToPostId,  String? inReplyToUserId,  String? repostOfId,  String? quoteOfId,  ReferencedPostDto? inReplyToPost,  ReferencedPostDto? repostOf,  ReferencedPostDto? quoteOf,  DateTime? deletedAt,  DateTime createdAt,  DateTime updatedAt,  PostUserDto user,  List<HashtagDto> hashtags,  List<MentionDto> mentions)  $default,) {final _that = this;
 switch (_that) {
 case _PostDto():
-return $default(_that.id,_that.userId,_that.content,_that.contentJson,_that.visibility,_that.likeCount,_that.commentCount,_that.shareCount,_that.viewCount,_that.repostCount,_that.quoteCount,_that.mentionCount,_that.language,_that.difficulty,_that.topics,_that.isReported,_that.isPinned,_that.isFeatured,_that.inReplyToPostId,_that.inReplyToUserId,_that.repostOfId,_that.quoteOfId,_that.deletedAt,_that.createdAt,_that.updatedAt,_that.user,_that.hashtags,_that.mentions);case _:
+return $default(_that.id,_that.userId,_that.content,_that.contentJson,_that.visibility,_that.likeCount,_that.commentCount,_that.shareCount,_that.viewCount,_that.repostCount,_that.quoteCount,_that.mentionCount,_that.language,_that.difficulty,_that.topics,_that.isReported,_that.isPinned,_that.isFeatured,_that.inReplyToPostId,_that.inReplyToUserId,_that.repostOfId,_that.quoteOfId,_that.inReplyToPost,_that.repostOf,_that.quoteOf,_that.deletedAt,_that.createdAt,_that.updatedAt,_that.user,_that.hashtags,_that.mentions);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -230,10 +269,10 @@ return $default(_that.id,_that.userId,_that.content,_that.contentJson,_that.visi
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String userId,  String content,  String? contentJson,  String visibility,  int likeCount,  int commentCount,  int shareCount,  int viewCount,  int repostCount,  int quoteCount,  int mentionCount,  String language,  String difficulty,  List<String> topics,  bool isReported,  bool isPinned,  bool isFeatured,  String? inReplyToPostId,  String? inReplyToUserId,  String? repostOfId,  String? quoteOfId,  DateTime? deletedAt,  DateTime createdAt,  DateTime updatedAt,  PostUserDto user,  List<HashtagDto> hashtags,  List<MentionDto> mentions)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String userId,  String content,  String? contentJson,  String visibility,  int likeCount,  int commentCount,  int shareCount,  int viewCount,  int repostCount,  int quoteCount,  int mentionCount,  String language,  String difficulty,  List<String> topics,  bool isReported,  bool isPinned,  bool isFeatured,  String? inReplyToPostId,  String? inReplyToUserId,  String? repostOfId,  String? quoteOfId,  ReferencedPostDto? inReplyToPost,  ReferencedPostDto? repostOf,  ReferencedPostDto? quoteOf,  DateTime? deletedAt,  DateTime createdAt,  DateTime updatedAt,  PostUserDto user,  List<HashtagDto> hashtags,  List<MentionDto> mentions)?  $default,) {final _that = this;
 switch (_that) {
 case _PostDto() when $default != null:
-return $default(_that.id,_that.userId,_that.content,_that.contentJson,_that.visibility,_that.likeCount,_that.commentCount,_that.shareCount,_that.viewCount,_that.repostCount,_that.quoteCount,_that.mentionCount,_that.language,_that.difficulty,_that.topics,_that.isReported,_that.isPinned,_that.isFeatured,_that.inReplyToPostId,_that.inReplyToUserId,_that.repostOfId,_that.quoteOfId,_that.deletedAt,_that.createdAt,_that.updatedAt,_that.user,_that.hashtags,_that.mentions);case _:
+return $default(_that.id,_that.userId,_that.content,_that.contentJson,_that.visibility,_that.likeCount,_that.commentCount,_that.shareCount,_that.viewCount,_that.repostCount,_that.quoteCount,_that.mentionCount,_that.language,_that.difficulty,_that.topics,_that.isReported,_that.isPinned,_that.isFeatured,_that.inReplyToPostId,_that.inReplyToUserId,_that.repostOfId,_that.quoteOfId,_that.inReplyToPost,_that.repostOf,_that.quoteOf,_that.deletedAt,_that.createdAt,_that.updatedAt,_that.user,_that.hashtags,_that.mentions);case _:
   return null;
 
 }
@@ -245,7 +284,7 @@ return $default(_that.id,_that.userId,_that.content,_that.contentJson,_that.visi
 @JsonSerializable()
 
 class _PostDto extends PostDto {
-  const _PostDto({required this.id, required this.userId, required this.content, this.contentJson, required this.visibility, required this.likeCount, required this.commentCount, required this.shareCount, required this.viewCount, required this.repostCount, required this.quoteCount, required this.mentionCount, required this.language, required this.difficulty, required final  List<String> topics, required this.isReported, required this.isPinned, required this.isFeatured, this.inReplyToPostId, this.inReplyToUserId, this.repostOfId, this.quoteOfId, this.deletedAt, required this.createdAt, required this.updatedAt, required this.user, required final  List<HashtagDto> hashtags, required final  List<MentionDto> mentions}): _topics = topics,_hashtags = hashtags,_mentions = mentions,super._();
+  const _PostDto({required this.id, required this.userId, required this.content, this.contentJson, required this.visibility, required this.likeCount, required this.commentCount, required this.shareCount, required this.viewCount, required this.repostCount, required this.quoteCount, required this.mentionCount, required this.language, required this.difficulty, required final  List<String> topics, required this.isReported, required this.isPinned, required this.isFeatured, this.inReplyToPostId, this.inReplyToUserId, this.repostOfId, this.quoteOfId, this.inReplyToPost, this.repostOf, this.quoteOf, this.deletedAt, required this.createdAt, required this.updatedAt, required this.user, required final  List<HashtagDto> hashtags, required final  List<MentionDto> mentions}): _topics = topics,_hashtags = hashtags,_mentions = mentions,super._();
   factory _PostDto.fromJson(Map<String, dynamic> json) => _$PostDtoFromJson(json);
 
 @override final  String id;
@@ -276,6 +315,9 @@ class _PostDto extends PostDto {
 @override final  String? inReplyToUserId;
 @override final  String? repostOfId;
 @override final  String? quoteOfId;
+@override final  ReferencedPostDto? inReplyToPost;
+@override final  ReferencedPostDto? repostOf;
+@override final  ReferencedPostDto? quoteOf;
 @override final  DateTime? deletedAt;
 @override final  DateTime createdAt;
 @override final  DateTime updatedAt;
@@ -308,16 +350,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PostDto&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.content, content) || other.content == content)&&(identical(other.contentJson, contentJson) || other.contentJson == contentJson)&&(identical(other.visibility, visibility) || other.visibility == visibility)&&(identical(other.likeCount, likeCount) || other.likeCount == likeCount)&&(identical(other.commentCount, commentCount) || other.commentCount == commentCount)&&(identical(other.shareCount, shareCount) || other.shareCount == shareCount)&&(identical(other.viewCount, viewCount) || other.viewCount == viewCount)&&(identical(other.repostCount, repostCount) || other.repostCount == repostCount)&&(identical(other.quoteCount, quoteCount) || other.quoteCount == quoteCount)&&(identical(other.mentionCount, mentionCount) || other.mentionCount == mentionCount)&&(identical(other.language, language) || other.language == language)&&(identical(other.difficulty, difficulty) || other.difficulty == difficulty)&&const DeepCollectionEquality().equals(other._topics, _topics)&&(identical(other.isReported, isReported) || other.isReported == isReported)&&(identical(other.isPinned, isPinned) || other.isPinned == isPinned)&&(identical(other.isFeatured, isFeatured) || other.isFeatured == isFeatured)&&(identical(other.inReplyToPostId, inReplyToPostId) || other.inReplyToPostId == inReplyToPostId)&&(identical(other.inReplyToUserId, inReplyToUserId) || other.inReplyToUserId == inReplyToUserId)&&(identical(other.repostOfId, repostOfId) || other.repostOfId == repostOfId)&&(identical(other.quoteOfId, quoteOfId) || other.quoteOfId == quoteOfId)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.user, user) || other.user == user)&&const DeepCollectionEquality().equals(other._hashtags, _hashtags)&&const DeepCollectionEquality().equals(other._mentions, _mentions));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PostDto&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.content, content) || other.content == content)&&(identical(other.contentJson, contentJson) || other.contentJson == contentJson)&&(identical(other.visibility, visibility) || other.visibility == visibility)&&(identical(other.likeCount, likeCount) || other.likeCount == likeCount)&&(identical(other.commentCount, commentCount) || other.commentCount == commentCount)&&(identical(other.shareCount, shareCount) || other.shareCount == shareCount)&&(identical(other.viewCount, viewCount) || other.viewCount == viewCount)&&(identical(other.repostCount, repostCount) || other.repostCount == repostCount)&&(identical(other.quoteCount, quoteCount) || other.quoteCount == quoteCount)&&(identical(other.mentionCount, mentionCount) || other.mentionCount == mentionCount)&&(identical(other.language, language) || other.language == language)&&(identical(other.difficulty, difficulty) || other.difficulty == difficulty)&&const DeepCollectionEquality().equals(other._topics, _topics)&&(identical(other.isReported, isReported) || other.isReported == isReported)&&(identical(other.isPinned, isPinned) || other.isPinned == isPinned)&&(identical(other.isFeatured, isFeatured) || other.isFeatured == isFeatured)&&(identical(other.inReplyToPostId, inReplyToPostId) || other.inReplyToPostId == inReplyToPostId)&&(identical(other.inReplyToUserId, inReplyToUserId) || other.inReplyToUserId == inReplyToUserId)&&(identical(other.repostOfId, repostOfId) || other.repostOfId == repostOfId)&&(identical(other.quoteOfId, quoteOfId) || other.quoteOfId == quoteOfId)&&(identical(other.inReplyToPost, inReplyToPost) || other.inReplyToPost == inReplyToPost)&&(identical(other.repostOf, repostOf) || other.repostOf == repostOf)&&(identical(other.quoteOf, quoteOf) || other.quoteOf == quoteOf)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.user, user) || other.user == user)&&const DeepCollectionEquality().equals(other._hashtags, _hashtags)&&const DeepCollectionEquality().equals(other._mentions, _mentions));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hashAll([runtimeType,id,userId,content,contentJson,visibility,likeCount,commentCount,shareCount,viewCount,repostCount,quoteCount,mentionCount,language,difficulty,const DeepCollectionEquality().hash(_topics),isReported,isPinned,isFeatured,inReplyToPostId,inReplyToUserId,repostOfId,quoteOfId,deletedAt,createdAt,updatedAt,user,const DeepCollectionEquality().hash(_hashtags),const DeepCollectionEquality().hash(_mentions)]);
+int get hashCode => Object.hashAll([runtimeType,id,userId,content,contentJson,visibility,likeCount,commentCount,shareCount,viewCount,repostCount,quoteCount,mentionCount,language,difficulty,const DeepCollectionEquality().hash(_topics),isReported,isPinned,isFeatured,inReplyToPostId,inReplyToUserId,repostOfId,quoteOfId,inReplyToPost,repostOf,quoteOf,deletedAt,createdAt,updatedAt,user,const DeepCollectionEquality().hash(_hashtags),const DeepCollectionEquality().hash(_mentions)]);
 
 @override
 String toString() {
-  return 'PostDto(id: $id, userId: $userId, content: $content, contentJson: $contentJson, visibility: $visibility, likeCount: $likeCount, commentCount: $commentCount, shareCount: $shareCount, viewCount: $viewCount, repostCount: $repostCount, quoteCount: $quoteCount, mentionCount: $mentionCount, language: $language, difficulty: $difficulty, topics: $topics, isReported: $isReported, isPinned: $isPinned, isFeatured: $isFeatured, inReplyToPostId: $inReplyToPostId, inReplyToUserId: $inReplyToUserId, repostOfId: $repostOfId, quoteOfId: $quoteOfId, deletedAt: $deletedAt, createdAt: $createdAt, updatedAt: $updatedAt, user: $user, hashtags: $hashtags, mentions: $mentions)';
+  return 'PostDto(id: $id, userId: $userId, content: $content, contentJson: $contentJson, visibility: $visibility, likeCount: $likeCount, commentCount: $commentCount, shareCount: $shareCount, viewCount: $viewCount, repostCount: $repostCount, quoteCount: $quoteCount, mentionCount: $mentionCount, language: $language, difficulty: $difficulty, topics: $topics, isReported: $isReported, isPinned: $isPinned, isFeatured: $isFeatured, inReplyToPostId: $inReplyToPostId, inReplyToUserId: $inReplyToUserId, repostOfId: $repostOfId, quoteOfId: $quoteOfId, inReplyToPost: $inReplyToPost, repostOf: $repostOf, quoteOf: $quoteOf, deletedAt: $deletedAt, createdAt: $createdAt, updatedAt: $updatedAt, user: $user, hashtags: $hashtags, mentions: $mentions)';
 }
 
 
@@ -328,11 +370,11 @@ abstract mixin class _$PostDtoCopyWith<$Res> implements $PostDtoCopyWith<$Res> {
   factory _$PostDtoCopyWith(_PostDto value, $Res Function(_PostDto) _then) = __$PostDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String userId, String content, String? contentJson, String visibility, int likeCount, int commentCount, int shareCount, int viewCount, int repostCount, int quoteCount, int mentionCount, String language, String difficulty, List<String> topics, bool isReported, bool isPinned, bool isFeatured, String? inReplyToPostId, String? inReplyToUserId, String? repostOfId, String? quoteOfId, DateTime? deletedAt, DateTime createdAt, DateTime updatedAt, PostUserDto user, List<HashtagDto> hashtags, List<MentionDto> mentions
+ String id, String userId, String content, String? contentJson, String visibility, int likeCount, int commentCount, int shareCount, int viewCount, int repostCount, int quoteCount, int mentionCount, String language, String difficulty, List<String> topics, bool isReported, bool isPinned, bool isFeatured, String? inReplyToPostId, String? inReplyToUserId, String? repostOfId, String? quoteOfId, ReferencedPostDto? inReplyToPost, ReferencedPostDto? repostOf, ReferencedPostDto? quoteOf, DateTime? deletedAt, DateTime createdAt, DateTime updatedAt, PostUserDto user, List<HashtagDto> hashtags, List<MentionDto> mentions
 });
 
 
-@override $PostUserDtoCopyWith<$Res> get user;
+@override $ReferencedPostDtoCopyWith<$Res>? get inReplyToPost;@override $ReferencedPostDtoCopyWith<$Res>? get repostOf;@override $ReferencedPostDtoCopyWith<$Res>? get quoteOf;@override $PostUserDtoCopyWith<$Res> get user;
 
 }
 /// @nodoc
@@ -345,7 +387,7 @@ class __$PostDtoCopyWithImpl<$Res>
 
 /// Create a copy of PostDto
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? userId = null,Object? content = null,Object? contentJson = freezed,Object? visibility = null,Object? likeCount = null,Object? commentCount = null,Object? shareCount = null,Object? viewCount = null,Object? repostCount = null,Object? quoteCount = null,Object? mentionCount = null,Object? language = null,Object? difficulty = null,Object? topics = null,Object? isReported = null,Object? isPinned = null,Object? isFeatured = null,Object? inReplyToPostId = freezed,Object? inReplyToUserId = freezed,Object? repostOfId = freezed,Object? quoteOfId = freezed,Object? deletedAt = freezed,Object? createdAt = null,Object? updatedAt = null,Object? user = null,Object? hashtags = null,Object? mentions = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? userId = null,Object? content = null,Object? contentJson = freezed,Object? visibility = null,Object? likeCount = null,Object? commentCount = null,Object? shareCount = null,Object? viewCount = null,Object? repostCount = null,Object? quoteCount = null,Object? mentionCount = null,Object? language = null,Object? difficulty = null,Object? topics = null,Object? isReported = null,Object? isPinned = null,Object? isFeatured = null,Object? inReplyToPostId = freezed,Object? inReplyToUserId = freezed,Object? repostOfId = freezed,Object? quoteOfId = freezed,Object? inReplyToPost = freezed,Object? repostOf = freezed,Object? quoteOf = freezed,Object? deletedAt = freezed,Object? createdAt = null,Object? updatedAt = null,Object? user = null,Object? hashtags = null,Object? mentions = null,}) {
   return _then(_PostDto(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
@@ -369,7 +411,10 @@ as bool,inReplyToPostId: freezed == inReplyToPostId ? _self.inReplyToPostId : in
 as String?,inReplyToUserId: freezed == inReplyToUserId ? _self.inReplyToUserId : inReplyToUserId // ignore: cast_nullable_to_non_nullable
 as String?,repostOfId: freezed == repostOfId ? _self.repostOfId : repostOfId // ignore: cast_nullable_to_non_nullable
 as String?,quoteOfId: freezed == quoteOfId ? _self.quoteOfId : quoteOfId // ignore: cast_nullable_to_non_nullable
-as String?,deletedAt: freezed == deletedAt ? _self.deletedAt : deletedAt // ignore: cast_nullable_to_non_nullable
+as String?,inReplyToPost: freezed == inReplyToPost ? _self.inReplyToPost : inReplyToPost // ignore: cast_nullable_to_non_nullable
+as ReferencedPostDto?,repostOf: freezed == repostOf ? _self.repostOf : repostOf // ignore: cast_nullable_to_non_nullable
+as ReferencedPostDto?,quoteOf: freezed == quoteOf ? _self.quoteOf : quoteOf // ignore: cast_nullable_to_non_nullable
+as ReferencedPostDto?,deletedAt: freezed == deletedAt ? _self.deletedAt : deletedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
@@ -380,6 +425,329 @@ as List<MentionDto>,
 }
 
 /// Create a copy of PostDto
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$ReferencedPostDtoCopyWith<$Res>? get inReplyToPost {
+    if (_self.inReplyToPost == null) {
+    return null;
+  }
+
+  return $ReferencedPostDtoCopyWith<$Res>(_self.inReplyToPost!, (value) {
+    return _then(_self.copyWith(inReplyToPost: value));
+  });
+}/// Create a copy of PostDto
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$ReferencedPostDtoCopyWith<$Res>? get repostOf {
+    if (_self.repostOf == null) {
+    return null;
+  }
+
+  return $ReferencedPostDtoCopyWith<$Res>(_self.repostOf!, (value) {
+    return _then(_self.copyWith(repostOf: value));
+  });
+}/// Create a copy of PostDto
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$ReferencedPostDtoCopyWith<$Res>? get quoteOf {
+    if (_self.quoteOf == null) {
+    return null;
+  }
+
+  return $ReferencedPostDtoCopyWith<$Res>(_self.quoteOf!, (value) {
+    return _then(_self.copyWith(quoteOf: value));
+  });
+}/// Create a copy of PostDto
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$PostUserDtoCopyWith<$Res> get user {
+  
+  return $PostUserDtoCopyWith<$Res>(_self.user, (value) {
+    return _then(_self.copyWith(user: value));
+  });
+}
+}
+
+
+/// @nodoc
+mixin _$ReferencedPostDto {
+
+ String get id; String get content; PostUserDto get user;
+/// Create a copy of ReferencedPostDto
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$ReferencedPostDtoCopyWith<ReferencedPostDto> get copyWith => _$ReferencedPostDtoCopyWithImpl<ReferencedPostDto>(this as ReferencedPostDto, _$identity);
+
+  /// Serializes this ReferencedPostDto to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ReferencedPostDto&&(identical(other.id, id) || other.id == id)&&(identical(other.content, content) || other.content == content)&&(identical(other.user, user) || other.user == user));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,content,user);
+
+@override
+String toString() {
+  return 'ReferencedPostDto(id: $id, content: $content, user: $user)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $ReferencedPostDtoCopyWith<$Res>  {
+  factory $ReferencedPostDtoCopyWith(ReferencedPostDto value, $Res Function(ReferencedPostDto) _then) = _$ReferencedPostDtoCopyWithImpl;
+@useResult
+$Res call({
+ String id, String content, PostUserDto user
+});
+
+
+$PostUserDtoCopyWith<$Res> get user;
+
+}
+/// @nodoc
+class _$ReferencedPostDtoCopyWithImpl<$Res>
+    implements $ReferencedPostDtoCopyWith<$Res> {
+  _$ReferencedPostDtoCopyWithImpl(this._self, this._then);
+
+  final ReferencedPostDto _self;
+  final $Res Function(ReferencedPostDto) _then;
+
+/// Create a copy of ReferencedPostDto
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? content = null,Object? user = null,}) {
+  return _then(_self.copyWith(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
+as String,user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
+as PostUserDto,
+  ));
+}
+/// Create a copy of ReferencedPostDto
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$PostUserDtoCopyWith<$Res> get user {
+  
+  return $PostUserDtoCopyWith<$Res>(_self.user, (value) {
+    return _then(_self.copyWith(user: value));
+  });
+}
+}
+
+
+/// Adds pattern-matching-related methods to [ReferencedPostDto].
+extension ReferencedPostDtoPatterns on ReferencedPostDto {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ReferencedPostDto value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _ReferencedPostDto() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ReferencedPostDto value)  $default,){
+final _that = this;
+switch (_that) {
+case _ReferencedPostDto():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ReferencedPostDto value)?  $default,){
+final _that = this;
+switch (_that) {
+case _ReferencedPostDto() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String content,  PostUserDto user)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _ReferencedPostDto() when $default != null:
+return $default(_that.id,_that.content,_that.user);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String content,  PostUserDto user)  $default,) {final _that = this;
+switch (_that) {
+case _ReferencedPostDto():
+return $default(_that.id,_that.content,_that.user);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String content,  PostUserDto user)?  $default,) {final _that = this;
+switch (_that) {
+case _ReferencedPostDto() when $default != null:
+return $default(_that.id,_that.content,_that.user);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _ReferencedPostDto extends ReferencedPostDto {
+  const _ReferencedPostDto({required this.id, required this.content, required this.user}): super._();
+  factory _ReferencedPostDto.fromJson(Map<String, dynamic> json) => _$ReferencedPostDtoFromJson(json);
+
+@override final  String id;
+@override final  String content;
+@override final  PostUserDto user;
+
+/// Create a copy of ReferencedPostDto
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ReferencedPostDtoCopyWith<_ReferencedPostDto> get copyWith => __$ReferencedPostDtoCopyWithImpl<_ReferencedPostDto>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$ReferencedPostDtoToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ReferencedPostDto&&(identical(other.id, id) || other.id == id)&&(identical(other.content, content) || other.content == content)&&(identical(other.user, user) || other.user == user));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,content,user);
+
+@override
+String toString() {
+  return 'ReferencedPostDto(id: $id, content: $content, user: $user)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$ReferencedPostDtoCopyWith<$Res> implements $ReferencedPostDtoCopyWith<$Res> {
+  factory _$ReferencedPostDtoCopyWith(_ReferencedPostDto value, $Res Function(_ReferencedPostDto) _then) = __$ReferencedPostDtoCopyWithImpl;
+@override @useResult
+$Res call({
+ String id, String content, PostUserDto user
+});
+
+
+@override $PostUserDtoCopyWith<$Res> get user;
+
+}
+/// @nodoc
+class __$ReferencedPostDtoCopyWithImpl<$Res>
+    implements _$ReferencedPostDtoCopyWith<$Res> {
+  __$ReferencedPostDtoCopyWithImpl(this._self, this._then);
+
+  final _ReferencedPostDto _self;
+  final $Res Function(_ReferencedPostDto) _then;
+
+/// Create a copy of ReferencedPostDto
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? content = null,Object? user = null,}) {
+  return _then(_ReferencedPostDto(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
+as String,user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
+as PostUserDto,
+  ));
+}
+
+/// Create a copy of ReferencedPostDto
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')

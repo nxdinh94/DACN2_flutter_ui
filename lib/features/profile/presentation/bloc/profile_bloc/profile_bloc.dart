@@ -7,7 +7,7 @@ import 'package:kit/features/profile/data_source/repository/user_info_entity.dar
 
 part 'profile_events.dart';
 part 'profile_state.dart';
-part '../profile_bloc.freezed.dart';
+part 'profile_bloc.freezed.dart';
 
 @injectable
 class ProfileBloc extends Bloc<ProfileEvents, ProfileState> {

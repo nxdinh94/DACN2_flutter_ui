@@ -27,6 +27,9 @@ abstract class PostEntity with _$PostEntity {
     String? inReplyToUserId,
     String? repostOfId,
     String? quoteOfId,
+    ReferencedPostEntity? inReplyToPost,
+    ReferencedPostEntity? repostOf,
+    ReferencedPostEntity? quoteOf,
     DateTime? deletedAt,
     required DateTime createdAt,
     required DateTime updatedAt,
@@ -34,6 +37,15 @@ abstract class PostEntity with _$PostEntity {
     required List<HashtagEntity> hashtags,
     required List<MentionEntity> mentions,
   }) = _PostEntity;
+}
+
+@freezed
+abstract class ReferencedPostEntity with _$ReferencedPostEntity {
+  const factory ReferencedPostEntity({
+    required String id,
+    required String content,
+    required PostUserEntity user,
+  }) = _ReferencedPostEntity;
 }
 
 @freezed

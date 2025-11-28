@@ -31,6 +31,9 @@ abstract class PostDto with _$PostDto {
     String? inReplyToUserId,
     String? repostOfId,
     String? quoteOfId,
+    ReferencedPostDto? inReplyToPost,
+    ReferencedPostDto? repostOf,
+    ReferencedPostDto? quoteOf,
     DateTime? deletedAt,
     required DateTime createdAt,
     required DateTime updatedAt,
@@ -66,12 +69,37 @@ abstract class PostDto with _$PostDto {
       inReplyToUserId: inReplyToUserId,
       repostOfId: repostOfId,
       quoteOfId: quoteOfId,
+      inReplyToPost: inReplyToPost?.toEntity(),
+      repostOf: repostOf?.toEntity(),
+      quoteOf: quoteOf?.toEntity(),
       deletedAt: deletedAt,
       createdAt: createdAt,
       updatedAt: updatedAt,
       user: user.toEntity(),
       hashtags: hashtags.map((e) => e.toEntity()).toList(),
       mentions: mentions.map((e) => e.toEntity()).toList(),
+    );
+  }
+}
+
+@freezed
+abstract class ReferencedPostDto with _$ReferencedPostDto {
+  const ReferencedPostDto._();
+  
+  const factory ReferencedPostDto({
+    required String id,
+    required String content,
+    required PostUserDto user,
+  }) = _ReferencedPostDto;
+
+  factory ReferencedPostDto.fromJson(Map<String, dynamic> json) =>
+      _$ReferencedPostDtoFromJson(json);
+      
+  ReferencedPostEntity toEntity() {
+    return ReferencedPostEntity(
+      id: id,
+      content: content,
+      user: user.toEntity(),
     );
   }
 }

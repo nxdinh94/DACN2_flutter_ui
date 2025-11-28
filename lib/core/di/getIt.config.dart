@@ -43,7 +43,8 @@ import '../../features/profile/data_source/remote/profile_remote_data_source.dar
     as _i156;
 import '../../features/profile/data_source/repository/profile_repository.dart'
     as _i741;
-import '../../features/profile/presentation/bloc/profile_bloc/profile_bloc.dart' as _i469;
+import '../../features/profile/presentation/bloc/profile_bloc/profile_bloc.dart'
+    as _i932;
 import '../../shared/blocs/locale/locale_bloc.dart' as _i190;
 import '../../shared/services/firebase_messaging_service.dart' as _i751;
 import '../../shared/services/upload_media.dart' as _i182;
@@ -102,8 +103,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i244.CreatePostRepository>(
       () => _i918.CreatePostRepositoryImpl(gh<_i181.CreatePostDataSource>()),
     );
-    gh.factory<_i469.ProfileBloc>(
-      () => _i469.ProfileBloc(profileRepository: gh<_i741.ProfileRepository>()),
+    gh.factory<_i932.ProfileBloc>(
+      () => _i932.ProfileBloc(profileRepository: gh<_i741.ProfileRepository>()),
     );
     gh.factory<_i107.AuthRemoteDataSource>(
       () => _i107.AuthRemoteDataSourceImpl(dioClient: gh<_i667.DioClient>()),
