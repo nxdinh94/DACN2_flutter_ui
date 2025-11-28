@@ -144,7 +144,7 @@ class _MediaViewState extends State<MediaView> {
 
 Widget loadingBuilder(BuildContext context, ImageChunkEvent? event) {
   return Center(
-    child: Container(
+    child: SizedBox(
       width: 20.0,
       height: 20.0,
       child: CircularProgressIndicator(

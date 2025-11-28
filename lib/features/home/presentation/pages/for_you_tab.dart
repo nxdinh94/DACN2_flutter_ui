@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kit/features/home/presentation/widgets/feed_item.dart';
+import 'package:kit/shared/model/post/post_entity.dart';
 class GalleryExampleItem {
   GalleryExampleItem({
     required this.id,
@@ -58,22 +59,22 @@ class _ForYouTabState extends State<ForYouTab> {
 sdfas
             
 asdfas''',
-            tags: ['flutter', 'dart'],
+            tags: [HashtagEntity(name: 'flutter', id: 222, ), HashtagEntity(name: 'dart', id: 2232)],
           ),
           FeedItem(
             medias: galleryItems.sublist(0, 2),
             contents: 'This is a sample post content.',
-            tags: ['flutter', 'dart', 'programming', 'development'],
+            tags: [HashtagEntity(name: 'flutter', id: 222), HashtagEntity(name: 'dart', id: 2232), HashtagEntity(name: 'programming', id: 224), HashtagEntity(name: 'development', id: 225)],
           ),
           FeedItem(
             medias: galleryItems.sublist(0, 3),
             contents: 'This is a sample post content.',
-            tags: ['flutter', 'dart'],
+            tags: [HashtagEntity(name: 'flutter', id: 22), HashtagEntity(name: 'dart', id: 2332), HashtagEntity(name: 'coding', id: 226)],
           ),
           FeedItem(
             medias: galleryItems,
             contents: 'This is a sample post content.',
-            tags: ['flutter', 'dart'],
+            tags: [HashtagEntity(name: 'flutter', id: 2), HashtagEntity(name: 'dart', id: 3)],
           ),
         ],
       )

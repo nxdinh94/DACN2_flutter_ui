@@ -86,7 +86,7 @@ Future<void> _setupNotifications() async {
     const InitializationSettings(android: androidInitializationSettings),
     onDidReceiveNotificationResponse:
         (NotificationResponse notificationResponse) async {
-      print('Notification tapped: ${notificationResponse.payload}');
+      debugPrint('Notification tapped: ${notificationResponse.payload}');
     },
     onDidReceiveBackgroundNotificationResponse: notificationTapBackground,
   );

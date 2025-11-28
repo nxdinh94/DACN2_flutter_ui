@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PostEntity {
 
- String get id; String get userId; String get content; String? get contentJson; String get visibility; int get likeCount; int get commentCount; int get shareCount; int get viewCount; int get repostCount; int get quoteCount; int get mentionCount; String get language; String get difficulty; List<String> get topics; bool get isReported; bool get isPinned; bool get isFeatured; String? get inReplyToPostId; String? get inReplyToUserId; String? get repostOfId; String? get quoteOfId; ReferencedPostEntity? get inReplyToPost; ReferencedPostEntity? get repostOf; ReferencedPostEntity? get quoteOf; DateTime? get deletedAt; DateTime get createdAt; DateTime get updatedAt; PostUserEntity get user; List<HashtagEntity> get hashtags; List<MentionEntity> get mentions;
+ String get id; String get userId; String get content; String? get contentJson; String get visibility; int get likeCount; int get commentCount; int get shareCount; int get viewCount; int get repostCount; int get quoteCount; int get mentionCount; String get language; String get difficulty; List<String> get topics; bool get isReported; bool get isPinned; bool get isFeatured; String? get inReplyToPostId; String? get inReplyToUserId; String? get repostOfId; String? get quoteOfId; ReferencedPostEntity? get inReplyToPost; ReferencedPostEntity? get repostOf; ReferencedPostEntity? get quoteOf; DateTime? get deletedAt; String get createdAt; String get updatedAt; PostUserEntity get user; List<HashtagEntity> get hashtags; List<MentionEntity> get mentions;
 /// Create a copy of PostEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -45,7 +45,7 @@ abstract mixin class $PostEntityCopyWith<$Res>  {
   factory $PostEntityCopyWith(PostEntity value, $Res Function(PostEntity) _then) = _$PostEntityCopyWithImpl;
 @useResult
 $Res call({
- String id, String userId, String content, String? contentJson, String visibility, int likeCount, int commentCount, int shareCount, int viewCount, int repostCount, int quoteCount, int mentionCount, String language, String difficulty, List<String> topics, bool isReported, bool isPinned, bool isFeatured, String? inReplyToPostId, String? inReplyToUserId, String? repostOfId, String? quoteOfId, ReferencedPostEntity? inReplyToPost, ReferencedPostEntity? repostOf, ReferencedPostEntity? quoteOf, DateTime? deletedAt, DateTime createdAt, DateTime updatedAt, PostUserEntity user, List<HashtagEntity> hashtags, List<MentionEntity> mentions
+ String id, String userId, String content, String? contentJson, String visibility, int likeCount, int commentCount, int shareCount, int viewCount, int repostCount, int quoteCount, int mentionCount, String language, String difficulty, List<String> topics, bool isReported, bool isPinned, bool isFeatured, String? inReplyToPostId, String? inReplyToUserId, String? repostOfId, String? quoteOfId, ReferencedPostEntity? inReplyToPost, ReferencedPostEntity? repostOf, ReferencedPostEntity? quoteOf, DateTime? deletedAt, String createdAt, String updatedAt, PostUserEntity user, List<HashtagEntity> hashtags, List<MentionEntity> mentions
 });
 
 
@@ -91,8 +91,8 @@ as ReferencedPostEntity?,repostOf: freezed == repostOf ? _self.repostOf : repost
 as ReferencedPostEntity?,quoteOf: freezed == quoteOf ? _self.quoteOf : quoteOf // ignore: cast_nullable_to_non_nullable
 as ReferencedPostEntity?,deletedAt: freezed == deletedAt ? _self.deletedAt : deletedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
-as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
-as DateTime,user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
+as String,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
+as String,user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
 as PostUserEntity,hashtags: null == hashtags ? _self.hashtags : hashtags // ignore: cast_nullable_to_non_nullable
 as List<HashtagEntity>,mentions: null == mentions ? _self.mentions : mentions // ignore: cast_nullable_to_non_nullable
 as List<MentionEntity>,
@@ -225,7 +225,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String userId,  String content,  String? contentJson,  String visibility,  int likeCount,  int commentCount,  int shareCount,  int viewCount,  int repostCount,  int quoteCount,  int mentionCount,  String language,  String difficulty,  List<String> topics,  bool isReported,  bool isPinned,  bool isFeatured,  String? inReplyToPostId,  String? inReplyToUserId,  String? repostOfId,  String? quoteOfId,  ReferencedPostEntity? inReplyToPost,  ReferencedPostEntity? repostOf,  ReferencedPostEntity? quoteOf,  DateTime? deletedAt,  DateTime createdAt,  DateTime updatedAt,  PostUserEntity user,  List<HashtagEntity> hashtags,  List<MentionEntity> mentions)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String userId,  String content,  String? contentJson,  String visibility,  int likeCount,  int commentCount,  int shareCount,  int viewCount,  int repostCount,  int quoteCount,  int mentionCount,  String language,  String difficulty,  List<String> topics,  bool isReported,  bool isPinned,  bool isFeatured,  String? inReplyToPostId,  String? inReplyToUserId,  String? repostOfId,  String? quoteOfId,  ReferencedPostEntity? inReplyToPost,  ReferencedPostEntity? repostOf,  ReferencedPostEntity? quoteOf,  DateTime? deletedAt,  String createdAt,  String updatedAt,  PostUserEntity user,  List<HashtagEntity> hashtags,  List<MentionEntity> mentions)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PostEntity() when $default != null:
 return $default(_that.id,_that.userId,_that.content,_that.contentJson,_that.visibility,_that.likeCount,_that.commentCount,_that.shareCount,_that.viewCount,_that.repostCount,_that.quoteCount,_that.mentionCount,_that.language,_that.difficulty,_that.topics,_that.isReported,_that.isPinned,_that.isFeatured,_that.inReplyToPostId,_that.inReplyToUserId,_that.repostOfId,_that.quoteOfId,_that.inReplyToPost,_that.repostOf,_that.quoteOf,_that.deletedAt,_that.createdAt,_that.updatedAt,_that.user,_that.hashtags,_that.mentions);case _:
@@ -246,7 +246,7 @@ return $default(_that.id,_that.userId,_that.content,_that.contentJson,_that.visi
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String userId,  String content,  String? contentJson,  String visibility,  int likeCount,  int commentCount,  int shareCount,  int viewCount,  int repostCount,  int quoteCount,  int mentionCount,  String language,  String difficulty,  List<String> topics,  bool isReported,  bool isPinned,  bool isFeatured,  String? inReplyToPostId,  String? inReplyToUserId,  String? repostOfId,  String? quoteOfId,  ReferencedPostEntity? inReplyToPost,  ReferencedPostEntity? repostOf,  ReferencedPostEntity? quoteOf,  DateTime? deletedAt,  DateTime createdAt,  DateTime updatedAt,  PostUserEntity user,  List<HashtagEntity> hashtags,  List<MentionEntity> mentions)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String userId,  String content,  String? contentJson,  String visibility,  int likeCount,  int commentCount,  int shareCount,  int viewCount,  int repostCount,  int quoteCount,  int mentionCount,  String language,  String difficulty,  List<String> topics,  bool isReported,  bool isPinned,  bool isFeatured,  String? inReplyToPostId,  String? inReplyToUserId,  String? repostOfId,  String? quoteOfId,  ReferencedPostEntity? inReplyToPost,  ReferencedPostEntity? repostOf,  ReferencedPostEntity? quoteOf,  DateTime? deletedAt,  String createdAt,  String updatedAt,  PostUserEntity user,  List<HashtagEntity> hashtags,  List<MentionEntity> mentions)  $default,) {final _that = this;
 switch (_that) {
 case _PostEntity():
 return $default(_that.id,_that.userId,_that.content,_that.contentJson,_that.visibility,_that.likeCount,_that.commentCount,_that.shareCount,_that.viewCount,_that.repostCount,_that.quoteCount,_that.mentionCount,_that.language,_that.difficulty,_that.topics,_that.isReported,_that.isPinned,_that.isFeatured,_that.inReplyToPostId,_that.inReplyToUserId,_that.repostOfId,_that.quoteOfId,_that.inReplyToPost,_that.repostOf,_that.quoteOf,_that.deletedAt,_that.createdAt,_that.updatedAt,_that.user,_that.hashtags,_that.mentions);case _:
@@ -266,7 +266,7 @@ return $default(_that.id,_that.userId,_that.content,_that.contentJson,_that.visi
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String userId,  String content,  String? contentJson,  String visibility,  int likeCount,  int commentCount,  int shareCount,  int viewCount,  int repostCount,  int quoteCount,  int mentionCount,  String language,  String difficulty,  List<String> topics,  bool isReported,  bool isPinned,  bool isFeatured,  String? inReplyToPostId,  String? inReplyToUserId,  String? repostOfId,  String? quoteOfId,  ReferencedPostEntity? inReplyToPost,  ReferencedPostEntity? repostOf,  ReferencedPostEntity? quoteOf,  DateTime? deletedAt,  DateTime createdAt,  DateTime updatedAt,  PostUserEntity user,  List<HashtagEntity> hashtags,  List<MentionEntity> mentions)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String userId,  String content,  String? contentJson,  String visibility,  int likeCount,  int commentCount,  int shareCount,  int viewCount,  int repostCount,  int quoteCount,  int mentionCount,  String language,  String difficulty,  List<String> topics,  bool isReported,  bool isPinned,  bool isFeatured,  String? inReplyToPostId,  String? inReplyToUserId,  String? repostOfId,  String? quoteOfId,  ReferencedPostEntity? inReplyToPost,  ReferencedPostEntity? repostOf,  ReferencedPostEntity? quoteOf,  DateTime? deletedAt,  String createdAt,  String updatedAt,  PostUserEntity user,  List<HashtagEntity> hashtags,  List<MentionEntity> mentions)?  $default,) {final _that = this;
 switch (_that) {
 case _PostEntity() when $default != null:
 return $default(_that.id,_that.userId,_that.content,_that.contentJson,_that.visibility,_that.likeCount,_that.commentCount,_that.shareCount,_that.viewCount,_that.repostCount,_that.quoteCount,_that.mentionCount,_that.language,_that.difficulty,_that.topics,_that.isReported,_that.isPinned,_that.isFeatured,_that.inReplyToPostId,_that.inReplyToUserId,_that.repostOfId,_that.quoteOfId,_that.inReplyToPost,_that.repostOf,_that.quoteOf,_that.deletedAt,_that.createdAt,_that.updatedAt,_that.user,_that.hashtags,_that.mentions);case _:
@@ -316,8 +316,8 @@ class _PostEntity implements PostEntity {
 @override final  ReferencedPostEntity? repostOf;
 @override final  ReferencedPostEntity? quoteOf;
 @override final  DateTime? deletedAt;
-@override final  DateTime createdAt;
-@override final  DateTime updatedAt;
+@override final  String createdAt;
+@override final  String updatedAt;
 @override final  PostUserEntity user;
  final  List<HashtagEntity> _hashtags;
 @override List<HashtagEntity> get hashtags {
@@ -364,7 +364,7 @@ abstract mixin class _$PostEntityCopyWith<$Res> implements $PostEntityCopyWith<$
   factory _$PostEntityCopyWith(_PostEntity value, $Res Function(_PostEntity) _then) = __$PostEntityCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String userId, String content, String? contentJson, String visibility, int likeCount, int commentCount, int shareCount, int viewCount, int repostCount, int quoteCount, int mentionCount, String language, String difficulty, List<String> topics, bool isReported, bool isPinned, bool isFeatured, String? inReplyToPostId, String? inReplyToUserId, String? repostOfId, String? quoteOfId, ReferencedPostEntity? inReplyToPost, ReferencedPostEntity? repostOf, ReferencedPostEntity? quoteOf, DateTime? deletedAt, DateTime createdAt, DateTime updatedAt, PostUserEntity user, List<HashtagEntity> hashtags, List<MentionEntity> mentions
+ String id, String userId, String content, String? contentJson, String visibility, int likeCount, int commentCount, int shareCount, int viewCount, int repostCount, int quoteCount, int mentionCount, String language, String difficulty, List<String> topics, bool isReported, bool isPinned, bool isFeatured, String? inReplyToPostId, String? inReplyToUserId, String? repostOfId, String? quoteOfId, ReferencedPostEntity? inReplyToPost, ReferencedPostEntity? repostOf, ReferencedPostEntity? quoteOf, DateTime? deletedAt, String createdAt, String updatedAt, PostUserEntity user, List<HashtagEntity> hashtags, List<MentionEntity> mentions
 });
 
 
@@ -410,8 +410,8 @@ as ReferencedPostEntity?,repostOf: freezed == repostOf ? _self.repostOf : repost
 as ReferencedPostEntity?,quoteOf: freezed == quoteOf ? _self.quoteOf : quoteOf // ignore: cast_nullable_to_non_nullable
 as ReferencedPostEntity?,deletedAt: freezed == deletedAt ? _self.deletedAt : deletedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
-as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
-as DateTime,user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
+as String,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
+as String,user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
 as PostUserEntity,hashtags: null == hashtags ? _self._hashtags : hashtags // ignore: cast_nullable_to_non_nullable
 as List<HashtagEntity>,mentions: null == mentions ? _self._mentions : mentions // ignore: cast_nullable_to_non_nullable
 as List<MentionEntity>,

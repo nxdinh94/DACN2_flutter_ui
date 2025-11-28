@@ -7,6 +7,7 @@ import 'package:kit/core/utils/app_utils.dart';
 import 'package:kit/features/profile/data_source/model/update_profile_request.dart';
 import 'package:kit/features/profile/data_source/repository/user_info_entity.dart';
 import 'package:kit/features/profile/presentation/bloc/profile_bloc/profile_bloc.dart';
+import 'package:kit/features/profile/presentation/widgets/posts_tab.dart';
 import 'package:kit/shared/widgets/app_bottom_sheet.dart';
 import 'package:kit/shared/widgets/app_button.dart';
 import 'package:kit/shared/widgets/app_textfield.dart';
@@ -21,6 +22,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -548,22 +550,6 @@ class EditProfileBottomSheetItem extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-class PostsTab extends StatelessWidget {
-  const PostsTab({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: 15,
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      itemBuilder: (_, i) => ListTile(
-        leading: const CircleAvatar(),
-        title: Text('Post #$i'),
-        subtitle: const Text('This is a tweet-like post content'),
       ),
     );
   }

@@ -6,6 +6,7 @@ import 'package:kit/features/profile/data_source/model/update_profile_request.da
 import 'package:kit/features/profile/data_source/remote/profile_remote_data_source.dart';
 import 'package:kit/features/profile/data_source/repository/user_info_entity.dart';
 import 'package:kit/shared/mapper/entity_mapper.dart';
+import 'package:kit/shared/model/post/post_entity.dart';
 import 'package:kit/shared/services/upload_media.dart';
 
 abstract class ProfileRepository {
@@ -14,6 +15,7 @@ abstract class ProfileRepository {
   });
   Future<Either<String, UserInfoEntity>> getUserInfo();
 
+  Future<Either<String, List<PostEntity>>> getSelfPosts();
 
 }
 @Injectable(as: ProfileRepository)
@@ -91,4 +93,19 @@ class ProfileRepositoryImpl implements ProfileRepository {
       },
     );
   }
+  
+  @override
+  Future<Either<String, List<PostEntity>>> getSelfPosts()async {
+    // Implementation for fetching self posts from repository
+    return remoteDataSource.getSelfPosts().then((result) => 
+      result.fold(
+        (error) => Left('Failed to fetch self posts: $error'),
+        (res) => Right(res.map((dto) => dto.toEntity()).toList()),
+      )
+    );
+  }
+
 }
+
+
+

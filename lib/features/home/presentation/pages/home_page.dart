@@ -29,88 +29,87 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          context.push(AppRoutes.createPost);
-        },
-        shape: CircleBorder(),
-        backgroundColor: context.appTheme.primaryColor,
-        child: Icon(Icons.add, size: 32, color: context.appTheme.onPrimaryColor),
-      ),
-      body: DefaultTabController(
-        length: 2,
-        child: NestedScrollView(
-          floatHeaderSlivers: true, 
-          physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()), 
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return [
-              SliverAppBar(
-                elevation: 2,
-                backgroundColor: context.appTheme.surfaceColor,
-                title: BlocListener<AuthBloc, AuthState>(
-                  listener: (BuildContext context, AuthState state) { 
-                    if (state is AuthError && state.logoutMessage != null) {
-                      showToast(state.logoutMessage!,);
-                    }
-                  },
-                  child: InkWell(
-                    onTap: () {
-                      context.read<AuthBloc>().add(LogoutRequested());
+    return SafeArea(
+      child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            context.push(AppRoutes.createPost);
+          },
+          shape: CircleBorder(),
+          backgroundColor: context.appTheme.primaryColor,
+          child: Icon(Icons.add, size: 32, color: context.appTheme.onPrimaryColor),
+        ),
+        body: DefaultTabController(
+          length: 2,
+          child: NestedScrollView(
+            floatHeaderSlivers: true, 
+            physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()), 
+            headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+              return [
+                SliverAppBar(
+                  elevation: 2,
+                  backgroundColor: context.appTheme.surfaceColor,
+                  title: BlocListener<AuthBloc, AuthState>(
+                    listener: (BuildContext context, AuthState state) { 
+                      if (state is AuthError && state.logoutMessage != null) {
+                        showToast(state.logoutMessage!,);
+                      }
                     },
-                    child: Image.asset(
-                      AppAssets.appLogo,
-                      width: 120,
-                      height: 120,
+                    child: InkWell(
+                      onTap: () {
+                        context.read<AuthBloc>().add(LogoutRequested());
+                      },
+                      child: Image.asset(
+                        AppAssets.appLogo,
+                        width: 120,
+                        height: 120,
+                      ),
+                    ),
+                  
+                  ),
+                  centerTitle: true,
+                  leading: Transform.scale(
+                    scale: 0.7, // Giảm kích thước toàn bộ widget
+                    child: InkWell(
+                      onTap: () {
+                        context.push(AppRoutes.profile);
+                      },
+                      child: BlocBuilder<ProfileBloc, ProfileState>(
+                        builder: (context, state) {
+                          final avatarUrl = state.mapOrNull(
+                            loaded: (profileState) => profileState.userInfo.avatar,
+                          );
+                          return AppNetworkImage.avatar(
+                            imageUrl: avatarUrl ?? 'https://www.shutterstock.com/image-vector/default-avatar-profile-icon-vector-600nw-1745180411.jpg',
+                            size: 70,
+                          );
+                        },
+                      )
                     ),
                   ),
-                
-                ),
-                centerTitle: true,
-                leading: Transform.scale(
-                  scale: 0.7, // Giảm kích thước toàn bộ widget
-                  child: InkWell(
-                    onTap: () {
-                      context.push(AppRoutes.profile);
-                    },
-                    child: BlocBuilder<ProfileBloc, ProfileState>(
-                      builder: (context, state) {
-                        final avatarUrl = state.mapOrNull(
-                          loaded: (profileState) => profileState.userInfo.avatar,
-                        );
-                        return AppNetworkImage.avatar(
-                          imageUrl: avatarUrl ?? 'https://www.shutterstock.com/image-vector/default-avatar-profile-icon-vector-600nw-1745180411.jpg',
-                          size: 70,
-                        );
-                      },
-                    )
+                  bottom: TabBar(
+                    indicatorColor: context.appTheme.primaryColor,
+                    indicatorSize: TabBarIndicatorSize.label,
+                    indicatorAnimation: TabIndicatorAnimation.linear,
+                    unselectedLabelStyle: context.textStyle.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.w400,
+                      color: context.appTheme.textSubtle,
+                    ),
+                    labelStyle: context.textStyle.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.w700,
+                      color: context.appTheme.onSurfaceColor,
+                    ),
+                    labelPadding: EdgeInsets.zero,
+                    overlayColor: WidgetStateProperty.all(Colors.transparent),
+                    tabs: const [
+                      Tab(text: 'For you', height: 36),
+                      Tab(text: 'Following', height: 36),
+                    ],
                   ),
                 ),
-                bottom: TabBar(
-                  indicatorColor: context.appTheme.primaryColor,
-                  indicatorSize: TabBarIndicatorSize.label,
-                  indicatorAnimation: TabIndicatorAnimation.linear,
-                  unselectedLabelStyle: context.textStyle.bodyMedium?.copyWith(
-                    fontWeight: FontWeight.w400,
-                    color: context.appTheme.textSubtle,
-                  ),
-                  labelStyle: context.textStyle.bodyMedium?.copyWith(
-                    fontWeight: FontWeight.w700,
-                    color: context.appTheme.onSurfaceColor,
-                  ),
-                  labelPadding: EdgeInsets.zero,
-                  overlayColor: WidgetStateProperty.all(Colors.transparent),
-                  tabs: const [
-                    Tab(text: 'For you', height: 36),
-                    Tab(text: 'Following', height: 36),
-                  ],
-                ),
-              ),
-            ];
-          },
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            child: TabBarView(
+              ];
+            },
+            body: TabBarView(
               children: [
                 ForYouTab(),
                 FollowingTab(),

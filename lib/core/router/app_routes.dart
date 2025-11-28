@@ -18,6 +18,7 @@ import 'package:kit/features/home/presentation/pages/view_specific_post.dart';
 import 'package:kit/features/notification/presentations/screens/notification_screen.dart';
 import 'package:kit/features/profile/presentation/profile_screen.dart';
 import 'package:kit/features/settings/presentation/pages/settings_page.dart';
+import 'package:kit/shared/model/post/post_entity.dart';
 
 
 class GoRouterRefreshStream extends ChangeNotifier {
@@ -118,7 +119,7 @@ class AppRoutes {
                       ? (state.extra as Map)['contents'] as String
                       : null;
                   final tags = state.extra != null && (state.extra as Map).containsKey('tags')
-                      ? (state.extra as Map)['tags'] as List<String>
+                      ? (state.extra as Map)['tags'] as List<HashtagEntity>
                       : null;
 
                   return slideTransitionPage(

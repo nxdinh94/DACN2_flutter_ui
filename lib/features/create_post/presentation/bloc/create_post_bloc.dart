@@ -55,10 +55,10 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
           if (await fileToDelete.exists()) {
             await fileToDelete.delete();
           } else {
-            print('File already deleted or moved: ${fileToDelete.path}');
+            debugPrint('File already deleted or moved: ${fileToDelete.path}');
           }
         } catch (e) {
-          print('Failed to delete file: ${fileToDelete.path}, Error: $e');
+          debugPrint('Failed to delete file: ${fileToDelete.path}, Error: $e');
         }
       }
 

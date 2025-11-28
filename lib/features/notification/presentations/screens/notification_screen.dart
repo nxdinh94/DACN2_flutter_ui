@@ -164,7 +164,7 @@ class _GalleryPhotoViewWrapperState extends State<GalleryPhotoViewWrapper> {
     final GalleryExampleItem item = widget.galleryItems[index];
     return item.isSvg
         ? PhotoViewGalleryPageOptions.customChild(
-            child: Container(
+            child: SizedBox(
               width: 300,
               height: 300,
               child: SvgPicture.network(
@@ -192,10 +192,10 @@ class _GalleryPhotoViewWrapperState extends State<GalleryPhotoViewWrapper> {
 
 class GalleryExampleItemThumbnail extends StatelessWidget {
   const GalleryExampleItemThumbnail({
-    Key? key,
+    super.key,
     required this.galleryExampleItem,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   final GalleryExampleItem galleryExampleItem;
 
@@ -238,7 +238,7 @@ List<GalleryExampleItem> galleryItems = <GalleryExampleItem>[
 
 
 class ExampleAppBar extends StatelessWidget {
-  const ExampleAppBar({required this.title, this.showGoBack = false}) : super();
+  const ExampleAppBar({super.key, required this.title, this.showGoBack = false});
 
   final String title;
   final bool showGoBack;
@@ -250,8 +250,8 @@ class ExampleAppBar extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
         decoration: const BoxDecoration(
             color: Colors.white,
-            borderRadius: const BorderRadius.only(
-              bottomLeft: const Radius.circular(10.0),
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(10.0),
               bottomRight: Radius.circular(10.0),
             ),
             boxShadow: <BoxShadow>[

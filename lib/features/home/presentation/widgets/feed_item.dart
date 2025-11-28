@@ -4,7 +4,9 @@ import 'package:gpt_markdown/gpt_markdown.dart';
 import 'package:kit/core/extensions/context.dart';
 import 'package:kit/core/router/app_routes.dart';
 import 'package:kit/features/home/presentation/pages/for_you_tab.dart';
+import 'package:kit/features/home/presentation/widgets/build_stat_item.dart';
 import 'package:kit/features/home/presentation/widgets/build_media_layout.dart';
+import 'package:kit/shared/model/post/post_entity.dart';
 import 'package:kit/shared/widgets/network_image.dart';
 
 class FeedItem extends StatelessWidget {
@@ -13,11 +15,30 @@ class FeedItem extends StatelessWidget {
       this.medias,
       this.contents,
       this.tags,
+      this.postUser,
+      this.createdAt,
+      this.shareCount,
+      this.viewCount,
+      this.repostCount,
+      this.quoteCount,
+      this.mentionCount,
+      this.commentCount,
+      this.likeCount,
   });
 
   final List<GalleryExampleItem>? medias;
   final String ? contents;
-  final List<String> ? tags;
+  final List<HashtagEntity> ? tags;
+  final PostUserEntity ? postUser;
+  final String? createdAt;
+  final int? shareCount;
+  final int? viewCount;
+  final int? repostCount;
+  final int? quoteCount;
+  final int? mentionCount;
+  final int? commentCount;
+  final int? likeCount;
+
 
   @override
   Widget build(BuildContext context) {
@@ -45,76 +66,99 @@ class FeedItem extends StatelessWidget {
 
     return InkWell(
       onTap: openPostDetails,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: 8,
-        children: [
-          AppNetworkImage.avatar(
-            size: 48,
-            imageUrl: 'https://thumbs.dreamstime.com/b/anime-girl-wearing-sailor-uniform-having-curious-expression-long-brown-hair-red-ribbon-blue-white-her-large-expressive-394359669.jpg',
-          ),
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.all(8),
-              child: Column(    
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Row(
-                    spacing: 4,
-                    children: [
-                      Text(
-                        'Username',
-                        style: context.textStyle.bodyMedium?.copyWith(
-                          fontWeight: FontWeight.w600,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            AppNetworkImage.avatar(
+              size: 48,
+              imageUrl: postUser?.avatar ?? '',
+            ),
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.only(left: 8),
+                child: Column(    
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  spacing: 8,
+                  children: [
+                    Row(
+                      spacing: 12,
+                      children: [
+                        Expanded(
+                          child: RichText(
+                            overflow: TextOverflow.ellipsis,
+                            text: TextSpan(
+                              style: context.textStyle.bodyMedium,
+                              children: [
+                                TextSpan(
+                                  text: postUser?.fullName ?? 'Username',
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: ' @${postUser?.username ?? 'username'}',
+                                  style: TextStyle(
+                                    color: context.appTheme.textSubtle,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: ' · ${createdAt ?? 'now'}',
+                                  style: TextStyle(
+                                    color: context.appTheme.textSubtle,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
-                      Text(
-                        '@{username}',
-                        style: context.textStyle.bodyMedium?.copyWith(
+                        Icon(
+                          Icons.more_horiz,
                           color: context.appTheme.textSubtle,
+                          size: 16,
                         ),
-                      ),
-                      Text(
-                        '3h',
-                        style: context.textStyle.bodyMedium?.copyWith(
-                          color: context.appTheme.textSubtle,
-                        ),
+                      ],
+                    ),
+                    GptMarkdown(
+                      contents ?? '',
+                    ),
+                    // Hashtags
+                    if (tags != null && tags!.isNotEmpty) ...[
+                      Wrap(
+                        spacing: 4,
+                        runSpacing: 2,
+                        children: tags!.map((tag) {
+                          return Text(
+                            '#${tag.name}',
+                            style: context.textStyle.bodyMedium?.copyWith(
+                              color: context.appTheme.primaryColor,
+                            ),
+                          );
+                        }).toList(),
                       ),
                     ],
-                  ),
-                  const SizedBox(height: 4),
-                  GptMarkdown(
-                    contents ?? '',
-                  ),
-                  // Hashtags
-                  if (tags != null && tags!.isNotEmpty) ...[
-                    const SizedBox(height: 8),
-                    Wrap(
-                      spacing: 4,
-                      runSpacing: 2,
-                      children: tags!.map((tag) {
-                        return Text(
-                          '#$tag',
-                          style: context.textStyle.bodyMedium?.copyWith(
-                            color: context.appTheme.primaryColor,
-                          ),
-                        );
-                      }).toList(),
+                    // Media
+                    medias != null && medias!.isNotEmpty
+                        ? ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: buildMediaLayout(context, medias, open),
+                        )
+                        : SizedBox.shrink(),
+        
+                    buildStat( 
+                      context,
+                      commentCount: commentCount?.toString(),
+                      repostCount: repostCount?.toString(),
+                      likeCount: likeCount?.toString(),
                     ),
                   ],
-                  // Media
-                  medias != null && medias!.isNotEmpty
-                      ? ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: buildMediaLayout(context, medias, open),
-                      )
-                      : SizedBox.shrink(),
-                ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

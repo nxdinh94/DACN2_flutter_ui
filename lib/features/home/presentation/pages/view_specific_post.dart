@@ -4,8 +4,10 @@ import 'package:gpt_markdown/gpt_markdown.dart';
 import 'package:kit/core/extensions/context.dart';
 import 'package:kit/core/router/app_routes.dart';
 import 'package:kit/features/home/presentation/pages/for_you_tab.dart';
+import 'package:kit/features/home/presentation/widgets/build_stat_item.dart';
 import 'package:kit/features/home/presentation/widgets/build_media_layout.dart';
 import 'package:kit/shared/constants/app_assets.dart';
+import 'package:kit/shared/model/post/post_entity.dart';
 import 'package:kit/shared/widgets/app_button.dart';
 import 'package:kit/shared/widgets/app_svg.dart';
 import 'package:kit/shared/widgets/back_appbar.dart';
@@ -16,7 +18,7 @@ class ViewSpecificPost extends StatelessWidget {
 
   final List<GalleryExampleItem>? medias;
   final String? contents;
-  final List<String>? tags;
+  final List<HashtagEntity>? tags;
 
   @override
   Widget build(BuildContext context) {
@@ -154,15 +156,11 @@ class ViewSpecificPost extends StatelessWidget {
                   // Stats (Views, Retweets, Likes)
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        _buildStatItem(context: context, iconPath: AppAssets.commentSvg, count: '122'),
-                        _buildStatItem(context: context, iconPath: AppAssets.repostSvg, count: '234'),
-                        _buildStatItem(context: context, iconPath: AppAssets.heartOutlinedSvg, count: '5'),
-                        _buildStatItem(context: context, iconPath: AppAssets.bookmarkOutlinedSvg),
-                        _buildStatItem(context: context, iconPath: AppAssets.shareSvg),
-                      ],
+                    child: buildStat( 
+                      context,
+                      commentCount: '122',
+                      repostCount: '234',
+                      likeCount: '5',
                     ),
                   ),
                 ],
@@ -194,23 +192,7 @@ class ViewSpecificPost extends StatelessWidget {
   }
 
 
-  Widget _buildStatItem({required BuildContext context, required String iconPath, String ? count}) {
-    return Row(
-      spacing: 4,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        AppSvg(iconPath: iconPath, size: 16, color: context.appTheme.textSubtle),
-        if (count != null) ...[
-          Text(
-            count,
-            style: context.textStyle.bodyMedium?.copyWith(
-              color: context.appTheme.textSubtle,
-            ),
-          ),
-        ],
-      ],
-    );
-  }
+ 
 
   Widget _buildActionButton(
     BuildContext context,

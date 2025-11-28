@@ -43,6 +43,8 @@ import '../../features/profile/data_source/remote/profile_remote_data_source.dar
     as _i156;
 import '../../features/profile/data_source/repository/profile_repository.dart'
     as _i741;
+import '../../features/profile/presentation/bloc/posts_bloc/posts_bloc.dart'
+    as _i873;
 import '../../features/profile/presentation/bloc/profile_bloc/profile_bloc.dart'
     as _i932;
 import '../../shared/blocs/locale/locale_bloc.dart' as _i190;
@@ -105,6 +107,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i932.ProfileBloc>(
       () => _i932.ProfileBloc(profileRepository: gh<_i741.ProfileRepository>()),
+    );
+    gh.factory<_i873.PostsBloc>(
+      () => _i873.PostsBloc(gh<_i741.ProfileRepository>()),
     );
     gh.factory<_i107.AuthRemoteDataSource>(
       () => _i107.AuthRemoteDataSourceImpl(dioClient: gh<_i667.DioClient>()),
