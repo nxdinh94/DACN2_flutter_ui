@@ -43,7 +43,7 @@ import '../../features/profile/data_source/remote/profile_remote_data_source.dar
     as _i156;
 import '../../features/profile/data_source/repository/profile_repository.dart'
     as _i741;
-import '../../features/profile/presentation/bloc/profile_bloc.dart' as _i469;
+import '../../features/profile/presentation/bloc/profile_bloc/profile_bloc.dart' as _i469;
 import '../../shared/blocs/locale/locale_bloc.dart' as _i190;
 import '../../shared/services/firebase_messaging_service.dart' as _i751;
 import '../../shared/services/upload_media.dart' as _i182;

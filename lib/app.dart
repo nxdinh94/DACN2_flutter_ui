@@ -8,7 +8,7 @@ import 'package:kit/core/theme/app_theme.dart';
 import 'package:kit/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:kit/features/create_post/presentation/bloc/cache_thumbnail_video.dart';
 import 'package:kit/features/create_post/presentation/bloc/create_post_bloc.dart';
-import 'package:kit/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:kit/features/profile/presentation/bloc/profile_bloc/profile_bloc.dart';
 import 'package:kit/shared/blocs/locale/locale_bloc.dart';
 import 'package:kit/shared/l10n/app_localizations.dart';
 

@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:kit/core/extensions/context.dart';
 import 'package:kit/core/router/app_routes.dart';
 import 'package:kit/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:kit/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:kit/features/profile/presentation/bloc/profile_bloc/profile_bloc.dart';
 import 'package:kit/features/settings/presentation/widgets/settings_header.dart';
 import 'package:kit/features/settings/presentation/widgets/settings_list_tile.dart';
 import 'package:kit/features/settings/presentation/widgets/settings_section.dart';

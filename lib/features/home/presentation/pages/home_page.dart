@@ -7,7 +7,7 @@ import 'package:kit/core/router/app_routes.dart';
 import 'package:kit/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:kit/features/home/presentation/pages/following_tab.dart';
 import 'package:kit/features/home/presentation/pages/for_you_tab.dart';
-import 'package:kit/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:kit/features/profile/presentation/bloc/profile_bloc/profile_bloc.dart';
 import 'package:kit/shared/constants/app_assets.dart';
 import 'package:kit/shared/widgets/network_image.dart';
 import 'package:kit/shared/widgets/toast.dart';
