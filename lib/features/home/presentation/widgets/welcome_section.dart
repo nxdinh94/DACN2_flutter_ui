@@ -12,16 +12,16 @@ void computeLargeNumber(SendPort sendPort)async {
   int timeDelay = 2000;
   receivePort.listen((message) {
     if(message is String && message == 'boost_speed'){
-      print('Isolate boosting speed');
+      debugPrint('Isolate boosting speed');
       timeDelay = 100;
       return;
     }
     if (message is String && message == 'start') {
-      print('Isolate started computation');
+      debugPrint('Isolate started computation');
 
       () async {
         for (int i = 0; i < 100; i++) {
-          print('timeDelay: $timeDelay');
+          debugPrint('timeDelay: $timeDelay');
           sendPort.send(i);
           await Future.delayed(Duration(milliseconds: timeDelay));
         }

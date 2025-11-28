@@ -43,7 +43,7 @@ class _CreatePostState extends State<CreatePost> {
       );
       if (!context.mounted) return;
       if (assets == null || assets.isEmpty) return; // Người dùng hủy chọn
-      print('Picked ${assets.length} assets.');
+      debugPrint('Picked ${assets.length} assets.');
       context.read<CreatePostBloc>().add(CollectingDataEvent(mediaAssetEntities: assets));
     } catch (e, st) {
       debugPrint('Error picking media: $e\n$st');

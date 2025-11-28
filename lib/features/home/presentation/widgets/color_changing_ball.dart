@@ -47,7 +47,7 @@ class _ColorChangingBallState extends State<ColorChangingBall>
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
-                color: _colorAnimation.value!.withOpacity(0.6),
+                color: _colorAnimation.value!.withValues(alpha: 0.6),
                 blurRadius: 25,
                 spreadRadius: 8,
               )
@@ -55,7 +55,7 @@ class _ColorChangingBallState extends State<ColorChangingBall>
             gradient: RadialGradient(
               colors: [
                 _colorAnimation.value ?? Colors.blue,
-                (_colorAnimation.value ?? Colors.blue).withOpacity(0.7),
+                (_colorAnimation.value ?? Colors.blue).withValues(alpha: 0.7),
               ],
               center: Alignment.topLeft,
               radius: 0.8,

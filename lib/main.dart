@@ -15,13 +15,13 @@ import 'app.dart';
 
 @pragma('vm:entry-point')
 void notificationTapBackground(NotificationResponse notificationResponse) {
-  print('notificationTapBackground tapped: ${notificationResponse.payload}');
+  debugPrint('notificationTapBackground tapped: ${notificationResponse.payload}');
 }
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-  print("Handling a background message: ${message.data.entries}");
+  debugPrint("Handling a background message: ${message.data.entries}");
 }
 
 // Define notification channels

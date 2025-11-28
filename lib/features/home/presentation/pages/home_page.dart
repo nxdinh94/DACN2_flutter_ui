@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kit/core/extensions/context.dart';
 import 'package:kit/core/router/app_routes.dart';
@@ -20,8 +19,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  bool _floatHeaderSlivers = true;
-
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -44,7 +41,7 @@ class _HomePageState extends State<HomePage> {
       body: DefaultTabController(
         length: 2,
         child: NestedScrollView(
-          floatHeaderSlivers: _floatHeaderSlivers, 
+          floatHeaderSlivers: true, 
           physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()), 
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return [

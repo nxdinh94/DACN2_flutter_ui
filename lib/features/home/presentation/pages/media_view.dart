@@ -33,11 +33,11 @@ class _MediaViewState extends State<MediaView> {
   }
 
   void onPageChanged(int index) {
-    print("Current page index: $index");
+    debugPrint("Current page index: $index");
   }
 
   void _handleVerticalDragUpdate(DragUpdateDetails details, PhotoViewScaleState scaleState) {
-    print("Vertical drag update: ${details.delta.dy}, scale state: $scaleState");
+    debugPrint("Vertical drag update: ${details.delta.dy}, scale state: $scaleState");
     // Only allow swipe down when image is at initial scale
     if (scaleState == PhotoViewScaleState.initial || scaleState == PhotoViewScaleState.zoomedOut) {
       setState(() {
@@ -49,7 +49,7 @@ class _MediaViewState extends State<MediaView> {
   }
 
   void _handleVerticalDragEnd(DragEndDetails details) {
-    print("Drag end with distance: $_verticalDragDistance");
+    debugPrint("Drag end with distance: $_verticalDragDistance");
     if (_verticalDragDistance.abs() > 150) {
       // Animate to slide completely off screen before popping
       final screenHeight = MediaQuery.of(context).size.height;

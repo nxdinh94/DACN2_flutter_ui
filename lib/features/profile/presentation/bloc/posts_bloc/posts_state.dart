@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:kit/features/create_post/domain/entities/post_entity.dart';
+import 'package:kit/shared/model/post/post_entity.dart';
 
 part 'posts_state.freezed.dart';
 

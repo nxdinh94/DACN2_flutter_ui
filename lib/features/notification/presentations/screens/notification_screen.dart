@@ -5,6 +5,7 @@ import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
 class NotificationScreen extends StatefulWidget {
+  const NotificationScreen({super.key});
   @override
   _NotificationScreenState createState() => _NotificationScreenState();
 }
@@ -85,7 +86,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
 }
 
 class GalleryPhotoViewWrapper extends StatefulWidget {
+
   GalleryPhotoViewWrapper({
+    super.key,
     this.loadingBuilder,
     this.backgroundDecoration,
     this.minScale,
@@ -249,10 +252,10 @@ class ExampleAppBar extends StatelessWidget {
             color: Colors.white,
             borderRadius: const BorderRadius.only(
               bottomLeft: const Radius.circular(10.0),
-              bottomRight: const Radius.circular(10.0),
+              bottomRight: Radius.circular(10.0),
             ),
             boxShadow: <BoxShadow>[
-              const BoxShadow(
+              BoxShadow(
                   color: Colors.black12, spreadRadius: 10.0, blurRadius: 20.0)
             ]),
         child: Row(
@@ -286,11 +289,11 @@ class ExampleAppBar extends StatelessWidget {
 
 class ExampleAppBarLayout extends StatelessWidget {
   const ExampleAppBarLayout({
-    Key? key,
+    super.key,
     required this.title,
     this.showGoBack = false,
     required this.child,
-  }) : super(key: key);
+  });
 
   final String title;
   final bool showGoBack;
@@ -300,7 +303,7 @@ class ExampleAppBarLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-      body: Container(
+      body: SizedBox(
         height: MediaQuery.of(context).size.height,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,

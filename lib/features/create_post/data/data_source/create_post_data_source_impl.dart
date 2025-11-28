@@ -6,7 +6,7 @@ import 'package:kit/core/network/dio_client.dart';
 import 'package:kit/core/utils/app_utils.dart';
 import 'package:kit/features/create_post/data/data_source/create_post_data_source.dart';
 import 'package:kit/features/create_post/data/models/create_post_request_dto.dart';
-import 'package:kit/features/create_post/data/models/post_dto.dart';
+import 'package:kit/shared/model/post/post_dto.dart';
 
 @Injectable(as: CreatePostDataSource)
 class CreatePostDataSourceImpl implements CreatePostDataSource {
