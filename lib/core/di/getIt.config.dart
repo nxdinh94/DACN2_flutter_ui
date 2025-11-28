@@ -23,6 +23,16 @@ import '../../features/auth/domain/usecases/login_usecase.dart' as _i188;
 import '../../features/auth/domain/usecases/logout_usecase.dart' as _i48;
 import '../../features/auth/domain/usecases/register_usecase.dart' as _i941;
 import '../../features/auth/presentation/bloc/auth_bloc.dart' as _i797;
+import '../../features/create_post/data/data_source/create_post_data_source.dart'
+    as _i181;
+import '../../features/create_post/data/data_source/create_post_data_source_impl.dart'
+    as _i756;
+import '../../features/create_post/data/repositories/create_post_repository_impl.dart'
+    as _i918;
+import '../../features/create_post/domain/repositories/create_post_repository.dart'
+    as _i244;
+import '../../features/create_post/domain/usecases/create_post_usecase.dart'
+    as _i528;
 import '../../features/create_post/presentation/bloc/cache_thumbnail_video.dart'
     as _i800;
 import '../../features/create_post/presentation/bloc/create_post_bloc.dart'
@@ -52,7 +62,6 @@ extension GetItInjectableX on _i174.GetIt {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final firebaseModule = _$FirebaseModule();
     gh.factory<_i800.CacheThumbnailVideo>(() => _i800.CacheThumbnailVideo());
-    gh.factory<_i491.CreatePostBloc>(() => _i491.CreatePostBloc());
     gh.factory<_i190.LocaleBloc>(() => _i190.LocaleBloc());
     gh.lazySingleton<_i892.FirebaseMessaging>(
       () => firebaseModule.firebaseMessaging,
@@ -80,6 +89,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i156.ProfileRemoteDataSource>(
       () => _i156.ProfileRemoteDataSourceImpl(gh<_i667.DioClient>()),
     );
+    gh.factory<_i181.CreatePostDataSource>(
+      () => _i756.CreatePostDataSourceImpl(gh<_i667.DioClient>()),
+    );
     gh.factory<_i741.ProfileRepository>(
       () => _i741.ProfileRepositoryImpl(
         gh<_i156.ProfileRemoteDataSource>(),
@@ -87,11 +99,20 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i911.ProfileLocalDataSource>(),
       ),
     );
+    gh.factory<_i244.CreatePostRepository>(
+      () => _i918.CreatePostRepositoryImpl(gh<_i181.CreatePostDataSource>()),
+    );
     gh.factory<_i469.ProfileBloc>(
       () => _i469.ProfileBloc(profileRepository: gh<_i741.ProfileRepository>()),
     );
     gh.factory<_i107.AuthRemoteDataSource>(
       () => _i107.AuthRemoteDataSourceImpl(dioClient: gh<_i667.DioClient>()),
+    );
+    gh.factory<_i528.CreatePostUseCase>(
+      () => _i528.CreatePostUseCase(gh<_i244.CreatePostRepository>()),
+    );
+    gh.factory<_i491.CreatePostBloc>(
+      () => _i491.CreatePostBloc(gh<_i528.CreatePostUseCase>()),
     );
     gh.factory<_i787.AuthRepository>(
       () => _i153.AuthRepositoryImpl(
