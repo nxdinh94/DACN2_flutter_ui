@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:kit/core/di/getIt.dart';
+import 'package:kit/core/di/get_it.dart';
 import 'package:kit/core/router/app_routes.dart';
 import 'package:kit/core/theme/app_theme.dart';
 import 'package:kit/features/auth/presentation/bloc/auth_bloc.dart';

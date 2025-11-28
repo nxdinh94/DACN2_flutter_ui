@@ -1,6 +1,6 @@
 enum UserStatus {
-  INACTIVE,
-  ACTIVE,
-  BANNED,
-  SUSPENDED,
+  inactive,
+  active,
+  banned,
+  suspended,
 }

@@ -96,9 +96,9 @@ class _CreatePostState extends State<CreatePost> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked, // Or any other location
         floatingActionButton: BlocBuilder<CreatePostBloc, CreatePostState>(
           builder: (BuildContext context, CreatePostState state) {
-
-            String icon = PostViewScope.PUBLIC.iconPath;
-            String name = PostViewScope.PUBLIC.name;
+            
+            String icon = PostViewScope.public.iconPath;
+            String name = PostViewScope.public.name;
 
             if (state is CreatePostCollectingData) {
               icon = state.viewScope.iconPath;

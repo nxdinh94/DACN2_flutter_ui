@@ -1,6 +1,6 @@
 enum VerificationCodeType {
-  REGISTER,
-  FORGOT_PASSWORD,
-  CHANGE_EMAIL,
-  TWO_FACTOR,
+  register,
+  forgotPassword,
+  changeEmail,
+  twoFactor,
 }

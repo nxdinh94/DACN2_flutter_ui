@@ -1,6 +1,6 @@
 enum FriendshipStatus {
-  PENDING,
-  ACCEPTED,
-  REJECTED,
-  BLOCKED,
+  pending,
+  accepted,
+  rejected,
+  blocked,
 }

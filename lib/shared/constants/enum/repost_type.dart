@@ -1,9 +1,9 @@
 enum ReportType {
-  USER,
-  POST,
-  COMMENT,
-  MESSAGE,
-  SPAM,
-  HARASSMENT,
-  INAPPROPRIATE_CONTENT,
+  user,
+  post,
+  comment,
+  message,
+  spam,
+  harassment,
+  inappropriateContent,
 }

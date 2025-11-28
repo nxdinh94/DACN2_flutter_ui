@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kit/core/di/getIt.dart';
+import 'package:kit/core/di/get_it.dart';
 import 'package:kit/core/extensions/context.dart';
 import 'package:kit/core/router/app_routes.dart';
 import 'package:kit/features/auth/presentation/bloc/auth_bloc.dart';

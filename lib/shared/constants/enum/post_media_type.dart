@@ -1,7 +1,7 @@
 enum PostMediaType {
-  IMAGE,
-  VIDEO,
-  AUDIO,
-  DOCUMENT,
-  OTHER,
+  image,
+  video,
+  audio,
+  document,
+  other,
 }

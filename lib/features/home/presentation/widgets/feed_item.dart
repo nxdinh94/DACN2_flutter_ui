@@ -67,7 +67,7 @@ class FeedItem extends StatelessWidget {
     return InkWell(
       onTap: openPostDetails,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
+        padding: const EdgeInsets.all(8.0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

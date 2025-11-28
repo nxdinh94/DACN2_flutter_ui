@@ -1,6 +1,6 @@
 
 enum LanguageLevel {
-  BEGINNER,
-  INTERMEDIATE,
-  ADVANCED,
+  beginner,
+  intermediate,
+  advanced,
 }

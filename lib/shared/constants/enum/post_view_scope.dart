@@ -1,46 +1,46 @@
 import 'package:kit/shared/constants/app_assets.dart';
 
 enum PostViewScope {
-  PUBLIC,
-  FOLLOWERS,
-  FRIENDS,
-  PRIVATE,
+  public,
+  followers,
+  friends,
+  private,
 }
 
 extension PostViewScopeExtension on PostViewScope {
   String get name {
     switch (this) {
-      case PostViewScope.PUBLIC:
+      case PostViewScope.public:
         return 'Public';
-      case PostViewScope.FOLLOWERS:
+      case PostViewScope.followers:
         return 'Followers';
-      case PostViewScope.FRIENDS:
+      case PostViewScope.friends:
         return 'Friends';
-      case PostViewScope.PRIVATE:
+      case PostViewScope.private:
         return 'Private';
     }
   }
   String get value {
     switch (this) {
-      case PostViewScope.PUBLIC:
+      case PostViewScope.public:
         return 'PUBLIC';
-      case PostViewScope.FOLLOWERS:
+      case PostViewScope.followers:
         return 'FOLLOWERS';
-      case PostViewScope.FRIENDS:
+      case PostViewScope.friends:
         return 'FRIENDS';
-      case PostViewScope.PRIVATE:
+      case PostViewScope.private:
         return 'PRIVATE';
     }
   }
   String get iconPath {
     switch (this) {
-      case PostViewScope.PUBLIC:
+      case PostViewScope.public:
         return AppAssets.globalSvg;
-      case PostViewScope.FOLLOWERS:
+      case PostViewScope.followers:
         return AppAssets.verifiedCheckSvg;
-      case PostViewScope.FRIENDS:
+      case PostViewScope.friends:
         return AppAssets.followedAccountSvg;
-      case PostViewScope.PRIVATE:
+      case PostViewScope.private:
         return AppAssets.privateSvg;
     }
   }

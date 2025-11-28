@@ -8,7 +8,7 @@ sealed class CreatePostEvent with _$CreatePostEvent {
     String? content,
     List<AssetEntity>? mediaAssetEntities,
     List<File?>? mediaFiles,
-    @Default(PostViewScope.PUBLIC) PostViewScope viewScope
+    @Default(PostViewScope.public) PostViewScope viewScope
   }) = CollectingDataEvent;
 
   const factory CreatePostEvent.startPost() = StartPostEvent;

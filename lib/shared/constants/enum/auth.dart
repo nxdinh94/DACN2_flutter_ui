@@ -1,1 +1,1 @@
-enum AuthType{REGISTER, LOGIN, LOGOUT}
+enum AuthType { register, login, logout }

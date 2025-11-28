@@ -120,7 +120,7 @@ class ViewSpecificPost extends StatelessWidget {
                         runSpacing: 4,
                         children: tags!.map((tag) {
                           return Text(
-                            '#$tag',
+                            '#${tag.name}',
                             style: context.textStyle.bodyMedium?.copyWith(
                               color: context.appTheme.primaryColor,
                               fontWeight: FontWeight.w600,
