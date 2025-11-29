@@ -43,6 +43,9 @@ _PostDto _$PostDtoFromJson(Map<String, dynamic> json) => _PostDto(
   deletedAt: json['deletedAt'] == null
       ? null
       : DateTime.parse(json['deletedAt'] as String),
+  bookmarkedAt: json['bookmarkedAt'] == null
+      ? null
+      : DateTime.parse(json['bookmarkedAt'] as String),
   createdAt: DateTime.parse(json['createdAt'] as String),
   updatedAt: DateTime.parse(json['updatedAt'] as String),
   user: PostUserDto.fromJson(json['user'] as Map<String, dynamic>),
@@ -81,6 +84,7 @@ Map<String, dynamic> _$PostDtoToJson(_PostDto instance) => <String, dynamic>{
   'repostOf': instance.repostOf,
   'quoteOf': instance.quoteOf,
   'deletedAt': instance.deletedAt?.toIso8601String(),
+  'bookmarkedAt': instance.bookmarkedAt?.toIso8601String(),
   'createdAt': instance.createdAt.toIso8601String(),
   'updatedAt': instance.updatedAt.toIso8601String(),
   'user': instance.user,

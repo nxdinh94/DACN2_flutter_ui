@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:kit/features/home/presentation/pages/for_you_tab.dart';
 import 'package:kit/shared/widgets/network_image.dart';
 
 Widget buildMediaLayout(
   BuildContext context, 
-  List<GalleryExampleItem>? mediaUrls, 
+  List<String>? mediaUrls, 
   void Function({required BuildContext context, required int index}) onTap
 ) {
   if(mediaUrls == null || mediaUrls.isEmpty) return SizedBox.shrink();
   if(mediaUrls.length == 1){
     return AppNetworkImage.post(
-      imageUrl: mediaUrls.first.resource,
+      imageUrl: mediaUrls.first,
       height: 180,
       onTap: () => onTap(context: context, index: 0),
     );
@@ -21,14 +20,14 @@ Widget buildMediaLayout(
       children: [
         Expanded(
           child: AppNetworkImage.post(
-            imageUrl: mediaUrls[0].resource,
+            imageUrl: mediaUrls[0],
             height: 180,
             onTap: () => onTap(context: context, index: 0),
           ),
         ),
         Expanded(
           child: AppNetworkImage.post(
-            imageUrl: mediaUrls[1].resource,
+            imageUrl: mediaUrls[1],
             height: 180,
             onTap: () => onTap(context: context, index: 1),
           ),
@@ -40,7 +39,7 @@ Widget buildMediaLayout(
     return Column(
       children: [
         AppNetworkImage.post(
-          imageUrl: mediaUrls[0].resource,
+          imageUrl: mediaUrls[0],
           height: 90,
           onTap: () => onTap(context: context, index: 0),
         ),
@@ -49,7 +48,7 @@ Widget buildMediaLayout(
           children: [
             Expanded(
               child: AppNetworkImage.post(
-                imageUrl: mediaUrls[1].resource,
+                imageUrl: mediaUrls[1],
                 height: 90,
                 onTap: () => onTap(context: context, index: 1),
               ),
@@ -57,7 +56,7 @@ Widget buildMediaLayout(
             const SizedBox(width: 4),
             Expanded(
               child: AppNetworkImage.post(
-                imageUrl: mediaUrls[2].resource,
+                imageUrl: mediaUrls[2],
                 height: 90,
                 onTap: () => onTap(context: context, index: 2),
               ),
@@ -80,7 +79,7 @@ Widget buildMediaLayout(
       itemCount: mediaUrls.length,
       itemBuilder: (context, index) {
         return AppNetworkImage.post(
-          imageUrl: mediaUrls[index].resource,
+          imageUrl: mediaUrls[index],
           height: 100,
           onTap: () => onTap(context: context, index: index),
         );

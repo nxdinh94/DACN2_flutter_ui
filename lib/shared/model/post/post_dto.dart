@@ -35,6 +35,7 @@ abstract class PostDto with _$PostDto {
     ReferencedPostDto? repostOf,
     ReferencedPostDto? quoteOf,
     DateTime? deletedAt,
+    DateTime? bookmarkedAt,
     required DateTime createdAt,
     required DateTime updatedAt,
     required PostUserDto user,

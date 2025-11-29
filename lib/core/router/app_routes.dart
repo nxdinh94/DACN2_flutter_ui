@@ -11,7 +11,6 @@ import 'package:kit/features/auth/presentation/pages/register_screen.dart';
 import 'package:kit/features/auth/presentation/pages/send_otp_screen.dart';
 import 'package:kit/features/create_post/presentation/screens/create_post.dart';
 import 'package:kit/features/create_post/presentation/widget/preview_image.dart';
-import 'package:kit/features/home/presentation/pages/for_you_tab.dart';
 import 'package:kit/features/home/presentation/pages/home_page.dart';
 import 'package:kit/features/home/presentation/pages/media_view.dart';
 import 'package:kit/features/home/presentation/pages/view_specific_post.dart';
@@ -113,8 +112,8 @@ class AppRoutes {
                 pageBuilder: (context, state){
 
                   final medias = state.extra != null && (state.extra as Map).containsKey('medias')
-                      ? (state.extra as Map)['medias'] as List<GalleryExampleItem>
-                      : <GalleryExampleItem>[];
+                      ? (state.extra as Map)['medias'] as List<String>
+                      : <String>[];
                   final contents = state.extra != null && (state.extra as Map).containsKey('contents')
                       ? (state.extra as Map)['contents'] as String
                       : null;
@@ -180,8 +179,8 @@ class AppRoutes {
         path: feedMediaView,
         pageBuilder: (context, state){
           final mediaUrls = state.extra != null && (state.extra as Map).containsKey('mediaUrls')
-              ? (state.extra as Map)['mediaUrls'] as List<GalleryExampleItem>
-              : <GalleryExampleItem>[];
+              ? (state.extra as Map)['mediaUrls'] as List<String>
+              : <String>[];
           final initialIndex = state.extra != null && (state.extra as Map).containsKey('initialIndex')
               ? (state.extra as Map)['initialIndex'] as int
               : 0;

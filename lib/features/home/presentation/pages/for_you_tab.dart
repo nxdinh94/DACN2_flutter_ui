@@ -1,83 +1,148 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kit/core/di/get_it.dart';
+import 'package:kit/core/extensions/context.dart';
+import 'package:kit/features/home/presentation/bloc/for_you/for_you_bloc.dart';
 import 'package:kit/features/home/presentation/widgets/feed_item.dart';
 import 'package:kit/shared/model/post/post_entity.dart';
-class GalleryExampleItem {
-  GalleryExampleItem({
-    required this.id,
-    required this.resource,
-    this.isSvg = false,
-  });
 
-  final String id;
-  final String resource;
-  final bool isSvg;
-}
-class ForYouTab extends StatefulWidget {
+
+class ForYouTab extends StatelessWidget {
   const ForYouTab({super.key});
 
   @override
-  State<ForYouTab> createState() => _ForYouTabState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => getIt<ForYouBloc>()
+        ..add(const ForYouEvent.fetchPosts()),
+      child: const _ForYouTabView(),
+    );
+  }
 }
 
-class _ForYouTabState extends State<ForYouTab> {
-
-  List<GalleryExampleItem> galleryItems = <GalleryExampleItem>[
-    GalleryExampleItem(
-      id: "tag1",
-      resource: "https://avatarmoi.com/wp-content/uploads/2025/07/Anh-gai-xinh-2k5-deo-kinh-can-dang-yeu.webp",
-    ),
-    GalleryExampleItem(
-      id: "tag2", 
-      resource: "https://auvi.edu.vn/wp-content/uploads/2025/02/anh-gai-xinh-trung-quoc-2.jpg", 
-      isSvg: false
-    ),
-    GalleryExampleItem(
-      id: "tag3",
-      resource: "https://macshop24h.com/wp-content/uploads/2025/07/anh-gai-xinh-trung-quoc-20.jpeg",
-    ),
-    GalleryExampleItem(
-      id: "tag4",
-      resource: "https://haycafe.vn/wp-content/uploads/2022/02/Anh-gai-xinh-Viet-Nam.jpg",
-    ),
-  ];
-
+class _ForYouTabView extends StatelessWidget {
+  const _ForYouTabView();
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: () { 
-        return Future.delayed(const Duration(seconds: 1));
+    return BlocBuilder<ForYouBloc, ForYouState>(
+      builder: (context, state) {
+        return switch (state) {
+          ForYouInitial() => const SizedBox.shrink(),
+          ForYouLoading() => const Center(
+              child: CircularProgressIndicator(),
+            ),
+          ForYouLoaded(:final posts, :final isLoadingMore, :final hasReachedMax) =>
+            _buildPostsList(context, posts, isLoadingMore, hasReachedMax),
+          ForYouError(:final message) => _buildErrorView(context, message),
+        };
       },
-      child: ListView(
-        physics: const BouncingScrollPhysics(),
-        
+    );
+  }
+
+  Widget _buildPostsList(
+    BuildContext context,
+    List<PostEntity> posts,
+    bool isLoadingMore,
+    bool hasReachedMax,
+  ) {
+    if (posts.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.article_outlined,
+              size: 64,
+              color: context.appTheme.textSubtle,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'No posts yet',
+              style: context.textStyle.bodyLarge?.copyWith(
+                color: context.appTheme.textSubtle,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return RefreshIndicator(
+      onRefresh: () async {
+        context.read<ForYouBloc>().add(const ForYouEvent.refreshPosts());
+      },
+      child: NotificationListener<ScrollNotification>(
+        onNotification: (scrollInfo) {
+          if (scrollInfo.metrics.pixels >=
+                  scrollInfo.metrics.maxScrollExtent - 200 &&
+              !isLoadingMore &&
+              !hasReachedMax) {
+            context.read<ForYouBloc>().add(const ForYouEvent.loadMorePosts());
+          }
+          return false;
+        },
+        child: ListView.builder(
+          physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics(),
+          ),
+          itemCount: posts.length + (isLoadingMore ? 1 : 0),
+          itemBuilder: (context, index) {
+            if (index >= posts.length) {
+              return const Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Center(child: CircularProgressIndicator()),
+              );
+            }
+
+            final post = posts[index];
+            return FeedItem(
+              contents: post.content,
+              tags: post.hashtags,
+              postUser: post.user,
+              createdAt: post.createdAt,
+              shareCount: post.shareCount,
+              viewCount: post.viewCount,
+              repostCount: post.repostCount,
+              quoteCount: post.quoteCount,
+              mentionCount: post.mentionCount,
+              commentCount: post.commentCount,
+              likeCount: post.likeCount,
+              medias: [],
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildErrorView(BuildContext context, String message) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          FeedItem(
-            medias: galleryItems.sublist(0, 1),
-            contents: '''This is a sample post content.
-            
-sdfas
-            
-asdfas''',
-            tags: [HashtagEntity(name: 'flutter', id: 222, ), HashtagEntity(name: 'dart', id: 2232)],
+          Icon(
+            Icons.error_outline,
+            size: 64,
+            color: context.appTheme.errorColor,
           ),
-          FeedItem(
-            medias: galleryItems.sublist(0, 2),
-            contents: 'This is a sample post content.',
-            tags: [HashtagEntity(name: 'flutter', id: 222), HashtagEntity(name: 'dart', id: 2232), HashtagEntity(name: 'programming', id: 224), HashtagEntity(name: 'development', id: 225)],
+          const SizedBox(height: 16),
+          Text(
+            message,
+            style: context.textStyle.bodyLarge?.copyWith(
+              color: context.appTheme.textSubtle,
+            ),
+            textAlign: TextAlign.center,
           ),
-          FeedItem(
-            medias: galleryItems.sublist(0, 3),
-            contents: 'This is a sample post content.',
-            tags: [HashtagEntity(name: 'flutter', id: 22), HashtagEntity(name: 'dart', id: 2332), HashtagEntity(name: 'coding', id: 226)],
-          ),
-          FeedItem(
-            medias: galleryItems,
-            contents: 'This is a sample post content.',
-            tags: [HashtagEntity(name: 'flutter', id: 2), HashtagEntity(name: 'dart', id: 3)],
+          const SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: () {
+              context.read<ForYouBloc>().add(const ForYouEvent.fetchPosts());
+            },
+            child: const Text('Retry'),
           ),
         ],
-      )
+      ),
     );
   }
 }

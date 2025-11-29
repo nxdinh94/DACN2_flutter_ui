@@ -33,6 +33,7 @@ abstract class PostEntity with _$PostEntity {
     DateTime? deletedAt,
     required String createdAt,
     required String updatedAt,
+    DateTime? bookmarkedAt,
     required PostUserEntity user,
     required List<HashtagEntity> hashtags,
     required List<MentionEntity> mentions,

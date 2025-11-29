@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:gpt_markdown/gpt_markdown.dart';
 import 'package:kit/core/extensions/context.dart';
 import 'package:kit/core/router/app_routes.dart';
-import 'package:kit/features/home/presentation/pages/for_you_tab.dart';
 import 'package:kit/features/home/presentation/widgets/build_stat_item.dart';
 import 'package:kit/features/home/presentation/widgets/build_media_layout.dart';
 import 'package:kit/shared/constants/app_assets.dart';
@@ -16,7 +15,7 @@ import 'package:kit/shared/widgets/network_image.dart';
 class ViewSpecificPost extends StatelessWidget {
   const ViewSpecificPost({super.key, this.medias, this.contents, this.tags});
 
-  final List<GalleryExampleItem>? medias;
+  final List<String>? medias;
   final String? contents;
   final List<HashtagEntity>? tags;
 

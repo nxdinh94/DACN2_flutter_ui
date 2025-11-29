@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:kit/features/home/presentation/pages/for_you_tab.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
@@ -104,7 +102,7 @@ class GalleryPhotoViewWrapper extends StatefulWidget {
   final dynamic maxScale;
   final int initialIndex;
   final PageController pageController;
-  final List<GalleryExampleItem> galleryItems;
+  final List<String> galleryItems;
   final Axis scrollDirection;
 
   @override
@@ -161,29 +159,13 @@ class _GalleryPhotoViewWrapperState extends State<GalleryPhotoViewWrapper> {
   }
 
   PhotoViewGalleryPageOptions _buildItem(BuildContext context, int index) {
-    final GalleryExampleItem item = widget.galleryItems[index];
-    return item.isSvg
-        ? PhotoViewGalleryPageOptions.customChild(
-            child: SizedBox(
-              width: 300,
-              height: 300,
-              child: SvgPicture.network(
-                item.resource,
-                height: 200.0,
-              ),
-            ),
-            childSize: const Size(300, 300),
+    final String item = widget.galleryItems[index];
+    return PhotoViewGalleryPageOptions(
+            imageProvider: Image.network(item).image,
             initialScale: PhotoViewComputedScale.contained,
             minScale: PhotoViewComputedScale.contained * (0.5 + index / 10),
             maxScale: PhotoViewComputedScale.covered * 4.1,
-            heroAttributes: PhotoViewHeroAttributes(tag: item.id),
-          )
-        : PhotoViewGalleryPageOptions(
-            imageProvider: Image.network(item.resource).image,
-            initialScale: PhotoViewComputedScale.contained,
-            minScale: PhotoViewComputedScale.contained * (0.5 + index / 10),
-            maxScale: PhotoViewComputedScale.covered * 4.1,
-            heroAttributes: PhotoViewHeroAttributes(tag: item.id),
+            heroAttributes: PhotoViewHeroAttributes(tag: item),
           );
   }
 }
@@ -197,7 +179,7 @@ class GalleryExampleItemThumbnail extends StatelessWidget {
     required this.onTap,
   });
 
-  final GalleryExampleItem galleryExampleItem;
+  final String galleryExampleItem;
 
   final GestureTapCallback onTap;
 
@@ -208,32 +190,19 @@ class GalleryExampleItemThumbnail extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: Hero(
-          tag: galleryExampleItem.id,
-          child: Image.network(galleryExampleItem.resource, height: 80.0),
+          tag: galleryExampleItem,
+          child: Image.network(galleryExampleItem, height: 80.0),
         ),
       ),
     );
   }
 }
 
-List<GalleryExampleItem> galleryItems = <GalleryExampleItem>[
-  GalleryExampleItem(
-    id: "tag1",
-    resource: "https://avatarmoi.com/wp-content/uploads/2025/07/Anh-gai-xinh-2k5-deo-kinh-can-dang-yeu.webp",
-  ),
-  GalleryExampleItem(
-    id: "tag2", 
-    resource: "https://auvi.edu.vn/wp-content/uploads/2025/02/anh-gai-xinh-trung-quoc-2.jpg", 
-    isSvg: false
-  ),
-  GalleryExampleItem(
-    id: "tag3",
-    resource: "https://macshop24h.com/wp-content/uploads/2025/07/anh-gai-xinh-trung-quoc-20.jpeg",
-  ),
-  GalleryExampleItem(
-    id: "tag4",
-    resource: "https://haycafe.vn/wp-content/uploads/2022/02/Anh-gai-xinh-Viet-Nam.jpg",
-  ),
+List<String> galleryItems = <String>[
+  "https://avatarmoi.com/wp-content/uploads/2025/07/Anh-gai-xinh-2k5-deo-kinh-can-dang-yeu.webp",
+  "https://auvi.edu.vn/wp-content/uploads/2025/02/anh-gai-xinh-trung-quoc-2.jpg",
+  "https://macshop24h.com/wp-content/uploads/2025/07/anh-gai-xinh-trung-quoc-20.jpeg",
+  "https://haycafe.vn/wp-content/uploads/2022/02/Anh-gai-xinh-Viet-Nam.jpg",
 ];
 
 

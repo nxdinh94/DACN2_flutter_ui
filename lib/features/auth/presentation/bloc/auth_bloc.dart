@@ -64,7 +64,7 @@ class AuthBloc extends HydratedBloc <AuthEvent, AuthState> {
     }
     emit(const AuthState.otpSent(isLoading: true));
   
-    final result = await registerUseCase.sendOtp(SendOtp(email: email, type: AuthType.register.name));
+    final result = await registerUseCase.sendOtp(SendOtp(email: email, type: AuthType.register.getName()));
     result.fold(
       (error) {
         return emit(AuthState.error(sentOptMessage: error, loginMessage: null, registerMessage: null, logoutMessage: null));
