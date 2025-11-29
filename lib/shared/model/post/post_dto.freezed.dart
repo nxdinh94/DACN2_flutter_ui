@@ -286,7 +286,7 @@ return $default(_that.id,_that.userId,_that.content,_that.contentJson,_that.visi
 @JsonSerializable()
 
 class _PostDto extends PostDto {
-  const _PostDto({required this.id, required this.userId, required this.content, this.contentJson, required this.visibility, required this.likeCount, required this.commentCount, required this.shareCount, required this.viewCount, required this.repostCount, required this.quoteCount, required this.mentionCount, required this.language, required this.difficulty, required final  List<String> topics, required this.isReported, required this.isPinned, required this.isFeatured, this.inReplyToPostId, this.inReplyToUserId, this.repostOfId, this.quoteOfId, this.inReplyToPost, this.repostOf, this.quoteOf, this.deletedAt, this.bookmarkedAt, required this.createdAt, required this.updatedAt, required this.user, required final  List<HashtagDto> hashtags, required final  List<MentionDto> mentions, final  List<MediaDto> media = const []}): _topics = topics,_hashtags = hashtags,_mentions = mentions,_media = media,super._();
+  const _PostDto({required this.id, required this.userId, required this.content, this.contentJson, required this.visibility, required this.likeCount, required this.commentCount, required this.shareCount, required this.viewCount, required this.repostCount, required this.quoteCount, required this.mentionCount, required this.language, required this.difficulty, required final  List<String> topics, required this.isReported, required this.isPinned, required this.isFeatured, this.inReplyToPostId, this.inReplyToUserId, this.repostOfId, this.quoteOfId, this.inReplyToPost, this.repostOf, this.quoteOf, this.deletedAt, this.bookmarkedAt, required this.createdAt, required this.updatedAt, required this.user, final  List<HashtagDto> hashtags = const [], final  List<MentionDto> mentions = const [], final  List<MediaDto> media = const []}): _topics = topics,_hashtags = hashtags,_mentions = mentions,_media = media,super._();
   factory _PostDto.fromJson(Map<String, dynamic> json) => _$PostDtoFromJson(json);
 
 @override final  String id;
@@ -326,14 +326,14 @@ class _PostDto extends PostDto {
 @override final  DateTime updatedAt;
 @override final  PostUserDto user;
  final  List<HashtagDto> _hashtags;
-@override List<HashtagDto> get hashtags {
+@override@JsonKey() List<HashtagDto> get hashtags {
   if (_hashtags is EqualUnmodifiableListView) return _hashtags;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_hashtags);
 }
 
  final  List<MentionDto> _mentions;
-@override List<MentionDto> get mentions {
+@override@JsonKey() List<MentionDto> get mentions {
   if (_mentions is EqualUnmodifiableListView) return _mentions;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_mentions);

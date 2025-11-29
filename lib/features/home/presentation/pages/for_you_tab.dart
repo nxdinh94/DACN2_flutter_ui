@@ -97,17 +97,7 @@ class _ForYouTabView extends StatelessWidget {
 
             final post = posts[index];
             return FeedItem(
-              contents: post.content,
-              tags: post.hashtags,
-              postUser: post.user,
-              createdAt: post.createdAt,
-              shareCount: post.shareCount,
-              viewCount: post.viewCount,
-              repostCount: post.repostCount,
-              quoteCount: post.quoteCount,
-              mentionCount: post.mentionCount,
-              commentCount: post.commentCount,
-              likeCount: post.likeCount,
+              postEntity: post,
             );
           },
         ),

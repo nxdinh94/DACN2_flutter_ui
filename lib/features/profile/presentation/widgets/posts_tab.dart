@@ -34,13 +34,7 @@ class _PostsTabState extends State<PostsTab> with AutomaticKeepAliveClientMixin<
             itemBuilder: (context, index) {
               final post = posts[index];
               return FeedItem(
-                contents: post.content,
-                tags: post.hashtags,
-                postUser: post.user,
-                createdAt: post.createdAt,
-                likeCount: post.likeCount,
-                commentCount: post.commentCount,
-                repostCount: post.repostCount,
+                postEntity: post,
               );
             },
           );

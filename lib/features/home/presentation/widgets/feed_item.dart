@@ -11,47 +11,22 @@ import 'package:kit/shared/widgets/network_image.dart';
 class FeedItem extends StatelessWidget {
     const FeedItem({
       super.key,
-      this.medias = const <String>[
-        "https://avatarmoi.com/wp-content/uploads/2025/07/Anh-gai-xinh-2k5-deo-kinh-can-dang-yeu.webp",
-        "https://auvi.edu.vn/wp-content/uploads/2025/02/anh-gai-xinh-trung-quoc-2.jpg",
-        "https://macshop24h.com/wp-content/uploads/2025/07/anh-gai-xinh-trung-quoc-20.jpeg",
-        "https://haycafe.vn/wp-content/uploads/2022/02/Anh-gai-xinh-Viet-Nam.jpg",
-      ],
-      this.contents,
-      this.tags,
-      this.postUser,
-      this.createdAt,
-      this.shareCount,
-      this.viewCount,
-      this.repostCount,
-      this.quoteCount,
-      this.mentionCount,
-      this.commentCount,
-      this.likeCount,
+      required this.postEntity,
   });
 
-  final List<String>? medias;
-  final String ? contents;
-  final List<HashtagEntity> ? tags;
-  final PostUserEntity ? postUser;
-  final String? createdAt;
-  final int? shareCount;
-  final int? viewCount;
-  final int? repostCount;
-  final int? quoteCount;
-  final int? mentionCount;
-  final int? commentCount;
-  final int? likeCount;
+  final PostEntity postEntity;
 
 
   @override
   Widget build(BuildContext context) {
 
+    final mediaList = postEntity.media.map((e) => e.url).toList();
+
     void open({required BuildContext context, required final int index}) {
       context.push(
         AppRoutes.feedMediaView,
         extra: {
-          'mediaUrls': medias,
+          'mediaUrls': mediaList,
           'initialIndex': index,
         },
       );
@@ -61,9 +36,9 @@ class FeedItem extends StatelessWidget {
       context.push(
         AppRoutes.viewSpecificPost,
         extra: {
-          'medias': medias,
-          'contents': contents,
-          'tags': tags,
+          'medias': mediaList,
+          'contents': postEntity.content,
+          'tags': postEntity.hashtags,
         },
       );
     }
@@ -77,7 +52,7 @@ class FeedItem extends StatelessWidget {
           children: [
             AppNetworkImage.avatar(
               size: 48,
-              imageUrl: postUser?.avatar ?? '',
+              imageUrl: postEntity.user.avatar ?? '',
             ),
             Expanded(
               child: Container(
@@ -97,19 +72,19 @@ class FeedItem extends StatelessWidget {
                               style: context.textStyle.bodyMedium,
                               children: [
                                 TextSpan(
-                                  text: postUser?.fullName ?? 'Username',
+                                  text: postEntity.user.fullName,
                                   style: const TextStyle(
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
                                 TextSpan(
-                                  text: ' @${postUser?.username ?? 'username'}',
+                                  text: ' @${postEntity.user.username}',
                                   style: TextStyle(
                                     color: context.appTheme.textSubtle,
                                   ),
                                 ),
                                 TextSpan(
-                                  text: ' · ${createdAt ?? 'now'}',
+                                  text: ' · ${postEntity.createdAt}',
                                   style: TextStyle(
                                     color: context.appTheme.textSubtle,
                                   ),
@@ -126,14 +101,14 @@ class FeedItem extends StatelessWidget {
                       ],
                     ),
                     GptMarkdown(
-                      contents ?? '',
+                      postEntity.content,
                     ),
                     // Hashtags
-                    if (tags != null && tags!.isNotEmpty) ...[
+                    if (postEntity.hashtags.isNotEmpty) ...[
                       Wrap(
                         spacing: 4,
                         runSpacing: 2,
-                        children: tags!.map((tag) {
+                        children: postEntity.hashtags.map((tag) {
                           return Text(
                             '#${tag.name}',
                             style: context.textStyle.bodyMedium?.copyWith(
@@ -144,18 +119,19 @@ class FeedItem extends StatelessWidget {
                       ),
                     ],
                     // Media
-                    medias != null && medias!.isNotEmpty
-                        ? ClipRRect(
+                    if (mediaList.isNotEmpty)...[
+                      ClipRRect(
                             borderRadius: BorderRadius.circular(8),
-                            child: buildMediaLayout(context, medias, open),
-                        )
-                        : SizedBox.shrink(),
+                            child: buildMediaLayout(
+                              context, mediaList, open),
+                        ),
+                    ],
         
                     buildStat( 
                       context,
-                      commentCount: commentCount?.toString(),
-                      repostCount: repostCount?.toString(),
-                      likeCount: likeCount?.toString(),
+                      commentCount: postEntity.commentCount.toString(),
+                      repostCount: postEntity.repostCount.toString(),
+                      likeCount: postEntity.likeCount.toString(),
                     ),
                   ],
                 ),

@@ -32,13 +32,7 @@ class _BookMarkedTabState extends State<BookMarkedTab>
                   itemBuilder: (context, index) {
                     final post = bookmarkedPosts[index];
                     return FeedItem(
-                      contents: post.content,
-                      tags: post.hashtags,
-                      postUser: post.user,
-                      createdAt: post.createdAt,
-                      likeCount: post.likeCount,
-                      commentCount: post.commentCount,
-                      repostCount: post.repostCount,
+                      postEntity: post,
                     );
                   },
                 ),

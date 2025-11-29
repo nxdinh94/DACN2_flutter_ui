@@ -283,7 +283,7 @@ return $default(_that.id,_that.userId,_that.content,_that.contentJson,_that.visi
 
 
 class _PostEntity implements PostEntity {
-  const _PostEntity({required this.id, required this.userId, required this.content, this.contentJson, required this.visibility, required this.likeCount, required this.commentCount, required this.shareCount, required this.viewCount, required this.repostCount, required this.quoteCount, required this.mentionCount, required this.language, required this.difficulty, required final  List<String> topics, required this.isReported, required this.isPinned, required this.isFeatured, this.inReplyToPostId, this.inReplyToUserId, this.repostOfId, this.quoteOfId, this.inReplyToPost, this.repostOf, this.quoteOf, this.deletedAt, required this.createdAt, required this.updatedAt, this.bookmarkedAt, required this.user, required final  List<HashtagEntity> hashtags, required final  List<MentionEntity> mentions, final  List<MediaEntity> media = const []}): _topics = topics,_hashtags = hashtags,_mentions = mentions,_media = media;
+  const _PostEntity({required this.id, required this.userId, required this.content, this.contentJson, required this.visibility, required this.likeCount, required this.commentCount, required this.shareCount, required this.viewCount, required this.repostCount, required this.quoteCount, required this.mentionCount, required this.language, required this.difficulty, required final  List<String> topics, required this.isReported, required this.isPinned, required this.isFeatured, this.inReplyToPostId, this.inReplyToUserId, this.repostOfId, this.quoteOfId, this.inReplyToPost, this.repostOf, this.quoteOf, this.deletedAt, required this.createdAt, required this.updatedAt, this.bookmarkedAt, required this.user, final  List<HashtagEntity> hashtags = const [], final  List<MentionEntity> mentions = const [], final  List<MediaEntity> media = const []}): _topics = topics,_hashtags = hashtags,_mentions = mentions,_media = media;
   
 
 @override final  String id;
@@ -323,14 +323,14 @@ class _PostEntity implements PostEntity {
 @override final  DateTime? bookmarkedAt;
 @override final  PostUserEntity user;
  final  List<HashtagEntity> _hashtags;
-@override List<HashtagEntity> get hashtags {
+@override@JsonKey() List<HashtagEntity> get hashtags {
   if (_hashtags is EqualUnmodifiableListView) return _hashtags;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_hashtags);
 }
 
  final  List<MentionEntity> _mentions;
-@override List<MentionEntity> get mentions {
+@override@JsonKey() List<MentionEntity> get mentions {
   if (_mentions is EqualUnmodifiableListView) return _mentions;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_mentions);

@@ -39,8 +39,8 @@ abstract class PostDto with _$PostDto {
     required DateTime createdAt,
     required DateTime updatedAt,
     required PostUserDto user,
-    required List<HashtagDto> hashtags,
-    required List<MentionDto> mentions,
+    @Default([]) List<HashtagDto> hashtags,
+    @Default([]) List<MentionDto> mentions,
     @Default([]) List<MediaDto> media,
   }) = _PostDto;
 
@@ -48,7 +48,7 @@ abstract class PostDto with _$PostDto {
       _$PostDtoFromJson(json);
       
   PostEntity toEntity() {
-    return PostEntity(
+    return PostEntity(  
       id: id,
       userId: userId,
       content: content,

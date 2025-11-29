@@ -35,8 +35,8 @@ abstract class PostEntity with _$PostEntity {
     required String updatedAt,
     DateTime? bookmarkedAt,
     required PostUserEntity user,
-    required List<HashtagEntity> hashtags,
-    required List<MentionEntity> mentions,
+    @Default([]) List<HashtagEntity> hashtags,
+    @Default([]) List<MentionEntity> mentions,
     @Default([]) List<MediaEntity> media,
   }) = _PostEntity;
 }

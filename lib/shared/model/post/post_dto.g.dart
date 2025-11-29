@@ -49,12 +49,16 @@ _PostDto _$PostDtoFromJson(Map<String, dynamic> json) => _PostDto(
   createdAt: DateTime.parse(json['createdAt'] as String),
   updatedAt: DateTime.parse(json['updatedAt'] as String),
   user: PostUserDto.fromJson(json['user'] as Map<String, dynamic>),
-  hashtags: (json['hashtags'] as List<dynamic>)
-      .map((e) => HashtagDto.fromJson(e as Map<String, dynamic>))
-      .toList(),
-  mentions: (json['mentions'] as List<dynamic>)
-      .map((e) => MentionDto.fromJson(e as Map<String, dynamic>))
-      .toList(),
+  hashtags:
+      (json['hashtags'] as List<dynamic>?)
+          ?.map((e) => HashtagDto.fromJson(e as Map<String, dynamic>))
+          .toList() ??
+      const [],
+  mentions:
+      (json['mentions'] as List<dynamic>?)
+          ?.map((e) => MentionDto.fromJson(e as Map<String, dynamic>))
+          .toList() ??
+      const [],
   media:
       (json['media'] as List<dynamic>?)
           ?.map((e) => MediaDto.fromJson(e as Map<String, dynamic>))
