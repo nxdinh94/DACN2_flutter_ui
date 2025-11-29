@@ -10,9 +10,8 @@ import 'package:kit/shared/constants/app_assets.dart';
 import 'package:kit/shared/model/post/post_entity.dart';
 import 'package:kit/shared/widgets/app_button.dart';
 import 'package:kit/shared/widgets/network_image.dart';
-import 'package:kit/shared/widgets/toast.dart';
 
-class FeedItem extends StatelessWidget {
+class FeedItem extends StatefulWidget {
     const FeedItem({
       super.key,
       required this.postEntity,
@@ -20,11 +19,19 @@ class FeedItem extends StatelessWidget {
 
   final PostEntity postEntity;
 
+  @override
+  State<FeedItem> createState() => _FeedItemState();
+}
+
+class _FeedItemState extends State<FeedItem> {
+
+  // TODO: use optimistic for bookmark, like,...
+  bool isBookMarked = false;
 
   @override
   Widget build(BuildContext context) {
 
-    final mediaList = postEntity.media.map((e) => e.url).toList();
+    final mediaList = widget.postEntity.media.map((e) => e.url).toList();
 
     void open({required BuildContext context, required final int index}) {
       context.push(
@@ -41,23 +48,25 @@ class FeedItem extends StatelessWidget {
         AppRoutes.viewSpecificPost,
         extra: {
           'medias': mediaList,
-          'contents': postEntity.content,
-          'tags': postEntity.hashtags,
+          'contents': widget.postEntity.content,
+          'tags': widget.postEntity.hashtags,
         },
       );
     }
 
-    void _onBookMarkedTap({required BuildContext context, required String postId}) {
+    void onBookMarkedTap({required BuildContext context, required String postId}) {
       context.read<PostInteractionBloc>().add(BookmarkPost(postId: postId));
     }
 
     return BlocListener<PostInteractionBloc, PostInteractionState>(
       listener: (context, state) {
         switch (state) {
-          case BookmarkSuccess(:final postId) when postId == postEntity.id:
-            showToast('Post bookmarked successfully');
-          case BookmarkError(:final postId, :final message) when postId == postEntity.id:
-            showToast('Failed to bookmark: $message');
+          case BookmarkSuccess(:final postId) when postId == widget.postEntity.id:
+          
+          case BookmarkLoading(:final postId) when postId == widget.postEntity.id:
+            
+          case BookmarkError(:final postId) when postId == widget.postEntity.id:
+            
           default:
             break;
         }
@@ -71,7 +80,7 @@ class FeedItem extends StatelessWidget {
           children: [
             AppNetworkImage.avatar(
               size: 48,
-              imageUrl: postEntity.user.avatar ?? '',
+              imageUrl: widget.postEntity.user.avatar ?? '',
             ),
             Expanded(
               child: Container(
@@ -91,19 +100,19 @@ class FeedItem extends StatelessWidget {
                               style: context.textStyle.bodyMedium,
                               children: [
                                 TextSpan(
-                                  text: postEntity.user.fullName,
+                                  text: widget.postEntity.user.fullName,
                                   style: const TextStyle(
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
                                 TextSpan(
-                                  text: ' @${postEntity.user.username}',
+                                  text: ' @${widget.postEntity.user.username}',
                                   style: TextStyle(
                                     color: context.appTheme.textSubtle,
                                   ),
                                 ),
                                 TextSpan(
-                                  text: ' · ${postEntity.createdAt}',
+                                  text: ' · ${widget.postEntity.createdAt}',
                                   style: TextStyle(
                                     color: context.appTheme.textSubtle,
                                   ),
@@ -120,14 +129,14 @@ class FeedItem extends StatelessWidget {
                       ],
                     ),
                     GptMarkdown(
-                      postEntity.content,
+                      widget.postEntity.content,
                     ),
                     // Hashtags
-                    if (postEntity.hashtags.isNotEmpty) ...[
+                    if (widget.postEntity.hashtags.isNotEmpty) ...[
                       Wrap(
                         spacing: 4,
                         runSpacing: 2,
-                        children: postEntity.hashtags.map((tag) {
+                        children: widget.postEntity.hashtags.map((tag) {
                           return Text(
                             '#${tag.name}',
                             style: context.textStyle.bodyMedium?.copyWith(
@@ -147,10 +156,11 @@ class FeedItem extends StatelessWidget {
                     ],
                     buildStat( 
                       context,
-                      commentCount: postEntity.commentCount.toString(),
-                      repostCount: postEntity.repostCount.toString(),
-                      likeCount: postEntity.likeCount.toString(),
-                      onBookMarkedTap: () => _onBookMarkedTap(context: context, postId: postEntity.id),
+                      commentCount: widget.postEntity.commentCount.toString(),
+                      repostCount: widget.postEntity.repostCount.toString(),
+                      likeCount: widget.postEntity.likeCount.toString(),
+                      isBookMarked: isBookMarked,
+                      onBookMarkedTap: () => onBookMarkedTap(context: context, postId: widget.postEntity.id),
                     ),
                   ],
                 ),
@@ -167,8 +177,10 @@ class FeedItem extends StatelessWidget {
 Widget buildStatItem({
   required BuildContext context, 
   required String iconPath, 
+  String? activeIconPath,
   String ? count,
   VoidCallback? onTap,
+  bool? isActive = false,
 }) {
     return SizedBox(
       width: 28,
@@ -176,7 +188,7 @@ Widget buildStatItem({
       child: AppButton.icon(
         iconSize: 14,
         backgroundColor: Colors.transparent,
-        iconPath: iconPath,
+        iconPath: isActive == true && activeIconPath != null ? activeIconPath : iconPath,
         iconColor: context.appTheme.onSurfaceColor,
         onPressed: onTap,
       ),
@@ -188,6 +200,8 @@ Widget buildStatItem({
       String ? commentCount, 
       String ? repostCount, 
       String ? likeCount,
+      bool? isBookMarked,
+      bool? isHeartActive,
       VoidCallback? onBookMarkedTap,
       VoidCallback? onShareTap,
       VoidCallback? onHeartTap,
@@ -201,7 +215,8 @@ Widget buildStatItem({
           context: context, 
           iconPath: AppAssets.commentSvg, 
           count: commentCount, 
-          onTap: onCommentTap
+          onTap: onCommentTap,
+          isActive: isHeartActive ?? false,
         ),
         buildStatItem(
           context: context, 
@@ -213,12 +228,16 @@ Widget buildStatItem({
           context: context, 
           iconPath: AppAssets.heartOutlinedSvg, 
           count: likeCount, 
-          onTap: onHeartTap
+          onTap: onHeartTap,
+          isActive: isHeartActive ?? false,
         ),
         buildStatItem(
           context: context, 
           iconPath: AppAssets.bookmarkOutlinedSvg, 
           onTap: onBookMarkedTap,
+          isActive: isBookMarked ?? false,
+          activeIconPath: isBookMarked != null && isBookMarked 
+                        ? AppAssets.bookmarkFilledSvg : null,
         ),
         buildStatItem(
           context: context, 
