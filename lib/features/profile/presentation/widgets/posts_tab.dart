@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kit/features/home/presentation/widgets/feed_item.dart';
+import 'package:kit/features/post_interaction/presentation/feed_item.dart';
 import 'package:kit/features/profile/presentation/bloc/posts_bloc/posts_bloc.dart';
 
 class PostsTab extends StatefulWidget {

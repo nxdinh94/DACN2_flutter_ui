@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kit/core/di/get_it.dart';
 import 'package:kit/core/extensions/context.dart';
 import 'package:kit/features/home/presentation/bloc/for_you/for_you_bloc.dart';
-import 'package:kit/features/home/presentation/widgets/feed_item.dart';
+import 'package:kit/features/post_interaction/presentation/feed_item.dart';
 import 'package:kit/shared/model/post/post_entity.dart';
 
 

@@ -3,13 +3,13 @@ import 'package:go_router/go_router.dart';
 import 'package:gpt_markdown/gpt_markdown.dart';
 import 'package:kit/core/extensions/context.dart';
 import 'package:kit/core/router/app_routes.dart';
-import 'package:kit/features/home/presentation/widgets/build_stat_item.dart';
 import 'package:kit/features/home/presentation/widgets/build_media_layout.dart';
 import 'package:kit/shared/constants/app_assets.dart';
 import 'package:kit/shared/model/post/post_entity.dart';
 import 'package:kit/shared/widgets/app_button.dart';
 import 'package:kit/shared/widgets/app_svg.dart';
 import 'package:kit/shared/widgets/back_appbar.dart';
+import 'package:kit/features/post_interaction/presentation/feed_item.dart';
 import 'package:kit/shared/widgets/network_image.dart';
 
 class ViewSpecificPost extends StatelessWidget {
