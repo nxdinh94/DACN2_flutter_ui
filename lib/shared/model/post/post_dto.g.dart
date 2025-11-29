@@ -55,6 +55,11 @@ _PostDto _$PostDtoFromJson(Map<String, dynamic> json) => _PostDto(
   mentions: (json['mentions'] as List<dynamic>)
       .map((e) => MentionDto.fromJson(e as Map<String, dynamic>))
       .toList(),
+  media:
+      (json['media'] as List<dynamic>?)
+          ?.map((e) => MediaDto.fromJson(e as Map<String, dynamic>))
+          .toList() ??
+      const [],
 );
 
 Map<String, dynamic> _$PostDtoToJson(_PostDto instance) => <String, dynamic>{
@@ -90,6 +95,23 @@ Map<String, dynamic> _$PostDtoToJson(_PostDto instance) => <String, dynamic>{
   'user': instance.user,
   'hashtags': instance.hashtags,
   'mentions': instance.mentions,
+  'media': instance.media,
+};
+
+_MediaDto _$MediaDtoFromJson(Map<String, dynamic> json) => _MediaDto(
+  id: json['id'] as String,
+  url: json['url'] as String,
+  type: json['type'] as String,
+  ordinal: (json['ordinal'] as num).toInt(),
+  metadata: json['metadata'] as String?,
+);
+
+Map<String, dynamic> _$MediaDtoToJson(_MediaDto instance) => <String, dynamic>{
+  'id': instance.id,
+  'url': instance.url,
+  'type': instance.type,
+  'ordinal': instance.ordinal,
+  'metadata': instance.metadata,
 };
 
 _ReferencedPostDto _$ReferencedPostDtoFromJson(Map<String, dynamic> json) =>

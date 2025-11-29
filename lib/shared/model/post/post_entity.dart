@@ -37,7 +37,19 @@ abstract class PostEntity with _$PostEntity {
     required PostUserEntity user,
     required List<HashtagEntity> hashtags,
     required List<MentionEntity> mentions,
+    @Default([]) List<MediaEntity> media,
   }) = _PostEntity;
+}
+
+@freezed
+abstract class MediaEntity with _$MediaEntity {
+  const factory MediaEntity({
+    required String id,
+    required String url,
+    required String type,
+    required int ordinal,
+    String? metadata,
+  }) = _MediaEntity;
 }
 
 @freezed

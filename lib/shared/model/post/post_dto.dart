@@ -41,6 +41,7 @@ abstract class PostDto with _$PostDto {
     required PostUserDto user,
     required List<HashtagDto> hashtags,
     required List<MentionDto> mentions,
+    @Default([]) List<MediaDto> media,
   }) = _PostDto;
 
   factory PostDto.fromJson(Map<String, dynamic> json) =>
@@ -79,6 +80,33 @@ abstract class PostDto with _$PostDto {
       user: user.toEntity(),
       hashtags: hashtags.map((e) => e.toEntity()).toList(),
       mentions: mentions.map((e) => e.toEntity()).toList(),
+      media: media.map((e) => e.toEntity()).toList(),
+    );
+  }
+}
+
+@freezed
+abstract class MediaDto with _$MediaDto {
+  const MediaDto._();
+
+  const factory MediaDto({
+    required String id,
+    required String url,
+    required String type,
+    required int ordinal,
+    String? metadata,
+  }) = _MediaDto;
+
+  factory MediaDto.fromJson(Map<String, dynamic> json) =>
+      _$MediaDtoFromJson(json);
+
+  MediaEntity toEntity() {
+    return MediaEntity(
+      id: id,
+      url: url,
+      type: type,
+      ordinal: ordinal,
+      metadata: metadata,
     );
   }
 }

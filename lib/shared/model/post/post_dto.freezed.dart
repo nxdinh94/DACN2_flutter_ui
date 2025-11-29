@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PostDto {
 
- String get id; String get userId; String get content; String? get contentJson; String get visibility; int get likeCount; int get commentCount; int get shareCount; int get viewCount; int get repostCount; int get quoteCount; int get mentionCount; String get language; String get difficulty; List<String> get topics; bool get isReported; bool get isPinned; bool get isFeatured; String? get inReplyToPostId; String? get inReplyToUserId; String? get repostOfId; String? get quoteOfId; ReferencedPostDto? get inReplyToPost; ReferencedPostDto? get repostOf; ReferencedPostDto? get quoteOf; DateTime? get deletedAt; DateTime? get bookmarkedAt; DateTime get createdAt; DateTime get updatedAt; PostUserDto get user; List<HashtagDto> get hashtags; List<MentionDto> get mentions;
+ String get id; String get userId; String get content; String? get contentJson; String get visibility; int get likeCount; int get commentCount; int get shareCount; int get viewCount; int get repostCount; int get quoteCount; int get mentionCount; String get language; String get difficulty; List<String> get topics; bool get isReported; bool get isPinned; bool get isFeatured; String? get inReplyToPostId; String? get inReplyToUserId; String? get repostOfId; String? get quoteOfId; ReferencedPostDto? get inReplyToPost; ReferencedPostDto? get repostOf; ReferencedPostDto? get quoteOf; DateTime? get deletedAt; DateTime? get bookmarkedAt; DateTime get createdAt; DateTime get updatedAt; PostUserDto get user; List<HashtagDto> get hashtags; List<MentionDto> get mentions; List<MediaDto> get media;
 /// Create a copy of PostDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $PostDtoCopyWith<PostDto> get copyWith => _$PostDtoCopyWithImpl<PostDto>(this as
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PostDto&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.content, content) || other.content == content)&&(identical(other.contentJson, contentJson) || other.contentJson == contentJson)&&(identical(other.visibility, visibility) || other.visibility == visibility)&&(identical(other.likeCount, likeCount) || other.likeCount == likeCount)&&(identical(other.commentCount, commentCount) || other.commentCount == commentCount)&&(identical(other.shareCount, shareCount) || other.shareCount == shareCount)&&(identical(other.viewCount, viewCount) || other.viewCount == viewCount)&&(identical(other.repostCount, repostCount) || other.repostCount == repostCount)&&(identical(other.quoteCount, quoteCount) || other.quoteCount == quoteCount)&&(identical(other.mentionCount, mentionCount) || other.mentionCount == mentionCount)&&(identical(other.language, language) || other.language == language)&&(identical(other.difficulty, difficulty) || other.difficulty == difficulty)&&const DeepCollectionEquality().equals(other.topics, topics)&&(identical(other.isReported, isReported) || other.isReported == isReported)&&(identical(other.isPinned, isPinned) || other.isPinned == isPinned)&&(identical(other.isFeatured, isFeatured) || other.isFeatured == isFeatured)&&(identical(other.inReplyToPostId, inReplyToPostId) || other.inReplyToPostId == inReplyToPostId)&&(identical(other.inReplyToUserId, inReplyToUserId) || other.inReplyToUserId == inReplyToUserId)&&(identical(other.repostOfId, repostOfId) || other.repostOfId == repostOfId)&&(identical(other.quoteOfId, quoteOfId) || other.quoteOfId == quoteOfId)&&(identical(other.inReplyToPost, inReplyToPost) || other.inReplyToPost == inReplyToPost)&&(identical(other.repostOf, repostOf) || other.repostOf == repostOf)&&(identical(other.quoteOf, quoteOf) || other.quoteOf == quoteOf)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt)&&(identical(other.bookmarkedAt, bookmarkedAt) || other.bookmarkedAt == bookmarkedAt)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.user, user) || other.user == user)&&const DeepCollectionEquality().equals(other.hashtags, hashtags)&&const DeepCollectionEquality().equals(other.mentions, mentions));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PostDto&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.content, content) || other.content == content)&&(identical(other.contentJson, contentJson) || other.contentJson == contentJson)&&(identical(other.visibility, visibility) || other.visibility == visibility)&&(identical(other.likeCount, likeCount) || other.likeCount == likeCount)&&(identical(other.commentCount, commentCount) || other.commentCount == commentCount)&&(identical(other.shareCount, shareCount) || other.shareCount == shareCount)&&(identical(other.viewCount, viewCount) || other.viewCount == viewCount)&&(identical(other.repostCount, repostCount) || other.repostCount == repostCount)&&(identical(other.quoteCount, quoteCount) || other.quoteCount == quoteCount)&&(identical(other.mentionCount, mentionCount) || other.mentionCount == mentionCount)&&(identical(other.language, language) || other.language == language)&&(identical(other.difficulty, difficulty) || other.difficulty == difficulty)&&const DeepCollectionEquality().equals(other.topics, topics)&&(identical(other.isReported, isReported) || other.isReported == isReported)&&(identical(other.isPinned, isPinned) || other.isPinned == isPinned)&&(identical(other.isFeatured, isFeatured) || other.isFeatured == isFeatured)&&(identical(other.inReplyToPostId, inReplyToPostId) || other.inReplyToPostId == inReplyToPostId)&&(identical(other.inReplyToUserId, inReplyToUserId) || other.inReplyToUserId == inReplyToUserId)&&(identical(other.repostOfId, repostOfId) || other.repostOfId == repostOfId)&&(identical(other.quoteOfId, quoteOfId) || other.quoteOfId == quoteOfId)&&(identical(other.inReplyToPost, inReplyToPost) || other.inReplyToPost == inReplyToPost)&&(identical(other.repostOf, repostOf) || other.repostOf == repostOf)&&(identical(other.quoteOf, quoteOf) || other.quoteOf == quoteOf)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt)&&(identical(other.bookmarkedAt, bookmarkedAt) || other.bookmarkedAt == bookmarkedAt)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.user, user) || other.user == user)&&const DeepCollectionEquality().equals(other.hashtags, hashtags)&&const DeepCollectionEquality().equals(other.mentions, mentions)&&const DeepCollectionEquality().equals(other.media, media));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hashAll([runtimeType,id,userId,content,contentJson,visibility,likeCount,commentCount,shareCount,viewCount,repostCount,quoteCount,mentionCount,language,difficulty,const DeepCollectionEquality().hash(topics),isReported,isPinned,isFeatured,inReplyToPostId,inReplyToUserId,repostOfId,quoteOfId,inReplyToPost,repostOf,quoteOf,deletedAt,bookmarkedAt,createdAt,updatedAt,user,const DeepCollectionEquality().hash(hashtags),const DeepCollectionEquality().hash(mentions)]);
+int get hashCode => Object.hashAll([runtimeType,id,userId,content,contentJson,visibility,likeCount,commentCount,shareCount,viewCount,repostCount,quoteCount,mentionCount,language,difficulty,const DeepCollectionEquality().hash(topics),isReported,isPinned,isFeatured,inReplyToPostId,inReplyToUserId,repostOfId,quoteOfId,inReplyToPost,repostOf,quoteOf,deletedAt,bookmarkedAt,createdAt,updatedAt,user,const DeepCollectionEquality().hash(hashtags),const DeepCollectionEquality().hash(mentions),const DeepCollectionEquality().hash(media)]);
 
 @override
 String toString() {
-  return 'PostDto(id: $id, userId: $userId, content: $content, contentJson: $contentJson, visibility: $visibility, likeCount: $likeCount, commentCount: $commentCount, shareCount: $shareCount, viewCount: $viewCount, repostCount: $repostCount, quoteCount: $quoteCount, mentionCount: $mentionCount, language: $language, difficulty: $difficulty, topics: $topics, isReported: $isReported, isPinned: $isPinned, isFeatured: $isFeatured, inReplyToPostId: $inReplyToPostId, inReplyToUserId: $inReplyToUserId, repostOfId: $repostOfId, quoteOfId: $quoteOfId, inReplyToPost: $inReplyToPost, repostOf: $repostOf, quoteOf: $quoteOf, deletedAt: $deletedAt, bookmarkedAt: $bookmarkedAt, createdAt: $createdAt, updatedAt: $updatedAt, user: $user, hashtags: $hashtags, mentions: $mentions)';
+  return 'PostDto(id: $id, userId: $userId, content: $content, contentJson: $contentJson, visibility: $visibility, likeCount: $likeCount, commentCount: $commentCount, shareCount: $shareCount, viewCount: $viewCount, repostCount: $repostCount, quoteCount: $quoteCount, mentionCount: $mentionCount, language: $language, difficulty: $difficulty, topics: $topics, isReported: $isReported, isPinned: $isPinned, isFeatured: $isFeatured, inReplyToPostId: $inReplyToPostId, inReplyToUserId: $inReplyToUserId, repostOfId: $repostOfId, quoteOfId: $quoteOfId, inReplyToPost: $inReplyToPost, repostOf: $repostOf, quoteOf: $quoteOf, deletedAt: $deletedAt, bookmarkedAt: $bookmarkedAt, createdAt: $createdAt, updatedAt: $updatedAt, user: $user, hashtags: $hashtags, mentions: $mentions, media: $media)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $PostDtoCopyWith<$Res>  {
   factory $PostDtoCopyWith(PostDto value, $Res Function(PostDto) _then) = _$PostDtoCopyWithImpl;
 @useResult
 $Res call({
- String id, String userId, String content, String? contentJson, String visibility, int likeCount, int commentCount, int shareCount, int viewCount, int repostCount, int quoteCount, int mentionCount, String language, String difficulty, List<String> topics, bool isReported, bool isPinned, bool isFeatured, String? inReplyToPostId, String? inReplyToUserId, String? repostOfId, String? quoteOfId, ReferencedPostDto? inReplyToPost, ReferencedPostDto? repostOf, ReferencedPostDto? quoteOf, DateTime? deletedAt, DateTime? bookmarkedAt, DateTime createdAt, DateTime updatedAt, PostUserDto user, List<HashtagDto> hashtags, List<MentionDto> mentions
+ String id, String userId, String content, String? contentJson, String visibility, int likeCount, int commentCount, int shareCount, int viewCount, int repostCount, int quoteCount, int mentionCount, String language, String difficulty, List<String> topics, bool isReported, bool isPinned, bool isFeatured, String? inReplyToPostId, String? inReplyToUserId, String? repostOfId, String? quoteOfId, ReferencedPostDto? inReplyToPost, ReferencedPostDto? repostOf, ReferencedPostDto? quoteOf, DateTime? deletedAt, DateTime? bookmarkedAt, DateTime createdAt, DateTime updatedAt, PostUserDto user, List<HashtagDto> hashtags, List<MentionDto> mentions, List<MediaDto> media
 });
 
 
@@ -65,7 +65,7 @@ class _$PostDtoCopyWithImpl<$Res>
 
 /// Create a copy of PostDto
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? userId = null,Object? content = null,Object? contentJson = freezed,Object? visibility = null,Object? likeCount = null,Object? commentCount = null,Object? shareCount = null,Object? viewCount = null,Object? repostCount = null,Object? quoteCount = null,Object? mentionCount = null,Object? language = null,Object? difficulty = null,Object? topics = null,Object? isReported = null,Object? isPinned = null,Object? isFeatured = null,Object? inReplyToPostId = freezed,Object? inReplyToUserId = freezed,Object? repostOfId = freezed,Object? quoteOfId = freezed,Object? inReplyToPost = freezed,Object? repostOf = freezed,Object? quoteOf = freezed,Object? deletedAt = freezed,Object? bookmarkedAt = freezed,Object? createdAt = null,Object? updatedAt = null,Object? user = null,Object? hashtags = null,Object? mentions = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? userId = null,Object? content = null,Object? contentJson = freezed,Object? visibility = null,Object? likeCount = null,Object? commentCount = null,Object? shareCount = null,Object? viewCount = null,Object? repostCount = null,Object? quoteCount = null,Object? mentionCount = null,Object? language = null,Object? difficulty = null,Object? topics = null,Object? isReported = null,Object? isPinned = null,Object? isFeatured = null,Object? inReplyToPostId = freezed,Object? inReplyToUserId = freezed,Object? repostOfId = freezed,Object? quoteOfId = freezed,Object? inReplyToPost = freezed,Object? repostOf = freezed,Object? quoteOf = freezed,Object? deletedAt = freezed,Object? bookmarkedAt = freezed,Object? createdAt = null,Object? updatedAt = null,Object? user = null,Object? hashtags = null,Object? mentions = null,Object? media = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
@@ -99,7 +99,8 @@ as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore
 as DateTime,user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
 as PostUserDto,hashtags: null == hashtags ? _self.hashtags : hashtags // ignore: cast_nullable_to_non_nullable
 as List<HashtagDto>,mentions: null == mentions ? _self.mentions : mentions // ignore: cast_nullable_to_non_nullable
-as List<MentionDto>,
+as List<MentionDto>,media: null == media ? _self.media : media // ignore: cast_nullable_to_non_nullable
+as List<MediaDto>,
   ));
 }
 /// Create a copy of PostDto
@@ -229,10 +230,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String userId,  String content,  String? contentJson,  String visibility,  int likeCount,  int commentCount,  int shareCount,  int viewCount,  int repostCount,  int quoteCount,  int mentionCount,  String language,  String difficulty,  List<String> topics,  bool isReported,  bool isPinned,  bool isFeatured,  String? inReplyToPostId,  String? inReplyToUserId,  String? repostOfId,  String? quoteOfId,  ReferencedPostDto? inReplyToPost,  ReferencedPostDto? repostOf,  ReferencedPostDto? quoteOf,  DateTime? deletedAt,  DateTime? bookmarkedAt,  DateTime createdAt,  DateTime updatedAt,  PostUserDto user,  List<HashtagDto> hashtags,  List<MentionDto> mentions)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String userId,  String content,  String? contentJson,  String visibility,  int likeCount,  int commentCount,  int shareCount,  int viewCount,  int repostCount,  int quoteCount,  int mentionCount,  String language,  String difficulty,  List<String> topics,  bool isReported,  bool isPinned,  bool isFeatured,  String? inReplyToPostId,  String? inReplyToUserId,  String? repostOfId,  String? quoteOfId,  ReferencedPostDto? inReplyToPost,  ReferencedPostDto? repostOf,  ReferencedPostDto? quoteOf,  DateTime? deletedAt,  DateTime? bookmarkedAt,  DateTime createdAt,  DateTime updatedAt,  PostUserDto user,  List<HashtagDto> hashtags,  List<MentionDto> mentions,  List<MediaDto> media)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PostDto() when $default != null:
-return $default(_that.id,_that.userId,_that.content,_that.contentJson,_that.visibility,_that.likeCount,_that.commentCount,_that.shareCount,_that.viewCount,_that.repostCount,_that.quoteCount,_that.mentionCount,_that.language,_that.difficulty,_that.topics,_that.isReported,_that.isPinned,_that.isFeatured,_that.inReplyToPostId,_that.inReplyToUserId,_that.repostOfId,_that.quoteOfId,_that.inReplyToPost,_that.repostOf,_that.quoteOf,_that.deletedAt,_that.bookmarkedAt,_that.createdAt,_that.updatedAt,_that.user,_that.hashtags,_that.mentions);case _:
+return $default(_that.id,_that.userId,_that.content,_that.contentJson,_that.visibility,_that.likeCount,_that.commentCount,_that.shareCount,_that.viewCount,_that.repostCount,_that.quoteCount,_that.mentionCount,_that.language,_that.difficulty,_that.topics,_that.isReported,_that.isPinned,_that.isFeatured,_that.inReplyToPostId,_that.inReplyToUserId,_that.repostOfId,_that.quoteOfId,_that.inReplyToPost,_that.repostOf,_that.quoteOf,_that.deletedAt,_that.bookmarkedAt,_that.createdAt,_that.updatedAt,_that.user,_that.hashtags,_that.mentions,_that.media);case _:
   return orElse();
 
 }
@@ -250,10 +251,10 @@ return $default(_that.id,_that.userId,_that.content,_that.contentJson,_that.visi
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String userId,  String content,  String? contentJson,  String visibility,  int likeCount,  int commentCount,  int shareCount,  int viewCount,  int repostCount,  int quoteCount,  int mentionCount,  String language,  String difficulty,  List<String> topics,  bool isReported,  bool isPinned,  bool isFeatured,  String? inReplyToPostId,  String? inReplyToUserId,  String? repostOfId,  String? quoteOfId,  ReferencedPostDto? inReplyToPost,  ReferencedPostDto? repostOf,  ReferencedPostDto? quoteOf,  DateTime? deletedAt,  DateTime? bookmarkedAt,  DateTime createdAt,  DateTime updatedAt,  PostUserDto user,  List<HashtagDto> hashtags,  List<MentionDto> mentions)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String userId,  String content,  String? contentJson,  String visibility,  int likeCount,  int commentCount,  int shareCount,  int viewCount,  int repostCount,  int quoteCount,  int mentionCount,  String language,  String difficulty,  List<String> topics,  bool isReported,  bool isPinned,  bool isFeatured,  String? inReplyToPostId,  String? inReplyToUserId,  String? repostOfId,  String? quoteOfId,  ReferencedPostDto? inReplyToPost,  ReferencedPostDto? repostOf,  ReferencedPostDto? quoteOf,  DateTime? deletedAt,  DateTime? bookmarkedAt,  DateTime createdAt,  DateTime updatedAt,  PostUserDto user,  List<HashtagDto> hashtags,  List<MentionDto> mentions,  List<MediaDto> media)  $default,) {final _that = this;
 switch (_that) {
 case _PostDto():
-return $default(_that.id,_that.userId,_that.content,_that.contentJson,_that.visibility,_that.likeCount,_that.commentCount,_that.shareCount,_that.viewCount,_that.repostCount,_that.quoteCount,_that.mentionCount,_that.language,_that.difficulty,_that.topics,_that.isReported,_that.isPinned,_that.isFeatured,_that.inReplyToPostId,_that.inReplyToUserId,_that.repostOfId,_that.quoteOfId,_that.inReplyToPost,_that.repostOf,_that.quoteOf,_that.deletedAt,_that.bookmarkedAt,_that.createdAt,_that.updatedAt,_that.user,_that.hashtags,_that.mentions);case _:
+return $default(_that.id,_that.userId,_that.content,_that.contentJson,_that.visibility,_that.likeCount,_that.commentCount,_that.shareCount,_that.viewCount,_that.repostCount,_that.quoteCount,_that.mentionCount,_that.language,_that.difficulty,_that.topics,_that.isReported,_that.isPinned,_that.isFeatured,_that.inReplyToPostId,_that.inReplyToUserId,_that.repostOfId,_that.quoteOfId,_that.inReplyToPost,_that.repostOf,_that.quoteOf,_that.deletedAt,_that.bookmarkedAt,_that.createdAt,_that.updatedAt,_that.user,_that.hashtags,_that.mentions,_that.media);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -270,10 +271,10 @@ return $default(_that.id,_that.userId,_that.content,_that.contentJson,_that.visi
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String userId,  String content,  String? contentJson,  String visibility,  int likeCount,  int commentCount,  int shareCount,  int viewCount,  int repostCount,  int quoteCount,  int mentionCount,  String language,  String difficulty,  List<String> topics,  bool isReported,  bool isPinned,  bool isFeatured,  String? inReplyToPostId,  String? inReplyToUserId,  String? repostOfId,  String? quoteOfId,  ReferencedPostDto? inReplyToPost,  ReferencedPostDto? repostOf,  ReferencedPostDto? quoteOf,  DateTime? deletedAt,  DateTime? bookmarkedAt,  DateTime createdAt,  DateTime updatedAt,  PostUserDto user,  List<HashtagDto> hashtags,  List<MentionDto> mentions)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String userId,  String content,  String? contentJson,  String visibility,  int likeCount,  int commentCount,  int shareCount,  int viewCount,  int repostCount,  int quoteCount,  int mentionCount,  String language,  String difficulty,  List<String> topics,  bool isReported,  bool isPinned,  bool isFeatured,  String? inReplyToPostId,  String? inReplyToUserId,  String? repostOfId,  String? quoteOfId,  ReferencedPostDto? inReplyToPost,  ReferencedPostDto? repostOf,  ReferencedPostDto? quoteOf,  DateTime? deletedAt,  DateTime? bookmarkedAt,  DateTime createdAt,  DateTime updatedAt,  PostUserDto user,  List<HashtagDto> hashtags,  List<MentionDto> mentions,  List<MediaDto> media)?  $default,) {final _that = this;
 switch (_that) {
 case _PostDto() when $default != null:
-return $default(_that.id,_that.userId,_that.content,_that.contentJson,_that.visibility,_that.likeCount,_that.commentCount,_that.shareCount,_that.viewCount,_that.repostCount,_that.quoteCount,_that.mentionCount,_that.language,_that.difficulty,_that.topics,_that.isReported,_that.isPinned,_that.isFeatured,_that.inReplyToPostId,_that.inReplyToUserId,_that.repostOfId,_that.quoteOfId,_that.inReplyToPost,_that.repostOf,_that.quoteOf,_that.deletedAt,_that.bookmarkedAt,_that.createdAt,_that.updatedAt,_that.user,_that.hashtags,_that.mentions);case _:
+return $default(_that.id,_that.userId,_that.content,_that.contentJson,_that.visibility,_that.likeCount,_that.commentCount,_that.shareCount,_that.viewCount,_that.repostCount,_that.quoteCount,_that.mentionCount,_that.language,_that.difficulty,_that.topics,_that.isReported,_that.isPinned,_that.isFeatured,_that.inReplyToPostId,_that.inReplyToUserId,_that.repostOfId,_that.quoteOfId,_that.inReplyToPost,_that.repostOf,_that.quoteOf,_that.deletedAt,_that.bookmarkedAt,_that.createdAt,_that.updatedAt,_that.user,_that.hashtags,_that.mentions,_that.media);case _:
   return null;
 
 }
@@ -285,7 +286,7 @@ return $default(_that.id,_that.userId,_that.content,_that.contentJson,_that.visi
 @JsonSerializable()
 
 class _PostDto extends PostDto {
-  const _PostDto({required this.id, required this.userId, required this.content, this.contentJson, required this.visibility, required this.likeCount, required this.commentCount, required this.shareCount, required this.viewCount, required this.repostCount, required this.quoteCount, required this.mentionCount, required this.language, required this.difficulty, required final  List<String> topics, required this.isReported, required this.isPinned, required this.isFeatured, this.inReplyToPostId, this.inReplyToUserId, this.repostOfId, this.quoteOfId, this.inReplyToPost, this.repostOf, this.quoteOf, this.deletedAt, this.bookmarkedAt, required this.createdAt, required this.updatedAt, required this.user, required final  List<HashtagDto> hashtags, required final  List<MentionDto> mentions}): _topics = topics,_hashtags = hashtags,_mentions = mentions,super._();
+  const _PostDto({required this.id, required this.userId, required this.content, this.contentJson, required this.visibility, required this.likeCount, required this.commentCount, required this.shareCount, required this.viewCount, required this.repostCount, required this.quoteCount, required this.mentionCount, required this.language, required this.difficulty, required final  List<String> topics, required this.isReported, required this.isPinned, required this.isFeatured, this.inReplyToPostId, this.inReplyToUserId, this.repostOfId, this.quoteOfId, this.inReplyToPost, this.repostOf, this.quoteOf, this.deletedAt, this.bookmarkedAt, required this.createdAt, required this.updatedAt, required this.user, required final  List<HashtagDto> hashtags, required final  List<MentionDto> mentions, final  List<MediaDto> media = const []}): _topics = topics,_hashtags = hashtags,_mentions = mentions,_media = media,super._();
   factory _PostDto.fromJson(Map<String, dynamic> json) => _$PostDtoFromJson(json);
 
 @override final  String id;
@@ -338,6 +339,13 @@ class _PostDto extends PostDto {
   return EqualUnmodifiableListView(_mentions);
 }
 
+ final  List<MediaDto> _media;
+@override@JsonKey() List<MediaDto> get media {
+  if (_media is EqualUnmodifiableListView) return _media;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_media);
+}
+
 
 /// Create a copy of PostDto
 /// with the given fields replaced by the non-null parameter values.
@@ -352,16 +360,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PostDto&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.content, content) || other.content == content)&&(identical(other.contentJson, contentJson) || other.contentJson == contentJson)&&(identical(other.visibility, visibility) || other.visibility == visibility)&&(identical(other.likeCount, likeCount) || other.likeCount == likeCount)&&(identical(other.commentCount, commentCount) || other.commentCount == commentCount)&&(identical(other.shareCount, shareCount) || other.shareCount == shareCount)&&(identical(other.viewCount, viewCount) || other.viewCount == viewCount)&&(identical(other.repostCount, repostCount) || other.repostCount == repostCount)&&(identical(other.quoteCount, quoteCount) || other.quoteCount == quoteCount)&&(identical(other.mentionCount, mentionCount) || other.mentionCount == mentionCount)&&(identical(other.language, language) || other.language == language)&&(identical(other.difficulty, difficulty) || other.difficulty == difficulty)&&const DeepCollectionEquality().equals(other._topics, _topics)&&(identical(other.isReported, isReported) || other.isReported == isReported)&&(identical(other.isPinned, isPinned) || other.isPinned == isPinned)&&(identical(other.isFeatured, isFeatured) || other.isFeatured == isFeatured)&&(identical(other.inReplyToPostId, inReplyToPostId) || other.inReplyToPostId == inReplyToPostId)&&(identical(other.inReplyToUserId, inReplyToUserId) || other.inReplyToUserId == inReplyToUserId)&&(identical(other.repostOfId, repostOfId) || other.repostOfId == repostOfId)&&(identical(other.quoteOfId, quoteOfId) || other.quoteOfId == quoteOfId)&&(identical(other.inReplyToPost, inReplyToPost) || other.inReplyToPost == inReplyToPost)&&(identical(other.repostOf, repostOf) || other.repostOf == repostOf)&&(identical(other.quoteOf, quoteOf) || other.quoteOf == quoteOf)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt)&&(identical(other.bookmarkedAt, bookmarkedAt) || other.bookmarkedAt == bookmarkedAt)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.user, user) || other.user == user)&&const DeepCollectionEquality().equals(other._hashtags, _hashtags)&&const DeepCollectionEquality().equals(other._mentions, _mentions));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PostDto&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.content, content) || other.content == content)&&(identical(other.contentJson, contentJson) || other.contentJson == contentJson)&&(identical(other.visibility, visibility) || other.visibility == visibility)&&(identical(other.likeCount, likeCount) || other.likeCount == likeCount)&&(identical(other.commentCount, commentCount) || other.commentCount == commentCount)&&(identical(other.shareCount, shareCount) || other.shareCount == shareCount)&&(identical(other.viewCount, viewCount) || other.viewCount == viewCount)&&(identical(other.repostCount, repostCount) || other.repostCount == repostCount)&&(identical(other.quoteCount, quoteCount) || other.quoteCount == quoteCount)&&(identical(other.mentionCount, mentionCount) || other.mentionCount == mentionCount)&&(identical(other.language, language) || other.language == language)&&(identical(other.difficulty, difficulty) || other.difficulty == difficulty)&&const DeepCollectionEquality().equals(other._topics, _topics)&&(identical(other.isReported, isReported) || other.isReported == isReported)&&(identical(other.isPinned, isPinned) || other.isPinned == isPinned)&&(identical(other.isFeatured, isFeatured) || other.isFeatured == isFeatured)&&(identical(other.inReplyToPostId, inReplyToPostId) || other.inReplyToPostId == inReplyToPostId)&&(identical(other.inReplyToUserId, inReplyToUserId) || other.inReplyToUserId == inReplyToUserId)&&(identical(other.repostOfId, repostOfId) || other.repostOfId == repostOfId)&&(identical(other.quoteOfId, quoteOfId) || other.quoteOfId == quoteOfId)&&(identical(other.inReplyToPost, inReplyToPost) || other.inReplyToPost == inReplyToPost)&&(identical(other.repostOf, repostOf) || other.repostOf == repostOf)&&(identical(other.quoteOf, quoteOf) || other.quoteOf == quoteOf)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt)&&(identical(other.bookmarkedAt, bookmarkedAt) || other.bookmarkedAt == bookmarkedAt)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.user, user) || other.user == user)&&const DeepCollectionEquality().equals(other._hashtags, _hashtags)&&const DeepCollectionEquality().equals(other._mentions, _mentions)&&const DeepCollectionEquality().equals(other._media, _media));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hashAll([runtimeType,id,userId,content,contentJson,visibility,likeCount,commentCount,shareCount,viewCount,repostCount,quoteCount,mentionCount,language,difficulty,const DeepCollectionEquality().hash(_topics),isReported,isPinned,isFeatured,inReplyToPostId,inReplyToUserId,repostOfId,quoteOfId,inReplyToPost,repostOf,quoteOf,deletedAt,bookmarkedAt,createdAt,updatedAt,user,const DeepCollectionEquality().hash(_hashtags),const DeepCollectionEquality().hash(_mentions)]);
+int get hashCode => Object.hashAll([runtimeType,id,userId,content,contentJson,visibility,likeCount,commentCount,shareCount,viewCount,repostCount,quoteCount,mentionCount,language,difficulty,const DeepCollectionEquality().hash(_topics),isReported,isPinned,isFeatured,inReplyToPostId,inReplyToUserId,repostOfId,quoteOfId,inReplyToPost,repostOf,quoteOf,deletedAt,bookmarkedAt,createdAt,updatedAt,user,const DeepCollectionEquality().hash(_hashtags),const DeepCollectionEquality().hash(_mentions),const DeepCollectionEquality().hash(_media)]);
 
 @override
 String toString() {
-  return 'PostDto(id: $id, userId: $userId, content: $content, contentJson: $contentJson, visibility: $visibility, likeCount: $likeCount, commentCount: $commentCount, shareCount: $shareCount, viewCount: $viewCount, repostCount: $repostCount, quoteCount: $quoteCount, mentionCount: $mentionCount, language: $language, difficulty: $difficulty, topics: $topics, isReported: $isReported, isPinned: $isPinned, isFeatured: $isFeatured, inReplyToPostId: $inReplyToPostId, inReplyToUserId: $inReplyToUserId, repostOfId: $repostOfId, quoteOfId: $quoteOfId, inReplyToPost: $inReplyToPost, repostOf: $repostOf, quoteOf: $quoteOf, deletedAt: $deletedAt, bookmarkedAt: $bookmarkedAt, createdAt: $createdAt, updatedAt: $updatedAt, user: $user, hashtags: $hashtags, mentions: $mentions)';
+  return 'PostDto(id: $id, userId: $userId, content: $content, contentJson: $contentJson, visibility: $visibility, likeCount: $likeCount, commentCount: $commentCount, shareCount: $shareCount, viewCount: $viewCount, repostCount: $repostCount, quoteCount: $quoteCount, mentionCount: $mentionCount, language: $language, difficulty: $difficulty, topics: $topics, isReported: $isReported, isPinned: $isPinned, isFeatured: $isFeatured, inReplyToPostId: $inReplyToPostId, inReplyToUserId: $inReplyToUserId, repostOfId: $repostOfId, quoteOfId: $quoteOfId, inReplyToPost: $inReplyToPost, repostOf: $repostOf, quoteOf: $quoteOf, deletedAt: $deletedAt, bookmarkedAt: $bookmarkedAt, createdAt: $createdAt, updatedAt: $updatedAt, user: $user, hashtags: $hashtags, mentions: $mentions, media: $media)';
 }
 
 
@@ -372,7 +380,7 @@ abstract mixin class _$PostDtoCopyWith<$Res> implements $PostDtoCopyWith<$Res> {
   factory _$PostDtoCopyWith(_PostDto value, $Res Function(_PostDto) _then) = __$PostDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String userId, String content, String? contentJson, String visibility, int likeCount, int commentCount, int shareCount, int viewCount, int repostCount, int quoteCount, int mentionCount, String language, String difficulty, List<String> topics, bool isReported, bool isPinned, bool isFeatured, String? inReplyToPostId, String? inReplyToUserId, String? repostOfId, String? quoteOfId, ReferencedPostDto? inReplyToPost, ReferencedPostDto? repostOf, ReferencedPostDto? quoteOf, DateTime? deletedAt, DateTime? bookmarkedAt, DateTime createdAt, DateTime updatedAt, PostUserDto user, List<HashtagDto> hashtags, List<MentionDto> mentions
+ String id, String userId, String content, String? contentJson, String visibility, int likeCount, int commentCount, int shareCount, int viewCount, int repostCount, int quoteCount, int mentionCount, String language, String difficulty, List<String> topics, bool isReported, bool isPinned, bool isFeatured, String? inReplyToPostId, String? inReplyToUserId, String? repostOfId, String? quoteOfId, ReferencedPostDto? inReplyToPost, ReferencedPostDto? repostOf, ReferencedPostDto? quoteOf, DateTime? deletedAt, DateTime? bookmarkedAt, DateTime createdAt, DateTime updatedAt, PostUserDto user, List<HashtagDto> hashtags, List<MentionDto> mentions, List<MediaDto> media
 });
 
 
@@ -389,7 +397,7 @@ class __$PostDtoCopyWithImpl<$Res>
 
 /// Create a copy of PostDto
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? userId = null,Object? content = null,Object? contentJson = freezed,Object? visibility = null,Object? likeCount = null,Object? commentCount = null,Object? shareCount = null,Object? viewCount = null,Object? repostCount = null,Object? quoteCount = null,Object? mentionCount = null,Object? language = null,Object? difficulty = null,Object? topics = null,Object? isReported = null,Object? isPinned = null,Object? isFeatured = null,Object? inReplyToPostId = freezed,Object? inReplyToUserId = freezed,Object? repostOfId = freezed,Object? quoteOfId = freezed,Object? inReplyToPost = freezed,Object? repostOf = freezed,Object? quoteOf = freezed,Object? deletedAt = freezed,Object? bookmarkedAt = freezed,Object? createdAt = null,Object? updatedAt = null,Object? user = null,Object? hashtags = null,Object? mentions = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? userId = null,Object? content = null,Object? contentJson = freezed,Object? visibility = null,Object? likeCount = null,Object? commentCount = null,Object? shareCount = null,Object? viewCount = null,Object? repostCount = null,Object? quoteCount = null,Object? mentionCount = null,Object? language = null,Object? difficulty = null,Object? topics = null,Object? isReported = null,Object? isPinned = null,Object? isFeatured = null,Object? inReplyToPostId = freezed,Object? inReplyToUserId = freezed,Object? repostOfId = freezed,Object? quoteOfId = freezed,Object? inReplyToPost = freezed,Object? repostOf = freezed,Object? quoteOf = freezed,Object? deletedAt = freezed,Object? bookmarkedAt = freezed,Object? createdAt = null,Object? updatedAt = null,Object? user = null,Object? hashtags = null,Object? mentions = null,Object? media = null,}) {
   return _then(_PostDto(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
@@ -423,7 +431,8 @@ as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore
 as DateTime,user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
 as PostUserDto,hashtags: null == hashtags ? _self._hashtags : hashtags // ignore: cast_nullable_to_non_nullable
 as List<HashtagDto>,mentions: null == mentions ? _self._mentions : mentions // ignore: cast_nullable_to_non_nullable
-as List<MentionDto>,
+as List<MentionDto>,media: null == media ? _self._media : media // ignore: cast_nullable_to_non_nullable
+as List<MediaDto>,
   ));
 }
 
@@ -473,6 +482,281 @@ $PostUserDtoCopyWith<$Res> get user {
     return _then(_self.copyWith(user: value));
   });
 }
+}
+
+
+/// @nodoc
+mixin _$MediaDto {
+
+ String get id; String get url; String get type; int get ordinal; String? get metadata;
+/// Create a copy of MediaDto
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$MediaDtoCopyWith<MediaDto> get copyWith => _$MediaDtoCopyWithImpl<MediaDto>(this as MediaDto, _$identity);
+
+  /// Serializes this MediaDto to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MediaDto&&(identical(other.id, id) || other.id == id)&&(identical(other.url, url) || other.url == url)&&(identical(other.type, type) || other.type == type)&&(identical(other.ordinal, ordinal) || other.ordinal == ordinal)&&(identical(other.metadata, metadata) || other.metadata == metadata));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,url,type,ordinal,metadata);
+
+@override
+String toString() {
+  return 'MediaDto(id: $id, url: $url, type: $type, ordinal: $ordinal, metadata: $metadata)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $MediaDtoCopyWith<$Res>  {
+  factory $MediaDtoCopyWith(MediaDto value, $Res Function(MediaDto) _then) = _$MediaDtoCopyWithImpl;
+@useResult
+$Res call({
+ String id, String url, String type, int ordinal, String? metadata
+});
+
+
+
+
+}
+/// @nodoc
+class _$MediaDtoCopyWithImpl<$Res>
+    implements $MediaDtoCopyWith<$Res> {
+  _$MediaDtoCopyWithImpl(this._self, this._then);
+
+  final MediaDto _self;
+  final $Res Function(MediaDto) _then;
+
+/// Create a copy of MediaDto
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? url = null,Object? type = null,Object? ordinal = null,Object? metadata = freezed,}) {
+  return _then(_self.copyWith(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,url: null == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
+as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as String,ordinal: null == ordinal ? _self.ordinal : ordinal // ignore: cast_nullable_to_non_nullable
+as int,metadata: freezed == metadata ? _self.metadata : metadata // ignore: cast_nullable_to_non_nullable
+as String?,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [MediaDto].
+extension MediaDtoPatterns on MediaDto {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _MediaDto value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _MediaDto() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _MediaDto value)  $default,){
+final _that = this;
+switch (_that) {
+case _MediaDto():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _MediaDto value)?  $default,){
+final _that = this;
+switch (_that) {
+case _MediaDto() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String url,  String type,  int ordinal,  String? metadata)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _MediaDto() when $default != null:
+return $default(_that.id,_that.url,_that.type,_that.ordinal,_that.metadata);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String url,  String type,  int ordinal,  String? metadata)  $default,) {final _that = this;
+switch (_that) {
+case _MediaDto():
+return $default(_that.id,_that.url,_that.type,_that.ordinal,_that.metadata);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String url,  String type,  int ordinal,  String? metadata)?  $default,) {final _that = this;
+switch (_that) {
+case _MediaDto() when $default != null:
+return $default(_that.id,_that.url,_that.type,_that.ordinal,_that.metadata);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _MediaDto extends MediaDto {
+  const _MediaDto({required this.id, required this.url, required this.type, required this.ordinal, this.metadata}): super._();
+  factory _MediaDto.fromJson(Map<String, dynamic> json) => _$MediaDtoFromJson(json);
+
+@override final  String id;
+@override final  String url;
+@override final  String type;
+@override final  int ordinal;
+@override final  String? metadata;
+
+/// Create a copy of MediaDto
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$MediaDtoCopyWith<_MediaDto> get copyWith => __$MediaDtoCopyWithImpl<_MediaDto>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$MediaDtoToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MediaDto&&(identical(other.id, id) || other.id == id)&&(identical(other.url, url) || other.url == url)&&(identical(other.type, type) || other.type == type)&&(identical(other.ordinal, ordinal) || other.ordinal == ordinal)&&(identical(other.metadata, metadata) || other.metadata == metadata));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,url,type,ordinal,metadata);
+
+@override
+String toString() {
+  return 'MediaDto(id: $id, url: $url, type: $type, ordinal: $ordinal, metadata: $metadata)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$MediaDtoCopyWith<$Res> implements $MediaDtoCopyWith<$Res> {
+  factory _$MediaDtoCopyWith(_MediaDto value, $Res Function(_MediaDto) _then) = __$MediaDtoCopyWithImpl;
+@override @useResult
+$Res call({
+ String id, String url, String type, int ordinal, String? metadata
+});
+
+
+
+
+}
+/// @nodoc
+class __$MediaDtoCopyWithImpl<$Res>
+    implements _$MediaDtoCopyWith<$Res> {
+  __$MediaDtoCopyWithImpl(this._self, this._then);
+
+  final _MediaDto _self;
+  final $Res Function(_MediaDto) _then;
+
+/// Create a copy of MediaDto
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? url = null,Object? type = null,Object? ordinal = null,Object? metadata = freezed,}) {
+  return _then(_MediaDto(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,url: null == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
+as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as String,ordinal: null == ordinal ? _self.ordinal : ordinal // ignore: cast_nullable_to_non_nullable
+as int,metadata: freezed == metadata ? _self.metadata : metadata // ignore: cast_nullable_to_non_nullable
+as String?,
+  ));
+}
+
+
 }
 
 
