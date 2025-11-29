@@ -13,6 +13,7 @@ abstract class ProfileRemoteDataSource {
   });
   Future<Either<String, UserInfoDto>> getUserInfo();
   Future<Either<String, List<PostDto>>> getSelfPosts();
+  Future<Either<String, List<PostDto>>> getBookmarkedPosts();
 }
 
 @Injectable(as: ProfileRemoteDataSource)
@@ -50,6 +51,15 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
     final result = await _client.get(AppConstants.getFollowingPostsEndpoint);
     return result.fold(
       (error) => Left('Failed to fetch self posts: $error'),
+      (res) => Right((res.data['data'] as List).map((item) => PostDto.fromJson(item)).toList()),
+    );
+  }
+
+  @override
+  Future<Either<String, List<PostDto>>> getBookmarkedPosts() async {
+    final result = await _client.get(AppConstants.getBookmarkedPostsEndpoint);
+    return result.fold(
+      (error) => Left('Failed to fetch bookmarked posts: $error'),
       (res) => Right((res.data['data'] as List).map((item) => PostDto.fromJson(item)).toList()),
     );
   }

@@ -11,7 +11,12 @@ import 'package:kit/shared/widgets/network_image.dart';
 class FeedItem extends StatelessWidget {
     const FeedItem({
       super.key,
-      this.medias,
+      this.medias = const <String>[
+        "https://avatarmoi.com/wp-content/uploads/2025/07/Anh-gai-xinh-2k5-deo-kinh-can-dang-yeu.webp",
+        "https://auvi.edu.vn/wp-content/uploads/2025/02/anh-gai-xinh-trung-quoc-2.jpg",
+        "https://macshop24h.com/wp-content/uploads/2025/07/anh-gai-xinh-trung-quoc-20.jpeg",
+        "https://haycafe.vn/wp-content/uploads/2022/02/Anh-gai-xinh-Viet-Nam.jpg",
+      ],
       this.contents,
       this.tags,
       this.postUser,

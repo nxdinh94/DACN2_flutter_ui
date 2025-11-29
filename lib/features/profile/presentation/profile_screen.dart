@@ -7,6 +7,7 @@ import 'package:kit/core/utils/app_utils.dart';
 import 'package:kit/features/profile/data_source/model/update_profile_request.dart';
 import 'package:kit/features/profile/data_source/repository/user_info_entity.dart';
 import 'package:kit/features/profile/presentation/bloc/profile_bloc/profile_bloc.dart';
+import 'package:kit/features/profile/presentation/screens/book_marked_tab.dart';
 import 'package:kit/features/profile/presentation/widgets/posts_tab.dart';
 import 'package:kit/shared/widgets/app_bottom_sheet.dart';
 import 'package:kit/shared/widgets/app_button.dart';
@@ -27,7 +28,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: DefaultTabController(
-        length: 4,
+        length: 5,
         child: BlocConsumer<ProfileBloc, ProfileState>(
           builder: (BuildContext context, state) {
             final data = state.mapOrNull(
@@ -44,6 +45,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   RepliesTab(),
                   MediaTab(),
                   LikesTab(),
+                  BookMarkedTab(),
                 ],
               ),
             );
@@ -159,7 +161,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ? userInfo.avatar : 'https://www.shutterstock.com/image-vector/default-avatar-profile-icon-vector-600nw-1745180411.jpg',
                         size: 80,
                       ),
-                      // Follow button
+                      // Edit Profile button
                       AppButton.outlined(
                         onPressed: () => showAppBottomSheet(
                           child: EditProfileBottomSheet(),
@@ -246,6 +248,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     Tab(text: 'Replies'),
                     Tab(text: 'Media'),
                     Tab(text: 'Likes'),
+                    Tab(text: 'Bookmarked'),
                   ],
                 ),
               ],

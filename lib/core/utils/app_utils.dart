@@ -20,6 +20,7 @@ class AppConstants {
   static const String createPostEndpoint = '/api/post';
   static const String getFollowingPostsEndpoint = '/api/post/feed';
   static const String getForYouPostsEndpoint = '/api/post/public/';
+  static const String getBookmarkedPostsEndpoint = '/api/post/bookmarks';
   // Hive key
   static const String hiveDataBase = 'Linggo';
   static const String hiveUserInfoBox = 'user_info';

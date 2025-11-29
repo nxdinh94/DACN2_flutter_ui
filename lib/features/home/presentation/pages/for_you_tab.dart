@@ -108,7 +108,6 @@ class _ForYouTabView extends StatelessWidget {
               mentionCount: post.mentionCount,
               commentCount: post.commentCount,
               likeCount: post.likeCount,
-              medias: [],
             );
           },
         ),

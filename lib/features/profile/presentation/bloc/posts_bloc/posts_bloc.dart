@@ -14,16 +14,48 @@ part 'posts_bloc.freezed.dart';
 class PostsBloc extends Bloc<PostEvent, PostsState> {
   final ProfileRepository profileRepository;
   PostsBloc(this.profileRepository) : super(const PostsState.initial()) {
-   on<GetPosts>(_onGetPosts);
+   on<GetSelfPosts>(_onGetSelfPosts);
+   on<GetBookMarkedPosts>(_onGetBookMarkedPosts);
   }
-  Future<void> _onGetPosts(GetPosts event, Emitter<PostsState> emit) async {
+
+  Future<void> _onGetBookMarkedPosts(GetBookMarkedPosts event, Emitter<PostsState> emit) async {
+    emit(const PostsState.loading());
+    final result = await profileRepository.getBookMarkedPosts();
+    result.fold(
+      (error) => emit(PostsState.error(message: error)),
+      (posts) {
+          if(state is PostsLoaded) {
+            final currentState = state as PostsLoaded;
+            final newState = currentState.copyWith(
+              bookmarkedPosts: posts,
+            );
+            
+            emit(newState);
+          } else {
+            emit(PostsState.loaded(bookmarkedPosts: posts));
+          }
+      },
+    );
+
+  }
+
+  Future<void> _onGetSelfPosts(GetSelfPosts event, Emitter<PostsState> emit) async {
     emit(const PostsState.loading());
     final result = await profileRepository.getSelfPosts();
     result.fold(
       (error) => emit(PostsState.error(message: error)),
-      (posts) => emit(PostsState.loaded(
-        selfPosts: posts,
-      )),
+      (posts) {
+          if(state is PostsLoaded) {
+            final currentState = state as PostsLoaded;
+            final newState = currentState.copyWith(
+              selfPosts: posts,
+            );
+            
+            emit(newState);
+          } else {
+            emit(PostsState.loaded(selfPosts: posts));
+          }
+      },
     );
 
   }

@@ -13,7 +13,7 @@ class PostsTab extends StatefulWidget {
 class _PostsTabState extends State<PostsTab> with AutomaticKeepAliveClientMixin<PostsTab> {
    @override
   void initState() {
-    context.read<PostsBloc>().add(GetPosts(page: 10));
+    context.read<PostsBloc>().add(GetSelfPosts(page: 10));
     super.initState();
   }
 

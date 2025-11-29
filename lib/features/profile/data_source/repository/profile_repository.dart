@@ -14,9 +14,8 @@ abstract class ProfileRepository {
     required UpdateProfileRequest data
   });
   Future<Either<String, UserInfoEntity>> getUserInfo();
-
   Future<Either<String, List<PostEntity>>> getSelfPosts();
-
+  Future<Either<String, List<PostEntity>>> getBookMarkedPosts();
 }
 @Injectable(as: ProfileRepository)
 class ProfileRepositoryImpl implements ProfileRepository {
@@ -105,6 +104,14 @@ class ProfileRepositoryImpl implements ProfileRepository {
     );
   }
 
+  @override
+  Future<Either<String, List<PostEntity>>> getBookMarkedPosts() async {
+    final result = await remoteDataSource.getBookmarkedPosts();
+    return result.fold(
+      (error) => Left(error),
+      (posts) => Right(posts.map((dto) => dto.toEntity()).toList()),
+    );
+  }
 }
 
 

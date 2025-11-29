@@ -86,11 +86,12 @@ extension PostEventPatterns on PostEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( GetPosts value)?  getPosts,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( GetSelfPosts value)?  getSelfPosts,TResult Function( GetBookMarkedPosts value)?  getBookMarkedPosts,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case GetPosts() when getPosts != null:
-return getPosts(_that);case _:
+case GetSelfPosts() when getSelfPosts != null:
+return getSelfPosts(_that);case GetBookMarkedPosts() when getBookMarkedPosts != null:
+return getBookMarkedPosts(_that);case _:
   return orElse();
 
 }
@@ -108,11 +109,12 @@ return getPosts(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( GetPosts value)  getPosts,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( GetSelfPosts value)  getSelfPosts,required TResult Function( GetBookMarkedPosts value)  getBookMarkedPosts,}){
 final _that = this;
 switch (_that) {
-case GetPosts():
-return getPosts(_that);case _:
+case GetSelfPosts():
+return getSelfPosts(_that);case GetBookMarkedPosts():
+return getBookMarkedPosts(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -129,11 +131,12 @@ return getPosts(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( GetPosts value)?  getPosts,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( GetSelfPosts value)?  getSelfPosts,TResult? Function( GetBookMarkedPosts value)?  getBookMarkedPosts,}){
 final _that = this;
 switch (_that) {
-case GetPosts() when getPosts != null:
-return getPosts(_that);case _:
+case GetSelfPosts() when getSelfPosts != null:
+return getSelfPosts(_that);case GetBookMarkedPosts() when getBookMarkedPosts != null:
+return getBookMarkedPosts(_that);case _:
   return null;
 
 }
@@ -150,10 +153,11 @@ return getPosts(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( int page)?  getPosts,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( int page)?  getSelfPosts,TResult Function( int page)?  getBookMarkedPosts,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case GetPosts() when getPosts != null:
-return getPosts(_that.page);case _:
+case GetSelfPosts() when getSelfPosts != null:
+return getSelfPosts(_that.page);case GetBookMarkedPosts() when getBookMarkedPosts != null:
+return getBookMarkedPosts(_that.page);case _:
   return orElse();
 
 }
@@ -171,10 +175,11 @@ return getPosts(_that.page);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( int page)  getPosts,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( int page)  getSelfPosts,required TResult Function( int page)  getBookMarkedPosts,}) {final _that = this;
 switch (_that) {
-case GetPosts():
-return getPosts(_that.page);case _:
+case GetSelfPosts():
+return getSelfPosts(_that.page);case GetBookMarkedPosts():
+return getBookMarkedPosts(_that.page);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -191,10 +196,11 @@ return getPosts(_that.page);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( int page)?  getPosts,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( int page)?  getSelfPosts,TResult? Function( int page)?  getBookMarkedPosts,}) {final _that = this;
 switch (_that) {
-case GetPosts() when getPosts != null:
-return getPosts(_that.page);case _:
+case GetSelfPosts() when getSelfPosts != null:
+return getSelfPosts(_that.page);case GetBookMarkedPosts() when getBookMarkedPosts != null:
+return getBookMarkedPosts(_that.page);case _:
   return null;
 
 }
@@ -205,8 +211,8 @@ return getPosts(_that.page);case _:
 /// @nodoc
 
 
-class GetPosts implements PostEvent {
-   GetPosts({required this.page});
+class GetSelfPosts implements PostEvent {
+   GetSelfPosts({required this.page});
   
 
 @override final  int page;
@@ -215,13 +221,13 @@ class GetPosts implements PostEvent {
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$GetPostsCopyWith<GetPosts> get copyWith => _$GetPostsCopyWithImpl<GetPosts>(this, _$identity);
+$GetSelfPostsCopyWith<GetSelfPosts> get copyWith => _$GetSelfPostsCopyWithImpl<GetSelfPosts>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is GetPosts&&(identical(other.page, page) || other.page == page));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is GetSelfPosts&&(identical(other.page, page) || other.page == page));
 }
 
 
@@ -230,15 +236,15 @@ int get hashCode => Object.hash(runtimeType,page);
 
 @override
 String toString() {
-  return 'PostEvent.getPosts(page: $page)';
+  return 'PostEvent.getSelfPosts(page: $page)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $GetPostsCopyWith<$Res> implements $PostEventCopyWith<$Res> {
-  factory $GetPostsCopyWith(GetPosts value, $Res Function(GetPosts) _then) = _$GetPostsCopyWithImpl;
+abstract mixin class $GetSelfPostsCopyWith<$Res> implements $PostEventCopyWith<$Res> {
+  factory $GetSelfPostsCopyWith(GetSelfPosts value, $Res Function(GetSelfPosts) _then) = _$GetSelfPostsCopyWithImpl;
 @override @useResult
 $Res call({
  int page
@@ -249,17 +255,83 @@ $Res call({
 
 }
 /// @nodoc
-class _$GetPostsCopyWithImpl<$Res>
-    implements $GetPostsCopyWith<$Res> {
-  _$GetPostsCopyWithImpl(this._self, this._then);
+class _$GetSelfPostsCopyWithImpl<$Res>
+    implements $GetSelfPostsCopyWith<$Res> {
+  _$GetSelfPostsCopyWithImpl(this._self, this._then);
 
-  final GetPosts _self;
-  final $Res Function(GetPosts) _then;
+  final GetSelfPosts _self;
+  final $Res Function(GetSelfPosts) _then;
 
 /// Create a copy of PostEvent
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? page = null,}) {
-  return _then(GetPosts(
+  return _then(GetSelfPosts(
+page: null == page ? _self.page : page // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class GetBookMarkedPosts implements PostEvent {
+   GetBookMarkedPosts({required this.page});
+  
+
+@override final  int page;
+
+/// Create a copy of PostEvent
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$GetBookMarkedPostsCopyWith<GetBookMarkedPosts> get copyWith => _$GetBookMarkedPostsCopyWithImpl<GetBookMarkedPosts>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is GetBookMarkedPosts&&(identical(other.page, page) || other.page == page));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,page);
+
+@override
+String toString() {
+  return 'PostEvent.getBookMarkedPosts(page: $page)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $GetBookMarkedPostsCopyWith<$Res> implements $PostEventCopyWith<$Res> {
+  factory $GetBookMarkedPostsCopyWith(GetBookMarkedPosts value, $Res Function(GetBookMarkedPosts) _then) = _$GetBookMarkedPostsCopyWithImpl;
+@override @useResult
+$Res call({
+ int page
+});
+
+
+
+
+}
+/// @nodoc
+class _$GetBookMarkedPostsCopyWithImpl<$Res>
+    implements $GetBookMarkedPostsCopyWith<$Res> {
+  _$GetBookMarkedPostsCopyWithImpl(this._self, this._then);
+
+  final GetBookMarkedPosts _self;
+  final $Res Function(GetBookMarkedPosts) _then;
+
+/// Create a copy of PostEvent
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? page = null,}) {
+  return _then(GetBookMarkedPosts(
 page: null == page ? _self.page : page // ignore: cast_nullable_to_non_nullable
 as int,
   ));
