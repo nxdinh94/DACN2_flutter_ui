@@ -12,18 +12,17 @@ abstract class ProfileLocalDataSource {
 @Injectable(as: ProfileLocalDataSource)
 class ProfileLocalDataSourceImpl implements ProfileLocalDataSource {
   final HiveClient hiveClient;
-  static const String userInfoKey = 'cached_user_info';
 
   ProfileLocalDataSourceImpl(this.hiveClient);
 
   @override
   Future<void> cacheUserInfo(UserInfoDto userInfo) async {
-    await hiveClient.put(AppConstants.hiveUserInfoBox, userInfoKey, userInfo.toJson());
+    await hiveClient.put(AppConstants.hiveUserInfoBox, AppConstants.userInfoKey, userInfo.toJson());
   }
 
   @override
   Future<UserInfoDto?> getCachedUserInfo() async {
-    final data = await hiveClient.get(AppConstants.hiveUserInfoBox, userInfoKey);
+    final data = await hiveClient.get(AppConstants.hiveUserInfoBox, AppConstants.userInfoKey);
     if (data != null) {
       return UserInfoDto.fromJson(Map<String, dynamic>.from(data));
     }
@@ -32,6 +31,6 @@ class ProfileLocalDataSourceImpl implements ProfileLocalDataSource {
 
   @override
   Future<void> clearCachedUserInfo() async {
-    await hiveClient.delete(AppConstants.hiveUserInfoBox, userInfoKey);
+    await hiveClient.delete(AppConstants.hiveUserInfoBox, AppConstants.userInfoKey);
   }
 }

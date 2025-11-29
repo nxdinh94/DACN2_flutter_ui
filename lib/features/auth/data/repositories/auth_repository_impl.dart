@@ -1,6 +1,7 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
 import 'package:kit/core/logger/logger.dart';
+import 'package:kit/core/network/hive_client.dart';
 import 'package:kit/core/utils/auth_token_services.dart';
 import 'package:kit/features/auth/domain/entities/login.dart';
 import 'package:kit/features/auth/domain/entities/register.dart';
@@ -13,12 +14,14 @@ import '../datasources/auth_remote_data_source.dart';
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource remoteDataSource;
   final AuthTokenServices authTokenServices;
+  final HiveClient hiveClient;
 
   final AppLogger _appLogger = AppLogger();
 
   AuthRepositoryImpl({
     required this.remoteDataSource,
     required this.authTokenServices,
+    required this.hiveClient,
   });
 
   @override
@@ -50,7 +53,10 @@ class AuthRepositoryImpl implements AuthRepository {
     return result.fold(
       (error) => Left('Logout went wrong'),
       (isLoggedOut) async {
+        // Delete tokens
         await authTokenServices.deleteBothToken();
+        // Clear all cached data
+        await hiveClient.clearAllBoxes();
         return Right(isLoggedOut);
       },
     );

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 
@@ -12,9 +14,7 @@ class AppLogger {
   }
 
   void info(String message) {
-    if (kDebugMode) {
-      debugPrint('$_prefix INFO: $message');
-    }
+    log('$_prefix INFO: $message');
   }
 
   void warning(String message) {

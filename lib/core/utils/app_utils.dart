@@ -23,6 +23,8 @@ class AppConstants {
   // Hive key
   static const String hiveDataBase = 'Linggo';
   static const String hiveUserInfoBox = 'user_info';
+  static const String userInfoKey = 'cached_user_info';
+
   static const String hiveSettingsBox = 'settings';
   static const String hiveThemeModeBox = 'theme_mode';
 

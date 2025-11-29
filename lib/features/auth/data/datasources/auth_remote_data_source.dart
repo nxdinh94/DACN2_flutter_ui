@@ -17,7 +17,7 @@ abstract class AuthRemoteDataSource {
 @Injectable(as: AuthRemoteDataSource)
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final DioClient dioClient;
-
+  
   AuthRemoteDataSourceImpl({required this.dioClient});
 
   @override

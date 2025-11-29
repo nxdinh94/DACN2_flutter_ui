@@ -129,17 +129,15 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i491.CreatePostBloc>(
       () => _i491.CreatePostBloc(gh<_i528.CreatePostUseCase>()),
     );
-    gh.factory<_i989.HomeRepository>(
-      () => _i989.HomeRepositoryImpl(gh<_i364.HomeRemoteDataSource>()),
-    );
     gh.factory<_i787.AuthRepository>(
       () => _i153.AuthRepositoryImpl(
         remoteDataSource: gh<_i107.AuthRemoteDataSource>(),
         authTokenServices: gh<_i822.AuthTokenServices>(),
+        hiveClient: gh<_i980.HiveClient>(),
       ),
     );
-    gh.factory<_i866.ForYouBloc>(
-      () => _i866.ForYouBloc(gh<_i989.HomeRepository>()),
+    gh.factory<_i989.HomeRepository>(
+      () => _i989.HomeRepositoryImpl(gh<_i364.HomeRemoteDataSource>()),
     );
     gh.factory<_i188.LoginUseCase>(
       () => _i188.LoginUseCase(gh<_i787.AuthRepository>()),
@@ -156,6 +154,9 @@ extension GetItInjectableX on _i174.GetIt {
         logoutUseCase: gh<_i48.LogoutUseCase>(),
         registerUseCase: gh<_i941.RegisterUseCase>(),
       ),
+    );
+    gh.factory<_i866.ForYouBloc>(
+      () => _i866.ForYouBloc(gh<_i989.HomeRepository>()),
     );
     return this;
   }
