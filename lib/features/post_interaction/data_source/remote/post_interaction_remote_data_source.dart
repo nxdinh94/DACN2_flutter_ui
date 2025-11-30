@@ -5,6 +5,7 @@ import 'package:kit/core/utils/app_utils.dart';
 
 abstract class PostInteractionRemoteDataSource {
   Future<Either<String, bool>> bookmarkPost({required String postId});
+  Future<Either<String, bool>> likePost({required String postId});
 }
 
 @Injectable(as: PostInteractionRemoteDataSource)
@@ -20,6 +21,17 @@ class PostInteractionRemoteDataSourceImpl implements PostInteractionRemoteDataSo
 
     return result.fold(
       (error) => Left('Failed to bookmark post: ${error.toString()}'),
+      (response) => const Right(true),
+    );
+  }
+
+  @override
+  Future<Either<String, bool>> likePost({required String postId}) async {
+    final endpoint = AppConstants.likeAnPostEndpoint.replaceFirst(':id', postId);
+    final result = await dioClient.post(endpoint);
+
+    return result.fold(
+      (error) => Left('Failed to like post: ${error.toString()}'),
       (response) => const Right(true),
     );
   }

@@ -4,6 +4,7 @@ import 'package:kit/features/post_interaction/data_source/remote/post_interactio
 
 abstract class PostInteractionRepository {
   Future<Either<String, bool>> bookmarkPost({required String postId});
+  Future<Either<String, bool>> likePost({required String postId});
 }
 
 @Injectable(as: PostInteractionRepository)
@@ -15,5 +16,10 @@ class PostInteractionRepositoryImpl implements PostInteractionRepository {
   @override
   Future<Either<String, bool>> bookmarkPost({required String postId}) async {
     return remoteDataSource.bookmarkPost(postId: postId);
+  }
+
+  @override
+  Future<Either<String, bool>> likePost({required String postId}) async {
+    return remoteDataSource.likePost(postId: postId);
   }
 }

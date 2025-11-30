@@ -555,30 +555,64 @@ as String,
 /// @nodoc
 mixin _$PostInteractionState {
 
-
+ InteractionType get type; InteractionStatus get status; String? get postId; String? get message;
+/// Create a copy of PostInteractionState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$PostInteractionStateCopyWith<PostInteractionState> get copyWith => _$PostInteractionStateCopyWithImpl<PostInteractionState>(this as PostInteractionState, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PostInteractionState);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PostInteractionState&&(identical(other.type, type) || other.type == type)&&(identical(other.status, status) || other.status == status)&&(identical(other.postId, postId) || other.postId == postId)&&(identical(other.message, message) || other.message == message));
 }
 
 
 @override
-int get hashCode => runtimeType.hashCode;
+int get hashCode => Object.hash(runtimeType,type,status,postId,message);
 
 @override
 String toString() {
-  return 'PostInteractionState()';
+  return 'PostInteractionState(type: $type, status: $status, postId: $postId, message: $message)';
 }
 
 
 }
 
 /// @nodoc
-class $PostInteractionStateCopyWith<$Res>  {
-$PostInteractionStateCopyWith(PostInteractionState _, $Res Function(PostInteractionState) __);
+abstract mixin class $PostInteractionStateCopyWith<$Res>  {
+  factory $PostInteractionStateCopyWith(PostInteractionState value, $Res Function(PostInteractionState) _then) = _$PostInteractionStateCopyWithImpl;
+@useResult
+$Res call({
+ InteractionType type, InteractionStatus status, String? postId, String? message
+});
+
+
+
+
+}
+/// @nodoc
+class _$PostInteractionStateCopyWithImpl<$Res>
+    implements $PostInteractionStateCopyWith<$Res> {
+  _$PostInteractionStateCopyWithImpl(this._self, this._then);
+
+  final PostInteractionState _self;
+  final $Res Function(PostInteractionState) _then;
+
+/// Create a copy of PostInteractionState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? type = null,Object? status = null,Object? postId = freezed,Object? message = freezed,}) {
+  return _then(_self.copyWith(
+type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as InteractionType,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as InteractionStatus,postId: freezed == postId ? _self.postId : postId // ignore: cast_nullable_to_non_nullable
+as String?,message: freezed == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+as String?,
+  ));
+}
+
 }
 
 
@@ -596,26 +630,11 @@ extension PostInteractionStatePatterns on PostInteractionState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( PostInteractionInitial value)?  initial,TResult Function( BookmarkLoading value)?  bookmarkLoading,TResult Function( BookmarkSuccess value)?  bookmarkSuccess,TResult Function( BookmarkError value)?  bookmarkError,TResult Function( LikeLoading value)?  likeLoading,TResult Function( LikeSuccess value)?  likeSuccess,TResult Function( LikeError value)?  likeError,TResult Function( CommentLoading value)?  commentLoading,TResult Function( CommentSuccess value)?  commentSuccess,TResult Function( CommentError value)?  commentError,TResult Function( RepostLoading value)?  repostLoading,TResult Function( RepostSuccess value)?  repostSuccess,TResult Function( RepostError value)?  repostError,TResult Function( ShareLoading value)?  shareLoading,TResult Function( ShareSuccess value)?  shareSuccess,TResult Function( ShareError value)?  shareError,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _PostInteractionState value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case PostInteractionInitial() when initial != null:
-return initial(_that);case BookmarkLoading() when bookmarkLoading != null:
-return bookmarkLoading(_that);case BookmarkSuccess() when bookmarkSuccess != null:
-return bookmarkSuccess(_that);case BookmarkError() when bookmarkError != null:
-return bookmarkError(_that);case LikeLoading() when likeLoading != null:
-return likeLoading(_that);case LikeSuccess() when likeSuccess != null:
-return likeSuccess(_that);case LikeError() when likeError != null:
-return likeError(_that);case CommentLoading() when commentLoading != null:
-return commentLoading(_that);case CommentSuccess() when commentSuccess != null:
-return commentSuccess(_that);case CommentError() when commentError != null:
-return commentError(_that);case RepostLoading() when repostLoading != null:
-return repostLoading(_that);case RepostSuccess() when repostSuccess != null:
-return repostSuccess(_that);case RepostError() when repostError != null:
-return repostError(_that);case ShareLoading() when shareLoading != null:
-return shareLoading(_that);case ShareSuccess() when shareSuccess != null:
-return shareSuccess(_that);case ShareError() when shareError != null:
-return shareError(_that);case _:
+case _PostInteractionState() when $default != null:
+return $default(_that);case _:
   return orElse();
 
 }
@@ -633,26 +652,14 @@ return shareError(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( PostInteractionInitial value)  initial,required TResult Function( BookmarkLoading value)  bookmarkLoading,required TResult Function( BookmarkSuccess value)  bookmarkSuccess,required TResult Function( BookmarkError value)  bookmarkError,required TResult Function( LikeLoading value)  likeLoading,required TResult Function( LikeSuccess value)  likeSuccess,required TResult Function( LikeError value)  likeError,required TResult Function( CommentLoading value)  commentLoading,required TResult Function( CommentSuccess value)  commentSuccess,required TResult Function( CommentError value)  commentError,required TResult Function( RepostLoading value)  repostLoading,required TResult Function( RepostSuccess value)  repostSuccess,required TResult Function( RepostError value)  repostError,required TResult Function( ShareLoading value)  shareLoading,required TResult Function( ShareSuccess value)  shareSuccess,required TResult Function( ShareError value)  shareError,}){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _PostInteractionState value)  $default,){
 final _that = this;
 switch (_that) {
-case PostInteractionInitial():
-return initial(_that);case BookmarkLoading():
-return bookmarkLoading(_that);case BookmarkSuccess():
-return bookmarkSuccess(_that);case BookmarkError():
-return bookmarkError(_that);case LikeLoading():
-return likeLoading(_that);case LikeSuccess():
-return likeSuccess(_that);case LikeError():
-return likeError(_that);case CommentLoading():
-return commentLoading(_that);case CommentSuccess():
-return commentSuccess(_that);case CommentError():
-return commentError(_that);case RepostLoading():
-return repostLoading(_that);case RepostSuccess():
-return repostSuccess(_that);case RepostError():
-return repostError(_that);case ShareLoading():
-return shareLoading(_that);case ShareSuccess():
-return shareSuccess(_that);case ShareError():
-return shareError(_that);}
+case _PostInteractionState():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -666,26 +673,11 @@ return shareError(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( PostInteractionInitial value)?  initial,TResult? Function( BookmarkLoading value)?  bookmarkLoading,TResult? Function( BookmarkSuccess value)?  bookmarkSuccess,TResult? Function( BookmarkError value)?  bookmarkError,TResult? Function( LikeLoading value)?  likeLoading,TResult? Function( LikeSuccess value)?  likeSuccess,TResult? Function( LikeError value)?  likeError,TResult? Function( CommentLoading value)?  commentLoading,TResult? Function( CommentSuccess value)?  commentSuccess,TResult? Function( CommentError value)?  commentError,TResult? Function( RepostLoading value)?  repostLoading,TResult? Function( RepostSuccess value)?  repostSuccess,TResult? Function( RepostError value)?  repostError,TResult? Function( ShareLoading value)?  shareLoading,TResult? Function( ShareSuccess value)?  shareSuccess,TResult? Function( ShareError value)?  shareError,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _PostInteractionState value)?  $default,){
 final _that = this;
 switch (_that) {
-case PostInteractionInitial() when initial != null:
-return initial(_that);case BookmarkLoading() when bookmarkLoading != null:
-return bookmarkLoading(_that);case BookmarkSuccess() when bookmarkSuccess != null:
-return bookmarkSuccess(_that);case BookmarkError() when bookmarkError != null:
-return bookmarkError(_that);case LikeLoading() when likeLoading != null:
-return likeLoading(_that);case LikeSuccess() when likeSuccess != null:
-return likeSuccess(_that);case LikeError() when likeError != null:
-return likeError(_that);case CommentLoading() when commentLoading != null:
-return commentLoading(_that);case CommentSuccess() when commentSuccess != null:
-return commentSuccess(_that);case CommentError() when commentError != null:
-return commentError(_that);case RepostLoading() when repostLoading != null:
-return repostLoading(_that);case RepostSuccess() when repostSuccess != null:
-return repostSuccess(_that);case RepostError() when repostError != null:
-return repostError(_that);case ShareLoading() when shareLoading != null:
-return shareLoading(_that);case ShareSuccess() when shareSuccess != null:
-return shareSuccess(_that);case ShareError() when shareError != null:
-return shareError(_that);case _:
+case _PostInteractionState() when $default != null:
+return $default(_that);case _:
   return null;
 
 }
@@ -702,25 +694,10 @@ return shareError(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function( String postId)?  bookmarkLoading,TResult Function( String postId)?  bookmarkSuccess,TResult Function( String postId,  String message)?  bookmarkError,TResult Function( String postId)?  likeLoading,TResult Function( String postId)?  likeSuccess,TResult Function( String postId,  String message)?  likeError,TResult Function( String postId)?  commentLoading,TResult Function( String postId)?  commentSuccess,TResult Function( String postId,  String message)?  commentError,TResult Function( String postId)?  repostLoading,TResult Function( String postId)?  repostSuccess,TResult Function( String postId,  String message)?  repostError,TResult Function( String postId)?  shareLoading,TResult Function( String postId)?  shareSuccess,TResult Function( String postId,  String message)?  shareError,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( InteractionType type,  InteractionStatus status,  String? postId,  String? message)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case PostInteractionInitial() when initial != null:
-return initial();case BookmarkLoading() when bookmarkLoading != null:
-return bookmarkLoading(_that.postId);case BookmarkSuccess() when bookmarkSuccess != null:
-return bookmarkSuccess(_that.postId);case BookmarkError() when bookmarkError != null:
-return bookmarkError(_that.postId,_that.message);case LikeLoading() when likeLoading != null:
-return likeLoading(_that.postId);case LikeSuccess() when likeSuccess != null:
-return likeSuccess(_that.postId);case LikeError() when likeError != null:
-return likeError(_that.postId,_that.message);case CommentLoading() when commentLoading != null:
-return commentLoading(_that.postId);case CommentSuccess() when commentSuccess != null:
-return commentSuccess(_that.postId);case CommentError() when commentError != null:
-return commentError(_that.postId,_that.message);case RepostLoading() when repostLoading != null:
-return repostLoading(_that.postId);case RepostSuccess() when repostSuccess != null:
-return repostSuccess(_that.postId);case RepostError() when repostError != null:
-return repostError(_that.postId,_that.message);case ShareLoading() when shareLoading != null:
-return shareLoading(_that.postId);case ShareSuccess() when shareSuccess != null:
-return shareSuccess(_that.postId);case ShareError() when shareError != null:
-return shareError(_that.postId,_that.message);case _:
+case _PostInteractionState() when $default != null:
+return $default(_that.type,_that.status,_that.postId,_that.message);case _:
   return orElse();
 
 }
@@ -738,25 +715,13 @@ return shareError(_that.postId,_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function( String postId)  bookmarkLoading,required TResult Function( String postId)  bookmarkSuccess,required TResult Function( String postId,  String message)  bookmarkError,required TResult Function( String postId)  likeLoading,required TResult Function( String postId)  likeSuccess,required TResult Function( String postId,  String message)  likeError,required TResult Function( String postId)  commentLoading,required TResult Function( String postId)  commentSuccess,required TResult Function( String postId,  String message)  commentError,required TResult Function( String postId)  repostLoading,required TResult Function( String postId)  repostSuccess,required TResult Function( String postId,  String message)  repostError,required TResult Function( String postId)  shareLoading,required TResult Function( String postId)  shareSuccess,required TResult Function( String postId,  String message)  shareError,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( InteractionType type,  InteractionStatus status,  String? postId,  String? message)  $default,) {final _that = this;
 switch (_that) {
-case PostInteractionInitial():
-return initial();case BookmarkLoading():
-return bookmarkLoading(_that.postId);case BookmarkSuccess():
-return bookmarkSuccess(_that.postId);case BookmarkError():
-return bookmarkError(_that.postId,_that.message);case LikeLoading():
-return likeLoading(_that.postId);case LikeSuccess():
-return likeSuccess(_that.postId);case LikeError():
-return likeError(_that.postId,_that.message);case CommentLoading():
-return commentLoading(_that.postId);case CommentSuccess():
-return commentSuccess(_that.postId);case CommentError():
-return commentError(_that.postId,_that.message);case RepostLoading():
-return repostLoading(_that.postId);case RepostSuccess():
-return repostSuccess(_that.postId);case RepostError():
-return repostError(_that.postId,_that.message);case ShareLoading():
-return shareLoading(_that.postId);case ShareSuccess():
-return shareSuccess(_that.postId);case ShareError():
-return shareError(_that.postId,_that.message);}
+case _PostInteractionState():
+return $default(_that.type,_that.status,_that.postId,_that.message);case _:
+  throw StateError('Unexpected subclass');
+
+}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -770,25 +735,10 @@ return shareError(_that.postId,_that.message);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function( String postId)?  bookmarkLoading,TResult? Function( String postId)?  bookmarkSuccess,TResult? Function( String postId,  String message)?  bookmarkError,TResult? Function( String postId)?  likeLoading,TResult? Function( String postId)?  likeSuccess,TResult? Function( String postId,  String message)?  likeError,TResult? Function( String postId)?  commentLoading,TResult? Function( String postId)?  commentSuccess,TResult? Function( String postId,  String message)?  commentError,TResult? Function( String postId)?  repostLoading,TResult? Function( String postId)?  repostSuccess,TResult? Function( String postId,  String message)?  repostError,TResult? Function( String postId)?  shareLoading,TResult? Function( String postId)?  shareSuccess,TResult? Function( String postId,  String message)?  shareError,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( InteractionType type,  InteractionStatus status,  String? postId,  String? message)?  $default,) {final _that = this;
 switch (_that) {
-case PostInteractionInitial() when initial != null:
-return initial();case BookmarkLoading() when bookmarkLoading != null:
-return bookmarkLoading(_that.postId);case BookmarkSuccess() when bookmarkSuccess != null:
-return bookmarkSuccess(_that.postId);case BookmarkError() when bookmarkError != null:
-return bookmarkError(_that.postId,_that.message);case LikeLoading() when likeLoading != null:
-return likeLoading(_that.postId);case LikeSuccess() when likeSuccess != null:
-return likeSuccess(_that.postId);case LikeError() when likeError != null:
-return likeError(_that.postId,_that.message);case CommentLoading() when commentLoading != null:
-return commentLoading(_that.postId);case CommentSuccess() when commentSuccess != null:
-return commentSuccess(_that.postId);case CommentError() when commentError != null:
-return commentError(_that.postId,_that.message);case RepostLoading() when repostLoading != null:
-return repostLoading(_that.postId);case RepostSuccess() when repostSuccess != null:
-return repostSuccess(_that.postId);case RepostError() when repostError != null:
-return repostError(_that.postId,_that.message);case ShareLoading() when shareLoading != null:
-return shareLoading(_that.postId);case ShareSuccess() when shareSuccess != null:
-return shareSuccess(_that.postId);case ShareError() when shareError != null:
-return shareError(_that.postId,_that.message);case _:
+case _PostInteractionState() when $default != null:
+return $default(_that.type,_that.status,_that.postId,_that.message);case _:
   return null;
 
 }
@@ -799,75 +749,46 @@ return shareError(_that.postId,_that.message);case _:
 /// @nodoc
 
 
-class PostInteractionInitial implements PostInteractionState {
-  const PostInteractionInitial();
+class _PostInteractionState implements PostInteractionState {
+  const _PostInteractionState({this.type = InteractionType.none, this.status = InteractionStatus.idle, this.postId, this.message});
   
 
-
-
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PostInteractionInitial);
-}
-
-
-@override
-int get hashCode => runtimeType.hashCode;
-
-@override
-String toString() {
-  return 'PostInteractionState.initial()';
-}
-
-
-}
-
-
-
-
-/// @nodoc
-
-
-class BookmarkLoading implements PostInteractionState {
-  const BookmarkLoading({required this.postId});
-  
-
- final  String postId;
+@override@JsonKey() final  InteractionType type;
+@override@JsonKey() final  InteractionStatus status;
+@override final  String? postId;
+@override final  String? message;
 
 /// Create a copy of PostInteractionState
 /// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
+@override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$BookmarkLoadingCopyWith<BookmarkLoading> get copyWith => _$BookmarkLoadingCopyWithImpl<BookmarkLoading>(this, _$identity);
+_$PostInteractionStateCopyWith<_PostInteractionState> get copyWith => __$PostInteractionStateCopyWithImpl<_PostInteractionState>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is BookmarkLoading&&(identical(other.postId, postId) || other.postId == postId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PostInteractionState&&(identical(other.type, type) || other.type == type)&&(identical(other.status, status) || other.status == status)&&(identical(other.postId, postId) || other.postId == postId)&&(identical(other.message, message) || other.message == message));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,postId);
+int get hashCode => Object.hash(runtimeType,type,status,postId,message);
 
 @override
 String toString() {
-  return 'PostInteractionState.bookmarkLoading(postId: $postId)';
+  return 'PostInteractionState(type: $type, status: $status, postId: $postId, message: $message)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $BookmarkLoadingCopyWith<$Res> implements $PostInteractionStateCopyWith<$Res> {
-  factory $BookmarkLoadingCopyWith(BookmarkLoading value, $Res Function(BookmarkLoading) _then) = _$BookmarkLoadingCopyWithImpl;
-@useResult
+abstract mixin class _$PostInteractionStateCopyWith<$Res> implements $PostInteractionStateCopyWith<$Res> {
+  factory _$PostInteractionStateCopyWith(_PostInteractionState value, $Res Function(_PostInteractionState) _then) = __$PostInteractionStateCopyWithImpl;
+@override @useResult
 $Res call({
- String postId
+ InteractionType type, InteractionStatus status, String? postId, String? message
 });
 
 
@@ -875,953 +796,22 @@ $Res call({
 
 }
 /// @nodoc
-class _$BookmarkLoadingCopyWithImpl<$Res>
-    implements $BookmarkLoadingCopyWith<$Res> {
-  _$BookmarkLoadingCopyWithImpl(this._self, this._then);
+class __$PostInteractionStateCopyWithImpl<$Res>
+    implements _$PostInteractionStateCopyWith<$Res> {
+  __$PostInteractionStateCopyWithImpl(this._self, this._then);
 
-  final BookmarkLoading _self;
-  final $Res Function(BookmarkLoading) _then;
-
-/// Create a copy of PostInteractionState
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? postId = null,}) {
-  return _then(BookmarkLoading(
-postId: null == postId ? _self.postId : postId // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
-
-}
-
-/// @nodoc
-
-
-class BookmarkSuccess implements PostInteractionState {
-  const BookmarkSuccess({required this.postId});
-  
-
- final  String postId;
+  final _PostInteractionState _self;
+  final $Res Function(_PostInteractionState) _then;
 
 /// Create a copy of PostInteractionState
 /// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$BookmarkSuccessCopyWith<BookmarkSuccess> get copyWith => _$BookmarkSuccessCopyWithImpl<BookmarkSuccess>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is BookmarkSuccess&&(identical(other.postId, postId) || other.postId == postId));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,postId);
-
-@override
-String toString() {
-  return 'PostInteractionState.bookmarkSuccess(postId: $postId)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class $BookmarkSuccessCopyWith<$Res> implements $PostInteractionStateCopyWith<$Res> {
-  factory $BookmarkSuccessCopyWith(BookmarkSuccess value, $Res Function(BookmarkSuccess) _then) = _$BookmarkSuccessCopyWithImpl;
-@useResult
-$Res call({
- String postId
-});
-
-
-
-
-}
-/// @nodoc
-class _$BookmarkSuccessCopyWithImpl<$Res>
-    implements $BookmarkSuccessCopyWith<$Res> {
-  _$BookmarkSuccessCopyWithImpl(this._self, this._then);
-
-  final BookmarkSuccess _self;
-  final $Res Function(BookmarkSuccess) _then;
-
-/// Create a copy of PostInteractionState
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? postId = null,}) {
-  return _then(BookmarkSuccess(
-postId: null == postId ? _self.postId : postId // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
-
-}
-
-/// @nodoc
-
-
-class BookmarkError implements PostInteractionState {
-  const BookmarkError({required this.postId, required this.message});
-  
-
- final  String postId;
- final  String message;
-
-/// Create a copy of PostInteractionState
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$BookmarkErrorCopyWith<BookmarkError> get copyWith => _$BookmarkErrorCopyWithImpl<BookmarkError>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is BookmarkError&&(identical(other.postId, postId) || other.postId == postId)&&(identical(other.message, message) || other.message == message));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,postId,message);
-
-@override
-String toString() {
-  return 'PostInteractionState.bookmarkError(postId: $postId, message: $message)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class $BookmarkErrorCopyWith<$Res> implements $PostInteractionStateCopyWith<$Res> {
-  factory $BookmarkErrorCopyWith(BookmarkError value, $Res Function(BookmarkError) _then) = _$BookmarkErrorCopyWithImpl;
-@useResult
-$Res call({
- String postId, String message
-});
-
-
-
-
-}
-/// @nodoc
-class _$BookmarkErrorCopyWithImpl<$Res>
-    implements $BookmarkErrorCopyWith<$Res> {
-  _$BookmarkErrorCopyWithImpl(this._self, this._then);
-
-  final BookmarkError _self;
-  final $Res Function(BookmarkError) _then;
-
-/// Create a copy of PostInteractionState
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? postId = null,Object? message = null,}) {
-  return _then(BookmarkError(
-postId: null == postId ? _self.postId : postId // ignore: cast_nullable_to_non_nullable
-as String,message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
-
-}
-
-/// @nodoc
-
-
-class LikeLoading implements PostInteractionState {
-  const LikeLoading({required this.postId});
-  
-
- final  String postId;
-
-/// Create a copy of PostInteractionState
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$LikeLoadingCopyWith<LikeLoading> get copyWith => _$LikeLoadingCopyWithImpl<LikeLoading>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LikeLoading&&(identical(other.postId, postId) || other.postId == postId));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,postId);
-
-@override
-String toString() {
-  return 'PostInteractionState.likeLoading(postId: $postId)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class $LikeLoadingCopyWith<$Res> implements $PostInteractionStateCopyWith<$Res> {
-  factory $LikeLoadingCopyWith(LikeLoading value, $Res Function(LikeLoading) _then) = _$LikeLoadingCopyWithImpl;
-@useResult
-$Res call({
- String postId
-});
-
-
-
-
-}
-/// @nodoc
-class _$LikeLoadingCopyWithImpl<$Res>
-    implements $LikeLoadingCopyWith<$Res> {
-  _$LikeLoadingCopyWithImpl(this._self, this._then);
-
-  final LikeLoading _self;
-  final $Res Function(LikeLoading) _then;
-
-/// Create a copy of PostInteractionState
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? postId = null,}) {
-  return _then(LikeLoading(
-postId: null == postId ? _self.postId : postId // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
-
-}
-
-/// @nodoc
-
-
-class LikeSuccess implements PostInteractionState {
-  const LikeSuccess({required this.postId});
-  
-
- final  String postId;
-
-/// Create a copy of PostInteractionState
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$LikeSuccessCopyWith<LikeSuccess> get copyWith => _$LikeSuccessCopyWithImpl<LikeSuccess>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LikeSuccess&&(identical(other.postId, postId) || other.postId == postId));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,postId);
-
-@override
-String toString() {
-  return 'PostInteractionState.likeSuccess(postId: $postId)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class $LikeSuccessCopyWith<$Res> implements $PostInteractionStateCopyWith<$Res> {
-  factory $LikeSuccessCopyWith(LikeSuccess value, $Res Function(LikeSuccess) _then) = _$LikeSuccessCopyWithImpl;
-@useResult
-$Res call({
- String postId
-});
-
-
-
-
-}
-/// @nodoc
-class _$LikeSuccessCopyWithImpl<$Res>
-    implements $LikeSuccessCopyWith<$Res> {
-  _$LikeSuccessCopyWithImpl(this._self, this._then);
-
-  final LikeSuccess _self;
-  final $Res Function(LikeSuccess) _then;
-
-/// Create a copy of PostInteractionState
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? postId = null,}) {
-  return _then(LikeSuccess(
-postId: null == postId ? _self.postId : postId // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
-
-}
-
-/// @nodoc
-
-
-class LikeError implements PostInteractionState {
-  const LikeError({required this.postId, required this.message});
-  
-
- final  String postId;
- final  String message;
-
-/// Create a copy of PostInteractionState
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$LikeErrorCopyWith<LikeError> get copyWith => _$LikeErrorCopyWithImpl<LikeError>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LikeError&&(identical(other.postId, postId) || other.postId == postId)&&(identical(other.message, message) || other.message == message));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,postId,message);
-
-@override
-String toString() {
-  return 'PostInteractionState.likeError(postId: $postId, message: $message)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class $LikeErrorCopyWith<$Res> implements $PostInteractionStateCopyWith<$Res> {
-  factory $LikeErrorCopyWith(LikeError value, $Res Function(LikeError) _then) = _$LikeErrorCopyWithImpl;
-@useResult
-$Res call({
- String postId, String message
-});
-
-
-
-
-}
-/// @nodoc
-class _$LikeErrorCopyWithImpl<$Res>
-    implements $LikeErrorCopyWith<$Res> {
-  _$LikeErrorCopyWithImpl(this._self, this._then);
-
-  final LikeError _self;
-  final $Res Function(LikeError) _then;
-
-/// Create a copy of PostInteractionState
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? postId = null,Object? message = null,}) {
-  return _then(LikeError(
-postId: null == postId ? _self.postId : postId // ignore: cast_nullable_to_non_nullable
-as String,message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
-
-}
-
-/// @nodoc
-
-
-class CommentLoading implements PostInteractionState {
-  const CommentLoading({required this.postId});
-  
-
- final  String postId;
-
-/// Create a copy of PostInteractionState
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$CommentLoadingCopyWith<CommentLoading> get copyWith => _$CommentLoadingCopyWithImpl<CommentLoading>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CommentLoading&&(identical(other.postId, postId) || other.postId == postId));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,postId);
-
-@override
-String toString() {
-  return 'PostInteractionState.commentLoading(postId: $postId)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class $CommentLoadingCopyWith<$Res> implements $PostInteractionStateCopyWith<$Res> {
-  factory $CommentLoadingCopyWith(CommentLoading value, $Res Function(CommentLoading) _then) = _$CommentLoadingCopyWithImpl;
-@useResult
-$Res call({
- String postId
-});
-
-
-
-
-}
-/// @nodoc
-class _$CommentLoadingCopyWithImpl<$Res>
-    implements $CommentLoadingCopyWith<$Res> {
-  _$CommentLoadingCopyWithImpl(this._self, this._then);
-
-  final CommentLoading _self;
-  final $Res Function(CommentLoading) _then;
-
-/// Create a copy of PostInteractionState
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? postId = null,}) {
-  return _then(CommentLoading(
-postId: null == postId ? _self.postId : postId // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
-
-}
-
-/// @nodoc
-
-
-class CommentSuccess implements PostInteractionState {
-  const CommentSuccess({required this.postId});
-  
-
- final  String postId;
-
-/// Create a copy of PostInteractionState
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$CommentSuccessCopyWith<CommentSuccess> get copyWith => _$CommentSuccessCopyWithImpl<CommentSuccess>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CommentSuccess&&(identical(other.postId, postId) || other.postId == postId));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,postId);
-
-@override
-String toString() {
-  return 'PostInteractionState.commentSuccess(postId: $postId)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class $CommentSuccessCopyWith<$Res> implements $PostInteractionStateCopyWith<$Res> {
-  factory $CommentSuccessCopyWith(CommentSuccess value, $Res Function(CommentSuccess) _then) = _$CommentSuccessCopyWithImpl;
-@useResult
-$Res call({
- String postId
-});
-
-
-
-
-}
-/// @nodoc
-class _$CommentSuccessCopyWithImpl<$Res>
-    implements $CommentSuccessCopyWith<$Res> {
-  _$CommentSuccessCopyWithImpl(this._self, this._then);
-
-  final CommentSuccess _self;
-  final $Res Function(CommentSuccess) _then;
-
-/// Create a copy of PostInteractionState
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? postId = null,}) {
-  return _then(CommentSuccess(
-postId: null == postId ? _self.postId : postId // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
-
-}
-
-/// @nodoc
-
-
-class CommentError implements PostInteractionState {
-  const CommentError({required this.postId, required this.message});
-  
-
- final  String postId;
- final  String message;
-
-/// Create a copy of PostInteractionState
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$CommentErrorCopyWith<CommentError> get copyWith => _$CommentErrorCopyWithImpl<CommentError>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CommentError&&(identical(other.postId, postId) || other.postId == postId)&&(identical(other.message, message) || other.message == message));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,postId,message);
-
-@override
-String toString() {
-  return 'PostInteractionState.commentError(postId: $postId, message: $message)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class $CommentErrorCopyWith<$Res> implements $PostInteractionStateCopyWith<$Res> {
-  factory $CommentErrorCopyWith(CommentError value, $Res Function(CommentError) _then) = _$CommentErrorCopyWithImpl;
-@useResult
-$Res call({
- String postId, String message
-});
-
-
-
-
-}
-/// @nodoc
-class _$CommentErrorCopyWithImpl<$Res>
-    implements $CommentErrorCopyWith<$Res> {
-  _$CommentErrorCopyWithImpl(this._self, this._then);
-
-  final CommentError _self;
-  final $Res Function(CommentError) _then;
-
-/// Create a copy of PostInteractionState
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? postId = null,Object? message = null,}) {
-  return _then(CommentError(
-postId: null == postId ? _self.postId : postId // ignore: cast_nullable_to_non_nullable
-as String,message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
-
-}
-
-/// @nodoc
-
-
-class RepostLoading implements PostInteractionState {
-  const RepostLoading({required this.postId});
-  
-
- final  String postId;
-
-/// Create a copy of PostInteractionState
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$RepostLoadingCopyWith<RepostLoading> get copyWith => _$RepostLoadingCopyWithImpl<RepostLoading>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RepostLoading&&(identical(other.postId, postId) || other.postId == postId));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,postId);
-
-@override
-String toString() {
-  return 'PostInteractionState.repostLoading(postId: $postId)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class $RepostLoadingCopyWith<$Res> implements $PostInteractionStateCopyWith<$Res> {
-  factory $RepostLoadingCopyWith(RepostLoading value, $Res Function(RepostLoading) _then) = _$RepostLoadingCopyWithImpl;
-@useResult
-$Res call({
- String postId
-});
-
-
-
-
-}
-/// @nodoc
-class _$RepostLoadingCopyWithImpl<$Res>
-    implements $RepostLoadingCopyWith<$Res> {
-  _$RepostLoadingCopyWithImpl(this._self, this._then);
-
-  final RepostLoading _self;
-  final $Res Function(RepostLoading) _then;
-
-/// Create a copy of PostInteractionState
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? postId = null,}) {
-  return _then(RepostLoading(
-postId: null == postId ? _self.postId : postId // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
-
-}
-
-/// @nodoc
-
-
-class RepostSuccess implements PostInteractionState {
-  const RepostSuccess({required this.postId});
-  
-
- final  String postId;
-
-/// Create a copy of PostInteractionState
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$RepostSuccessCopyWith<RepostSuccess> get copyWith => _$RepostSuccessCopyWithImpl<RepostSuccess>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RepostSuccess&&(identical(other.postId, postId) || other.postId == postId));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,postId);
-
-@override
-String toString() {
-  return 'PostInteractionState.repostSuccess(postId: $postId)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class $RepostSuccessCopyWith<$Res> implements $PostInteractionStateCopyWith<$Res> {
-  factory $RepostSuccessCopyWith(RepostSuccess value, $Res Function(RepostSuccess) _then) = _$RepostSuccessCopyWithImpl;
-@useResult
-$Res call({
- String postId
-});
-
-
-
-
-}
-/// @nodoc
-class _$RepostSuccessCopyWithImpl<$Res>
-    implements $RepostSuccessCopyWith<$Res> {
-  _$RepostSuccessCopyWithImpl(this._self, this._then);
-
-  final RepostSuccess _self;
-  final $Res Function(RepostSuccess) _then;
-
-/// Create a copy of PostInteractionState
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? postId = null,}) {
-  return _then(RepostSuccess(
-postId: null == postId ? _self.postId : postId // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
-
-}
-
-/// @nodoc
-
-
-class RepostError implements PostInteractionState {
-  const RepostError({required this.postId, required this.message});
-  
-
- final  String postId;
- final  String message;
-
-/// Create a copy of PostInteractionState
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$RepostErrorCopyWith<RepostError> get copyWith => _$RepostErrorCopyWithImpl<RepostError>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RepostError&&(identical(other.postId, postId) || other.postId == postId)&&(identical(other.message, message) || other.message == message));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,postId,message);
-
-@override
-String toString() {
-  return 'PostInteractionState.repostError(postId: $postId, message: $message)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class $RepostErrorCopyWith<$Res> implements $PostInteractionStateCopyWith<$Res> {
-  factory $RepostErrorCopyWith(RepostError value, $Res Function(RepostError) _then) = _$RepostErrorCopyWithImpl;
-@useResult
-$Res call({
- String postId, String message
-});
-
-
-
-
-}
-/// @nodoc
-class _$RepostErrorCopyWithImpl<$Res>
-    implements $RepostErrorCopyWith<$Res> {
-  _$RepostErrorCopyWithImpl(this._self, this._then);
-
-  final RepostError _self;
-  final $Res Function(RepostError) _then;
-
-/// Create a copy of PostInteractionState
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? postId = null,Object? message = null,}) {
-  return _then(RepostError(
-postId: null == postId ? _self.postId : postId // ignore: cast_nullable_to_non_nullable
-as String,message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
-
-}
-
-/// @nodoc
-
-
-class ShareLoading implements PostInteractionState {
-  const ShareLoading({required this.postId});
-  
-
- final  String postId;
-
-/// Create a copy of PostInteractionState
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$ShareLoadingCopyWith<ShareLoading> get copyWith => _$ShareLoadingCopyWithImpl<ShareLoading>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ShareLoading&&(identical(other.postId, postId) || other.postId == postId));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,postId);
-
-@override
-String toString() {
-  return 'PostInteractionState.shareLoading(postId: $postId)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class $ShareLoadingCopyWith<$Res> implements $PostInteractionStateCopyWith<$Res> {
-  factory $ShareLoadingCopyWith(ShareLoading value, $Res Function(ShareLoading) _then) = _$ShareLoadingCopyWithImpl;
-@useResult
-$Res call({
- String postId
-});
-
-
-
-
-}
-/// @nodoc
-class _$ShareLoadingCopyWithImpl<$Res>
-    implements $ShareLoadingCopyWith<$Res> {
-  _$ShareLoadingCopyWithImpl(this._self, this._then);
-
-  final ShareLoading _self;
-  final $Res Function(ShareLoading) _then;
-
-/// Create a copy of PostInteractionState
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? postId = null,}) {
-  return _then(ShareLoading(
-postId: null == postId ? _self.postId : postId // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
-
-}
-
-/// @nodoc
-
-
-class ShareSuccess implements PostInteractionState {
-  const ShareSuccess({required this.postId});
-  
-
- final  String postId;
-
-/// Create a copy of PostInteractionState
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$ShareSuccessCopyWith<ShareSuccess> get copyWith => _$ShareSuccessCopyWithImpl<ShareSuccess>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ShareSuccess&&(identical(other.postId, postId) || other.postId == postId));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,postId);
-
-@override
-String toString() {
-  return 'PostInteractionState.shareSuccess(postId: $postId)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class $ShareSuccessCopyWith<$Res> implements $PostInteractionStateCopyWith<$Res> {
-  factory $ShareSuccessCopyWith(ShareSuccess value, $Res Function(ShareSuccess) _then) = _$ShareSuccessCopyWithImpl;
-@useResult
-$Res call({
- String postId
-});
-
-
-
-
-}
-/// @nodoc
-class _$ShareSuccessCopyWithImpl<$Res>
-    implements $ShareSuccessCopyWith<$Res> {
-  _$ShareSuccessCopyWithImpl(this._self, this._then);
-
-  final ShareSuccess _self;
-  final $Res Function(ShareSuccess) _then;
-
-/// Create a copy of PostInteractionState
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? postId = null,}) {
-  return _then(ShareSuccess(
-postId: null == postId ? _self.postId : postId // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
-
-}
-
-/// @nodoc
-
-
-class ShareError implements PostInteractionState {
-  const ShareError({required this.postId, required this.message});
-  
-
- final  String postId;
- final  String message;
-
-/// Create a copy of PostInteractionState
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$ShareErrorCopyWith<ShareError> get copyWith => _$ShareErrorCopyWithImpl<ShareError>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ShareError&&(identical(other.postId, postId) || other.postId == postId)&&(identical(other.message, message) || other.message == message));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,postId,message);
-
-@override
-String toString() {
-  return 'PostInteractionState.shareError(postId: $postId, message: $message)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class $ShareErrorCopyWith<$Res> implements $PostInteractionStateCopyWith<$Res> {
-  factory $ShareErrorCopyWith(ShareError value, $Res Function(ShareError) _then) = _$ShareErrorCopyWithImpl;
-@useResult
-$Res call({
- String postId, String message
-});
-
-
-
-
-}
-/// @nodoc
-class _$ShareErrorCopyWithImpl<$Res>
-    implements $ShareErrorCopyWith<$Res> {
-  _$ShareErrorCopyWithImpl(this._self, this._then);
-
-  final ShareError _self;
-  final $Res Function(ShareError) _then;
-
-/// Create a copy of PostInteractionState
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? postId = null,Object? message = null,}) {
-  return _then(ShareError(
-postId: null == postId ? _self.postId : postId // ignore: cast_nullable_to_non_nullable
-as String,message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
-as String,
+@override @pragma('vm:prefer-inline') $Res call({Object? type = null,Object? status = null,Object? postId = freezed,Object? message = freezed,}) {
+  return _then(_PostInteractionState(
+type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as InteractionType,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as InteractionStatus,postId: freezed == postId ? _self.postId : postId // ignore: cast_nullable_to_non_nullable
+as String?,message: freezed == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

@@ -11,7 +11,7 @@ part 'post_interaction_bloc.freezed.dart';
 class PostInteractionBloc extends Bloc<PostInteractionEvent, PostInteractionState> {
   final PostInteractionRepository repository;
 
-  PostInteractionBloc(this.repository) : super(const PostInteractionState.initial()) {
+  PostInteractionBloc(this.repository) : super(const PostInteractionState(status: InteractionStatus.idle)) {
     on<BookmarkPost>(_onBookmarkPost);
     // Placeholder handlers for future implementation
     on<LikePost>(_onLikePost);
@@ -24,25 +24,47 @@ class PostInteractionBloc extends Bloc<PostInteractionEvent, PostInteractionStat
     BookmarkPost event,
     Emitter<PostInteractionState> emit,
   ) async {
-    emit(PostInteractionState.bookmarkLoading(postId: event.postId));
+    emit(state.copyWith(postId: event.postId, status: InteractionStatus.success, type: InteractionType.bookmark));
     
     final result = await repository.bookmarkPost(postId: event.postId);
     
     result.fold(
-      (error) => emit(PostInteractionState.bookmarkError(
+      (error) => emit(state.copyWith(
         postId: event.postId,
         message: error,
+        type: InteractionType.bookmark,
+        status: InteractionStatus.error,
       )),
-      (success) => emit(PostInteractionState.bookmarkSuccess(postId: event.postId)),
+      (success) {
+        // Already emitted success state optimistically, no need to emit again
+      },
     );
   }
 
-  // Placeholder handlers for future implementation
   Future<void> _onLikePost(
     LikePost event,
     Emitter<PostInteractionState> emit,
   ) async {
-    // TODO: Implement like post functionality
+    // Optimistic UI: emit success state immediately
+    emit(state.copyWith(
+      postId: event.postId,
+      type: InteractionType.like,
+      status: InteractionStatus.success,
+    ));
+
+    final result = await repository.likePost(postId: event.postId);
+
+    result.fold(
+      (error) => emit(state.copyWith(
+        postId: event.postId,
+        message: error,
+        type: InteractionType.like,
+        status: InteractionStatus.error,
+      )),
+      (success) {
+        // Already emitted success state optimistically, no need to emit again
+      },
+    );
   }
 
   Future<void> _onCommentPost(

@@ -25,9 +25,16 @@ class FeedItem extends StatefulWidget {
 
 class _FeedItemState extends State<FeedItem> {
 
-  // TODO: use optimistic for bookmark, like,...
-  bool isBookMarked = false;
-
+  late bool isBookMarked;
+  late bool isLiked;
+  late int likeCount;
+  @override
+  void initState() {
+    isBookMarked = widget.postEntity.isBookmarked;
+    isLiked = widget.postEntity.isLiked;
+    likeCount = widget.postEntity.likeCount;
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
 
@@ -58,17 +65,40 @@ class _FeedItemState extends State<FeedItem> {
       context.read<PostInteractionBloc>().add(BookmarkPost(postId: postId));
     }
 
+    void onLikeTap({required BuildContext context, required String postId}) {
+      context.read<PostInteractionBloc>().add(LikePost(postId: postId));
+    }
+
     return BlocListener<PostInteractionBloc, PostInteractionState>(
       listener: (context, state) {
-        switch (state) {
-          case BookmarkSuccess(:final postId) when postId == widget.postEntity.id:
-          
-          case BookmarkLoading(:final postId) when postId == widget.postEntity.id:
-            
-          case BookmarkError(:final postId) when postId == widget.postEntity.id:
-            
-          default:
-            break;
+        if (state.postId != widget.postEntity.id) return;
+        
+        // Handle bookmark interaction
+        if (state.type == InteractionType.bookmark) {
+          if (state.status == InteractionStatus.success) {
+            setState(() {
+              isBookMarked = !isBookMarked;
+            });
+          } else if (state.status == InteractionStatus.error) {
+            setState(() {
+              isBookMarked = widget.postEntity.isBookmarked;
+            });
+          }
+        }
+        
+        // Handle like interaction - revert on error (optimistic UI)
+        if (state.type == InteractionType.like &&
+            state.status == InteractionStatus.success) {
+          setState(() {
+            isLiked = !isLiked;
+            likeCount = likeCount + 1;
+          });
+        }else if (state.type == InteractionType.like &&
+            state.status == InteractionStatus.error) {
+          setState(() {
+            isLiked = !isLiked;
+            likeCount = likeCount - 1;
+          });
         }
       },
       child: InkWell(
@@ -158,9 +188,11 @@ class _FeedItemState extends State<FeedItem> {
                       context,
                       commentCount: widget.postEntity.commentCount.toString(),
                       repostCount: widget.postEntity.repostCount.toString(),
-                      likeCount: widget.postEntity.likeCount.toString(),
+                      likeCount: likeCount.toString(),
                       isBookMarked: isBookMarked,
+                      isHeartActive: isLiked,
                       onBookMarkedTap: () => onBookMarkedTap(context: context, postId: widget.postEntity.id),
+                      onHeartTap: () => onLikeTap(context: context, postId: widget.postEntity.id),
                     ),
                   ],
                 ),
@@ -230,6 +262,8 @@ Widget buildStatItem({
           count: likeCount, 
           onTap: onHeartTap,
           isActive: isHeartActive ?? false,
+          activeIconPath: isHeartActive != null && isHeartActive 
+                        ? AppAssets.heartFilledSvg : null,
         ),
         buildStatItem(
           context: context, 
