@@ -34,6 +34,8 @@ abstract class PostEntity with _$PostEntity {
     required String createdAt,
     required String updatedAt,
     DateTime? bookmarkedAt,
+    @Default(false) bool isLiked,
+    @Default(false) bool isBookmarked,
     required PostUserEntity user,
     @Default([]) List<HashtagEntity> hashtags,
     @Default([]) List<MentionEntity> mentions,
