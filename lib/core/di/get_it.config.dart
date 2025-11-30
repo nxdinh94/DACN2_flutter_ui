@@ -25,8 +25,6 @@ import '../../features/auth/domain/usecases/register_usecase.dart' as _i941;
 import '../../features/auth/presentation/bloc/auth_bloc.dart' as _i797;
 import '../../features/create_post/data/data_source/create_post_data_source.dart'
     as _i181;
-import '../../features/create_post/data/data_source/create_post_data_source_impl.dart'
-    as _i756;
 import '../../features/create_post/data/repositories/create_post_repository_impl.dart'
     as _i918;
 import '../../features/create_post/domain/repositories/create_post_repository.dart'
@@ -41,8 +39,6 @@ import '../../features/home/data_source/remote/home_remote_data_source.dart'
     as _i364;
 import '../../features/home/data_source/repository/home_repository.dart'
     as _i989;
-import '../../features/home/presentation/bloc/following_bloc/following_bloc.dart'
-    as _i392;
 import '../../features/home/presentation/bloc/home_bloc/for_you_bloc.dart'
     as _i600;
 import '../../features/post_interaction/data_source/remote/post_interaction_remote_data_source.dart'
@@ -64,6 +60,7 @@ import '../../features/profile/presentation/bloc/profile_bloc/profile_bloc.dart'
 import '../../shared/blocs/locale/locale_bloc.dart' as _i190;
 import '../../shared/services/firebase_messaging_service.dart' as _i751;
 import '../../shared/services/upload_media.dart' as _i182;
+import '../../shared/services/upload_post_media.dart' as _i931;
 import '../logger/logger.dart' as _i512;
 import '../network/dio_client.dart' as _i667;
 import '../network/hive_client.dart' as _i980;
@@ -106,8 +103,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i156.ProfileRemoteDataSource>(
       () => _i156.ProfileRemoteDataSourceImpl(gh<_i667.DioClient>()),
     );
-    gh.factory<_i181.CreatePostDataSource>(
-      () => _i756.CreatePostDataSourceImpl(gh<_i667.DioClient>()),
+    gh.factory<_i931.UploadMediaPostService>(
+      () => _i931.UploadMediaPostServiceImpl(gh<_i667.DioClient>()),
     );
     gh.factory<_i741.ProfileRepository>(
       () => _i741.ProfileRepositoryImpl(
@@ -116,13 +113,13 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i911.ProfileLocalDataSource>(),
       ),
     );
-    gh.factory<_i244.CreatePostRepository>(
-      () => _i918.CreatePostRepositoryImpl(gh<_i181.CreatePostDataSource>()),
-    );
     gh.factory<_i209.PostInteractionRemoteDataSource>(
       () => _i209.PostInteractionRemoteDataSourceImpl(
         dioClient: gh<_i667.DioClient>(),
       ),
+    );
+    gh.factory<_i181.CreatePostDataSource>(
+      () => _i181.CreatePostDataSourceImpl(gh<_i667.DioClient>()),
     );
     gh.factory<_i932.ProfileBloc>(
       () => _i932.ProfileBloc(profileRepository: gh<_i741.ProfileRepository>()),
@@ -136,12 +133,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i107.AuthRemoteDataSource>(
       () => _i107.AuthRemoteDataSourceImpl(dioClient: gh<_i667.DioClient>()),
     );
-    gh.factory<_i528.CreatePostUseCase>(
-      () => _i528.CreatePostUseCase(gh<_i244.CreatePostRepository>()),
-    );
-    gh.factory<_i491.CreatePostBloc>(
-      () => _i491.CreatePostBloc(gh<_i528.CreatePostUseCase>()),
-    );
     gh.factory<_i185.PostInteractionRepository>(
       () => _i185.PostInteractionRepositoryImpl(
         gh<_i209.PostInteractionRemoteDataSource>(),
@@ -152,6 +143,12 @@ extension GetItInjectableX on _i174.GetIt {
         remoteDataSource: gh<_i107.AuthRemoteDataSource>(),
         authTokenServices: gh<_i822.AuthTokenServices>(),
         hiveClient: gh<_i980.HiveClient>(),
+      ),
+    );
+    gh.factory<_i244.CreatePostRepository>(
+      () => _i918.CreatePostRepositoryImpl(
+        gh<_i181.CreatePostDataSource>(),
+        gh<_i931.UploadMediaPostService>(),
       ),
     );
     gh.factory<_i989.HomeRepository>(
@@ -166,8 +163,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i941.RegisterUseCase>(
       () => _i941.RegisterUseCase(gh<_i787.AuthRepository>()),
     );
+    gh.factory<_i528.CreatePostUseCase>(
+      () => _i528.CreatePostUseCase(gh<_i244.CreatePostRepository>()),
+    );
     gh.factory<_i875.PostInteractionBloc>(
       () => _i875.PostInteractionBloc(gh<_i185.PostInteractionRepository>()),
+    );
+    gh.factory<_i491.CreatePostBloc>(
+      () => _i491.CreatePostBloc(gh<_i528.CreatePostUseCase>()),
     );
     gh.singleton<_i797.AuthBloc>(
       () => _i797.AuthBloc(
@@ -178,9 +181,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i600.HomeBloc>(
       () => _i600.HomeBloc(gh<_i989.HomeRepository>()),
-    );
-    gh.factory<_i392.FollowingBloc>(
-      () => _i392.FollowingBloc(gh<_i989.HomeRepository>()),
     );
     return this;
   }

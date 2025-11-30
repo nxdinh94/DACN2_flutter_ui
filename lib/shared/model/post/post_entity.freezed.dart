@@ -487,7 +487,7 @@ $PostUserEntityCopyWith<$Res> get user {
 /// @nodoc
 mixin _$MediaEntity {
 
- String get id; String get url; String get type; int get ordinal; String? get metadata;
+ String get id; String get url; String get type; int get ordinal; MediaMetadataEntity? get metadata;
 /// Create a copy of MediaEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -518,11 +518,11 @@ abstract mixin class $MediaEntityCopyWith<$Res>  {
   factory $MediaEntityCopyWith(MediaEntity value, $Res Function(MediaEntity) _then) = _$MediaEntityCopyWithImpl;
 @useResult
 $Res call({
- String id, String url, String type, int ordinal, String? metadata
+ String id, String url, String type, int ordinal, MediaMetadataEntity? metadata
 });
 
 
-
+$MediaMetadataEntityCopyWith<$Res>? get metadata;
 
 }
 /// @nodoc
@@ -542,10 +542,22 @@ as String,url: null == url ? _self.url : url // ignore: cast_nullable_to_non_nul
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as String,ordinal: null == ordinal ? _self.ordinal : ordinal // ignore: cast_nullable_to_non_nullable
 as int,metadata: freezed == metadata ? _self.metadata : metadata // ignore: cast_nullable_to_non_nullable
-as String?,
+as MediaMetadataEntity?,
   ));
 }
+/// Create a copy of MediaEntity
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$MediaMetadataEntityCopyWith<$Res>? get metadata {
+    if (_self.metadata == null) {
+    return null;
+  }
 
+  return $MediaMetadataEntityCopyWith<$Res>(_self.metadata!, (value) {
+    return _then(_self.copyWith(metadata: value));
+  });
+}
 }
 
 
@@ -627,7 +639,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String url,  String type,  int ordinal,  String? metadata)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String url,  String type,  int ordinal,  MediaMetadataEntity? metadata)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _MediaEntity() when $default != null:
 return $default(_that.id,_that.url,_that.type,_that.ordinal,_that.metadata);case _:
@@ -648,7 +660,7 @@ return $default(_that.id,_that.url,_that.type,_that.ordinal,_that.metadata);case
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String url,  String type,  int ordinal,  String? metadata)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String url,  String type,  int ordinal,  MediaMetadataEntity? metadata)  $default,) {final _that = this;
 switch (_that) {
 case _MediaEntity():
 return $default(_that.id,_that.url,_that.type,_that.ordinal,_that.metadata);case _:
@@ -668,7 +680,7 @@ return $default(_that.id,_that.url,_that.type,_that.ordinal,_that.metadata);case
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String url,  String type,  int ordinal,  String? metadata)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String url,  String type,  int ordinal,  MediaMetadataEntity? metadata)?  $default,) {final _that = this;
 switch (_that) {
 case _MediaEntity() when $default != null:
 return $default(_that.id,_that.url,_that.type,_that.ordinal,_that.metadata);case _:
@@ -690,7 +702,7 @@ class _MediaEntity implements MediaEntity {
 @override final  String url;
 @override final  String type;
 @override final  int ordinal;
-@override final  String? metadata;
+@override final  MediaMetadataEntity? metadata;
 
 /// Create a copy of MediaEntity
 /// with the given fields replaced by the non-null parameter values.
@@ -722,11 +734,11 @@ abstract mixin class _$MediaEntityCopyWith<$Res> implements $MediaEntityCopyWith
   factory _$MediaEntityCopyWith(_MediaEntity value, $Res Function(_MediaEntity) _then) = __$MediaEntityCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String url, String type, int ordinal, String? metadata
+ String id, String url, String type, int ordinal, MediaMetadataEntity? metadata
 });
 
 
-
+@override $MediaMetadataEntityCopyWith<$Res>? get metadata;
 
 }
 /// @nodoc
@@ -746,6 +758,284 @@ as String,url: null == url ? _self.url : url // ignore: cast_nullable_to_non_nul
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as String,ordinal: null == ordinal ? _self.ordinal : ordinal // ignore: cast_nullable_to_non_nullable
 as int,metadata: freezed == metadata ? _self.metadata : metadata // ignore: cast_nullable_to_non_nullable
+as MediaMetadataEntity?,
+  ));
+}
+
+/// Create a copy of MediaEntity
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$MediaMetadataEntityCopyWith<$Res>? get metadata {
+    if (_self.metadata == null) {
+    return null;
+  }
+
+  return $MediaMetadataEntityCopyWith<$Res>(_self.metadata!, (value) {
+    return _then(_self.copyWith(metadata: value));
+  });
+}
+}
+
+/// @nodoc
+mixin _$MediaMetadataEntity {
+
+ String? get mimetype; String? get fileName; int? get fileSize; String? get uploadedAt;
+/// Create a copy of MediaMetadataEntity
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$MediaMetadataEntityCopyWith<MediaMetadataEntity> get copyWith => _$MediaMetadataEntityCopyWithImpl<MediaMetadataEntity>(this as MediaMetadataEntity, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MediaMetadataEntity&&(identical(other.mimetype, mimetype) || other.mimetype == mimetype)&&(identical(other.fileName, fileName) || other.fileName == fileName)&&(identical(other.fileSize, fileSize) || other.fileSize == fileSize)&&(identical(other.uploadedAt, uploadedAt) || other.uploadedAt == uploadedAt));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,mimetype,fileName,fileSize,uploadedAt);
+
+@override
+String toString() {
+  return 'MediaMetadataEntity(mimetype: $mimetype, fileName: $fileName, fileSize: $fileSize, uploadedAt: $uploadedAt)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $MediaMetadataEntityCopyWith<$Res>  {
+  factory $MediaMetadataEntityCopyWith(MediaMetadataEntity value, $Res Function(MediaMetadataEntity) _then) = _$MediaMetadataEntityCopyWithImpl;
+@useResult
+$Res call({
+ String? mimetype, String? fileName, int? fileSize, String? uploadedAt
+});
+
+
+
+
+}
+/// @nodoc
+class _$MediaMetadataEntityCopyWithImpl<$Res>
+    implements $MediaMetadataEntityCopyWith<$Res> {
+  _$MediaMetadataEntityCopyWithImpl(this._self, this._then);
+
+  final MediaMetadataEntity _self;
+  final $Res Function(MediaMetadataEntity) _then;
+
+/// Create a copy of MediaMetadataEntity
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? mimetype = freezed,Object? fileName = freezed,Object? fileSize = freezed,Object? uploadedAt = freezed,}) {
+  return _then(_self.copyWith(
+mimetype: freezed == mimetype ? _self.mimetype : mimetype // ignore: cast_nullable_to_non_nullable
+as String?,fileName: freezed == fileName ? _self.fileName : fileName // ignore: cast_nullable_to_non_nullable
+as String?,fileSize: freezed == fileSize ? _self.fileSize : fileSize // ignore: cast_nullable_to_non_nullable
+as int?,uploadedAt: freezed == uploadedAt ? _self.uploadedAt : uploadedAt // ignore: cast_nullable_to_non_nullable
+as String?,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [MediaMetadataEntity].
+extension MediaMetadataEntityPatterns on MediaMetadataEntity {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _MediaMetadataEntity value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _MediaMetadataEntity() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _MediaMetadataEntity value)  $default,){
+final _that = this;
+switch (_that) {
+case _MediaMetadataEntity():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _MediaMetadataEntity value)?  $default,){
+final _that = this;
+switch (_that) {
+case _MediaMetadataEntity() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? mimetype,  String? fileName,  int? fileSize,  String? uploadedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _MediaMetadataEntity() when $default != null:
+return $default(_that.mimetype,_that.fileName,_that.fileSize,_that.uploadedAt);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? mimetype,  String? fileName,  int? fileSize,  String? uploadedAt)  $default,) {final _that = this;
+switch (_that) {
+case _MediaMetadataEntity():
+return $default(_that.mimetype,_that.fileName,_that.fileSize,_that.uploadedAt);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? mimetype,  String? fileName,  int? fileSize,  String? uploadedAt)?  $default,) {final _that = this;
+switch (_that) {
+case _MediaMetadataEntity() when $default != null:
+return $default(_that.mimetype,_that.fileName,_that.fileSize,_that.uploadedAt);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+
+
+class _MediaMetadataEntity implements MediaMetadataEntity {
+   _MediaMetadataEntity({this.mimetype, this.fileName, this.fileSize, this.uploadedAt});
+  
+
+@override final  String? mimetype;
+@override final  String? fileName;
+@override final  int? fileSize;
+@override final  String? uploadedAt;
+
+/// Create a copy of MediaMetadataEntity
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$MediaMetadataEntityCopyWith<_MediaMetadataEntity> get copyWith => __$MediaMetadataEntityCopyWithImpl<_MediaMetadataEntity>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MediaMetadataEntity&&(identical(other.mimetype, mimetype) || other.mimetype == mimetype)&&(identical(other.fileName, fileName) || other.fileName == fileName)&&(identical(other.fileSize, fileSize) || other.fileSize == fileSize)&&(identical(other.uploadedAt, uploadedAt) || other.uploadedAt == uploadedAt));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,mimetype,fileName,fileSize,uploadedAt);
+
+@override
+String toString() {
+  return 'MediaMetadataEntity(mimetype: $mimetype, fileName: $fileName, fileSize: $fileSize, uploadedAt: $uploadedAt)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$MediaMetadataEntityCopyWith<$Res> implements $MediaMetadataEntityCopyWith<$Res> {
+  factory _$MediaMetadataEntityCopyWith(_MediaMetadataEntity value, $Res Function(_MediaMetadataEntity) _then) = __$MediaMetadataEntityCopyWithImpl;
+@override @useResult
+$Res call({
+ String? mimetype, String? fileName, int? fileSize, String? uploadedAt
+});
+
+
+
+
+}
+/// @nodoc
+class __$MediaMetadataEntityCopyWithImpl<$Res>
+    implements _$MediaMetadataEntityCopyWith<$Res> {
+  __$MediaMetadataEntityCopyWithImpl(this._self, this._then);
+
+  final _MediaMetadataEntity _self;
+  final $Res Function(_MediaMetadataEntity) _then;
+
+/// Create a copy of MediaMetadataEntity
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? mimetype = freezed,Object? fileName = freezed,Object? fileSize = freezed,Object? uploadedAt = freezed,}) {
+  return _then(_MediaMetadataEntity(
+mimetype: freezed == mimetype ? _self.mimetype : mimetype // ignore: cast_nullable_to_non_nullable
+as String?,fileName: freezed == fileName ? _self.fileName : fileName // ignore: cast_nullable_to_non_nullable
+as String?,fileSize: freezed == fileSize ? _self.fileSize : fileSize // ignore: cast_nullable_to_non_nullable
+as int?,uploadedAt: freezed == uploadedAt ? _self.uploadedAt : uploadedAt // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }

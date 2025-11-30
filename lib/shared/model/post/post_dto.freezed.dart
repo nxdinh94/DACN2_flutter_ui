@@ -494,7 +494,7 @@ $PostUserDtoCopyWith<$Res> get user {
 /// @nodoc
 mixin _$MediaDto {
 
- String get id; String get url; String get type; int get ordinal; String? get metadata;
+ String get id; String get url; String get type; int get ordinal; MediaMetadataDto? get metadata;
 /// Create a copy of MediaDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -527,11 +527,11 @@ abstract mixin class $MediaDtoCopyWith<$Res>  {
   factory $MediaDtoCopyWith(MediaDto value, $Res Function(MediaDto) _then) = _$MediaDtoCopyWithImpl;
 @useResult
 $Res call({
- String id, String url, String type, int ordinal, String? metadata
+ String id, String url, String type, int ordinal, MediaMetadataDto? metadata
 });
 
 
-
+$MediaMetadataDtoCopyWith<$Res>? get metadata;
 
 }
 /// @nodoc
@@ -551,10 +551,22 @@ as String,url: null == url ? _self.url : url // ignore: cast_nullable_to_non_nul
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as String,ordinal: null == ordinal ? _self.ordinal : ordinal // ignore: cast_nullable_to_non_nullable
 as int,metadata: freezed == metadata ? _self.metadata : metadata // ignore: cast_nullable_to_non_nullable
-as String?,
+as MediaMetadataDto?,
   ));
 }
+/// Create a copy of MediaDto
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$MediaMetadataDtoCopyWith<$Res>? get metadata {
+    if (_self.metadata == null) {
+    return null;
+  }
 
+  return $MediaMetadataDtoCopyWith<$Res>(_self.metadata!, (value) {
+    return _then(_self.copyWith(metadata: value));
+  });
+}
 }
 
 
@@ -636,7 +648,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String url,  String type,  int ordinal,  String? metadata)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String url,  String type,  int ordinal,  MediaMetadataDto? metadata)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _MediaDto() when $default != null:
 return $default(_that.id,_that.url,_that.type,_that.ordinal,_that.metadata);case _:
@@ -657,7 +669,7 @@ return $default(_that.id,_that.url,_that.type,_that.ordinal,_that.metadata);case
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String url,  String type,  int ordinal,  String? metadata)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String url,  String type,  int ordinal,  MediaMetadataDto? metadata)  $default,) {final _that = this;
 switch (_that) {
 case _MediaDto():
 return $default(_that.id,_that.url,_that.type,_that.ordinal,_that.metadata);case _:
@@ -677,7 +689,7 @@ return $default(_that.id,_that.url,_that.type,_that.ordinal,_that.metadata);case
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String url,  String type,  int ordinal,  String? metadata)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String url,  String type,  int ordinal,  MediaMetadataDto? metadata)?  $default,) {final _that = this;
 switch (_that) {
 case _MediaDto() when $default != null:
 return $default(_that.id,_that.url,_that.type,_that.ordinal,_that.metadata);case _:
@@ -699,7 +711,7 @@ class _MediaDto extends MediaDto {
 @override final  String url;
 @override final  String type;
 @override final  int ordinal;
-@override final  String? metadata;
+@override final  MediaMetadataDto? metadata;
 
 /// Create a copy of MediaDto
 /// with the given fields replaced by the non-null parameter values.
@@ -734,11 +746,11 @@ abstract mixin class _$MediaDtoCopyWith<$Res> implements $MediaDtoCopyWith<$Res>
   factory _$MediaDtoCopyWith(_MediaDto value, $Res Function(_MediaDto) _then) = __$MediaDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String url, String type, int ordinal, String? metadata
+ String id, String url, String type, int ordinal, MediaMetadataDto? metadata
 });
 
 
-
+@override $MediaMetadataDtoCopyWith<$Res>? get metadata;
 
 }
 /// @nodoc
@@ -758,6 +770,290 @@ as String,url: null == url ? _self.url : url // ignore: cast_nullable_to_non_nul
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as String,ordinal: null == ordinal ? _self.ordinal : ordinal // ignore: cast_nullable_to_non_nullable
 as int,metadata: freezed == metadata ? _self.metadata : metadata // ignore: cast_nullable_to_non_nullable
+as MediaMetadataDto?,
+  ));
+}
+
+/// Create a copy of MediaDto
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$MediaMetadataDtoCopyWith<$Res>? get metadata {
+    if (_self.metadata == null) {
+    return null;
+  }
+
+  return $MediaMetadataDtoCopyWith<$Res>(_self.metadata!, (value) {
+    return _then(_self.copyWith(metadata: value));
+  });
+}
+}
+
+
+/// @nodoc
+mixin _$MediaMetadataDto {
+
+ String? get mimetype; String? get fileName; int? get fileSize; String? get uploadedAt;
+/// Create a copy of MediaMetadataDto
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$MediaMetadataDtoCopyWith<MediaMetadataDto> get copyWith => _$MediaMetadataDtoCopyWithImpl<MediaMetadataDto>(this as MediaMetadataDto, _$identity);
+
+  /// Serializes this MediaMetadataDto to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MediaMetadataDto&&(identical(other.mimetype, mimetype) || other.mimetype == mimetype)&&(identical(other.fileName, fileName) || other.fileName == fileName)&&(identical(other.fileSize, fileSize) || other.fileSize == fileSize)&&(identical(other.uploadedAt, uploadedAt) || other.uploadedAt == uploadedAt));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,mimetype,fileName,fileSize,uploadedAt);
+
+@override
+String toString() {
+  return 'MediaMetadataDto(mimetype: $mimetype, fileName: $fileName, fileSize: $fileSize, uploadedAt: $uploadedAt)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $MediaMetadataDtoCopyWith<$Res>  {
+  factory $MediaMetadataDtoCopyWith(MediaMetadataDto value, $Res Function(MediaMetadataDto) _then) = _$MediaMetadataDtoCopyWithImpl;
+@useResult
+$Res call({
+ String? mimetype, String? fileName, int? fileSize, String? uploadedAt
+});
+
+
+
+
+}
+/// @nodoc
+class _$MediaMetadataDtoCopyWithImpl<$Res>
+    implements $MediaMetadataDtoCopyWith<$Res> {
+  _$MediaMetadataDtoCopyWithImpl(this._self, this._then);
+
+  final MediaMetadataDto _self;
+  final $Res Function(MediaMetadataDto) _then;
+
+/// Create a copy of MediaMetadataDto
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? mimetype = freezed,Object? fileName = freezed,Object? fileSize = freezed,Object? uploadedAt = freezed,}) {
+  return _then(_self.copyWith(
+mimetype: freezed == mimetype ? _self.mimetype : mimetype // ignore: cast_nullable_to_non_nullable
+as String?,fileName: freezed == fileName ? _self.fileName : fileName // ignore: cast_nullable_to_non_nullable
+as String?,fileSize: freezed == fileSize ? _self.fileSize : fileSize // ignore: cast_nullable_to_non_nullable
+as int?,uploadedAt: freezed == uploadedAt ? _self.uploadedAt : uploadedAt // ignore: cast_nullable_to_non_nullable
+as String?,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [MediaMetadataDto].
+extension MediaMetadataDtoPatterns on MediaMetadataDto {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _MediaMetadataDto value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _MediaMetadataDto() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _MediaMetadataDto value)  $default,){
+final _that = this;
+switch (_that) {
+case _MediaMetadataDto():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _MediaMetadataDto value)?  $default,){
+final _that = this;
+switch (_that) {
+case _MediaMetadataDto() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? mimetype,  String? fileName,  int? fileSize,  String? uploadedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _MediaMetadataDto() when $default != null:
+return $default(_that.mimetype,_that.fileName,_that.fileSize,_that.uploadedAt);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? mimetype,  String? fileName,  int? fileSize,  String? uploadedAt)  $default,) {final _that = this;
+switch (_that) {
+case _MediaMetadataDto():
+return $default(_that.mimetype,_that.fileName,_that.fileSize,_that.uploadedAt);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? mimetype,  String? fileName,  int? fileSize,  String? uploadedAt)?  $default,) {final _that = this;
+switch (_that) {
+case _MediaMetadataDto() when $default != null:
+return $default(_that.mimetype,_that.fileName,_that.fileSize,_that.uploadedAt);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _MediaMetadataDto extends MediaMetadataDto {
+   _MediaMetadataDto({this.mimetype, this.fileName, this.fileSize, this.uploadedAt}): super._();
+  factory _MediaMetadataDto.fromJson(Map<String, dynamic> json) => _$MediaMetadataDtoFromJson(json);
+
+@override final  String? mimetype;
+@override final  String? fileName;
+@override final  int? fileSize;
+@override final  String? uploadedAt;
+
+/// Create a copy of MediaMetadataDto
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$MediaMetadataDtoCopyWith<_MediaMetadataDto> get copyWith => __$MediaMetadataDtoCopyWithImpl<_MediaMetadataDto>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$MediaMetadataDtoToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MediaMetadataDto&&(identical(other.mimetype, mimetype) || other.mimetype == mimetype)&&(identical(other.fileName, fileName) || other.fileName == fileName)&&(identical(other.fileSize, fileSize) || other.fileSize == fileSize)&&(identical(other.uploadedAt, uploadedAt) || other.uploadedAt == uploadedAt));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,mimetype,fileName,fileSize,uploadedAt);
+
+@override
+String toString() {
+  return 'MediaMetadataDto(mimetype: $mimetype, fileName: $fileName, fileSize: $fileSize, uploadedAt: $uploadedAt)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$MediaMetadataDtoCopyWith<$Res> implements $MediaMetadataDtoCopyWith<$Res> {
+  factory _$MediaMetadataDtoCopyWith(_MediaMetadataDto value, $Res Function(_MediaMetadataDto) _then) = __$MediaMetadataDtoCopyWithImpl;
+@override @useResult
+$Res call({
+ String? mimetype, String? fileName, int? fileSize, String? uploadedAt
+});
+
+
+
+
+}
+/// @nodoc
+class __$MediaMetadataDtoCopyWithImpl<$Res>
+    implements _$MediaMetadataDtoCopyWith<$Res> {
+  __$MediaMetadataDtoCopyWithImpl(this._self, this._then);
+
+  final _MediaMetadataDto _self;
+  final $Res Function(_MediaMetadataDto) _then;
+
+/// Create a copy of MediaMetadataDto
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? mimetype = freezed,Object? fileName = freezed,Object? fileSize = freezed,Object? uploadedAt = freezed,}) {
+  return _then(_MediaMetadataDto(
+mimetype: freezed == mimetype ? _self.mimetype : mimetype // ignore: cast_nullable_to_non_nullable
+as String?,fileName: freezed == fileName ? _self.fileName : fileName // ignore: cast_nullable_to_non_nullable
+as String?,fileSize: freezed == fileSize ? _self.fileSize : fileSize // ignore: cast_nullable_to_non_nullable
+as int?,uploadedAt: freezed == uploadedAt ? _self.uploadedAt : uploadedAt // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }

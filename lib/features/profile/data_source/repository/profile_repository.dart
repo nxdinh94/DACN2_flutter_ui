@@ -7,6 +7,7 @@ import 'package:kit/features/profile/data_source/remote/profile_remote_data_sour
 import 'package:kit/features/profile/data_source/repository/user_info_entity.dart';
 import 'package:kit/shared/mapper/entity_mapper.dart';
 import 'package:kit/shared/model/post/post_entity.dart';
+import 'package:kit/shared/model/upload_media/upload_media_request_dto.dart';
 import 'package:kit/shared/services/upload_media.dart';
 
 abstract class ProfileRepository {
@@ -54,7 +55,9 @@ class ProfileRepositoryImpl implements ProfileRepository {
   Future<Either<String, UserInfoEntity>> updateProfile({required UpdateProfileRequest data}) async {
     // Upload avatar if provided (local file path)
     if(data.avatar != null) {
-      final avatarResult = await uploadMediaService.uploadImage(data.avatar!);
+      final avatarResult = await uploadMediaService.uploadImage(
+        UploadMediaRequestDto(filePath: data.avatar!)
+      );
       final uploadError = avatarResult.fold(
         (error) => error,
         (url) {
@@ -69,7 +72,9 @@ class ProfileRepositoryImpl implements ProfileRepository {
     
     // Upload cover if provided (local file path)
     if(data.cover != null) {
-      final coverResult = await uploadMediaService.uploadImage(data.cover!);
+      final coverResult = await uploadMediaService.uploadImage(
+        UploadMediaRequestDto(filePath: data.cover!)
+      );
       final uploadError = coverResult.fold(
         (error) => error,
         (url) {

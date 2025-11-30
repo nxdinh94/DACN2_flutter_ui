@@ -347,6 +347,7 @@ class _EditProfileBottomSheetState extends State<EditProfileBottomSheet> {
                     horizontal: 0,
                   ),
                 ),
+                // Save button
                 AppButton.text(
                   onPressed: (){
                     final updateRequest = UpdateProfileRequest(

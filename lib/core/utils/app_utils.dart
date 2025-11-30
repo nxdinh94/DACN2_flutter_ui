@@ -17,6 +17,7 @@ class AppConstants {
   static const String userProfileEndpoint = 'api/user/me';
   static const String uploadImage = '/api/media/image/upload';
   static const String uploadVideo = '/api/media/video/upload';
+  static const String uploadMediaPost = '/api/media/post/upload';
   static const String createPostEndpoint = '/api/post';
   static const String getFollowingPostsEndpoint = '/api/post/feed';
   static const String getMyPostsEndpoint = '/api/post/my-posts';

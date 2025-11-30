@@ -111,7 +111,9 @@ _MediaDto _$MediaDtoFromJson(Map<String, dynamic> json) => _MediaDto(
   url: json['url'] as String,
   type: json['type'] as String,
   ordinal: (json['ordinal'] as num).toInt(),
-  metadata: json['metadata'] as String?,
+  metadata: json['metadata'] == null
+      ? null
+      : MediaMetadataDto.fromJson(json['metadata'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$MediaDtoToJson(_MediaDto instance) => <String, dynamic>{
@@ -121,6 +123,22 @@ Map<String, dynamic> _$MediaDtoToJson(_MediaDto instance) => <String, dynamic>{
   'ordinal': instance.ordinal,
   'metadata': instance.metadata,
 };
+
+_MediaMetadataDto _$MediaMetadataDtoFromJson(Map<String, dynamic> json) =>
+    _MediaMetadataDto(
+      mimetype: json['mimetype'] as String?,
+      fileName: json['fileName'] as String?,
+      fileSize: (json['fileSize'] as num?)?.toInt(),
+      uploadedAt: json['uploadedAt'] as String?,
+    );
+
+Map<String, dynamic> _$MediaMetadataDtoToJson(_MediaMetadataDto instance) =>
+    <String, dynamic>{
+      'mimetype': instance.mimetype,
+      'fileName': instance.fileName,
+      'fileSize': instance.fileSize,
+      'uploadedAt': instance.uploadedAt,
+    };
 
 _ReferencedPostDto _$ReferencedPostDtoFromJson(Map<String, dynamic> json) =>
     _ReferencedPostDto(

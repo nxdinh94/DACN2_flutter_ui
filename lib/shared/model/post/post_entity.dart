@@ -50,8 +50,17 @@ abstract class MediaEntity with _$MediaEntity {
     required String url,
     required String type,
     required int ordinal,
-    String? metadata,
+    MediaMetadataEntity? metadata,
   }) = _MediaEntity;
+}
+@freezed
+abstract class MediaMetadataEntity with _$MediaMetadataEntity {
+  factory MediaMetadataEntity({
+    String? mimetype,
+    String? fileName,
+    int? fileSize,
+    String? uploadedAt,
+  }) = _MediaMetadataEntity;
 }
 
 @freezed

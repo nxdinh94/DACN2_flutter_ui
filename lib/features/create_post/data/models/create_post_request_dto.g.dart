@@ -14,6 +14,12 @@ _CreatePostRequestDto _$CreatePostRequestDtoFromJson(
   language: json['language'] as String,
   difficulty: json['difficulty'] as String,
   topics: (json['topics'] as List<dynamic>).map((e) => e as String).toList(),
+  media: (json['media'] as List<dynamic>?)
+      ?.map((e) => UploadMediaResponseDto.fromJson(e as Map<String, dynamic>))
+      .toList(),
+  pickedMedia: (json['pickedMedia'] as List<dynamic>?)
+      ?.map((e) => e as String)
+      .toList(),
   inReplyToPostId: json['inReplyToPostId'] as String?,
   inReplyToUserId: json['inReplyToUserId'] as String?,
   repostOfId: json['repostOfId'] as String?,
@@ -28,6 +34,8 @@ Map<String, dynamic> _$CreatePostRequestDtoToJson(
   'language': instance.language,
   'difficulty': instance.difficulty,
   'topics': instance.topics,
+  'media': instance.media,
+  'pickedMedia': instance.pickedMedia,
   'inReplyToPostId': instance.inReplyToPostId,
   'inReplyToUserId': instance.inReplyToUserId,
   'repostOfId': instance.repostOfId,

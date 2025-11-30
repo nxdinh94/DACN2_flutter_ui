@@ -98,7 +98,7 @@ abstract class MediaDto with _$MediaDto {
     required String url,
     required String type,
     required int ordinal,
-    String? metadata,
+    MediaMetadataDto? metadata,
   }) = _MediaDto;
 
   factory MediaDto.fromJson(Map<String, dynamic> json) =>
@@ -110,10 +110,34 @@ abstract class MediaDto with _$MediaDto {
       url: url,
       type: type,
       ordinal: ordinal,
-      metadata: metadata,
+      metadata: metadata?.toEntity(),
     );
   }
 }
+@freezed
+abstract class MediaMetadataDto with _$MediaMetadataDto {
+  const MediaMetadataDto._();
+
+  factory MediaMetadataDto({
+    String? mimetype,
+    String? fileName,
+    int? fileSize,
+    String? uploadedAt,
+  }) = _MediaMetadataDto;
+
+  factory MediaMetadataDto.fromJson(Map<String, dynamic> json) =>
+      _$MediaMetadataDtoFromJson(json);
+
+  MediaMetadataEntity toEntity() {
+    return MediaMetadataEntity(
+      mimetype: mimetype,
+      fileName: fileName,
+      fileSize: fileSize,
+      uploadedAt: uploadedAt,
+    );
+  }
+}
+
 
 @freezed
 abstract class ReferencedPostDto with _$ReferencedPostDto {

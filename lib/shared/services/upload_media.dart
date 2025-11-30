@@ -6,9 +6,10 @@ import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
 import 'package:kit/core/network/dio_client.dart';
 import 'package:kit/core/utils/app_utils.dart';
+import 'package:kit/shared/model/upload_media/upload_media_request_dto.dart';
 
 abstract class UploadMediaService {
-  Future<Either<String, String>> uploadImage(String filePath);
+  Future<Either<String, String>> uploadImage(UploadMediaRequestDto filePath);
   Future<Either<String, String>> uploadVideo(String filePath);
 }
 @Injectable(as: UploadMediaService)
@@ -18,13 +19,13 @@ class UploadMediaServiceImpl implements UploadMediaService {
   UploadMediaServiceImpl(this.client);
 
   @override
-  Future<Either<String, String>> uploadImage(String filePath) async {
+  Future<Either<String, String>> uploadImage(UploadMediaRequestDto data) async {
     try {
       // Create form data with the actual file
       final formData = FormData.fromMap({
         'image': await MultipartFile.fromFile(
-          filePath,
-          filename: filePath.split(Platform.pathSeparator).last,
+          data.filePath,
+          filename: data.filePath.split(Platform.pathSeparator).last,
         ),
       });
 

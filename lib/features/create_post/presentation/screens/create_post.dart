@@ -183,9 +183,7 @@ class _CreatePostState extends State<CreatePost> {
             BlocBuilder<CreatePostBloc, CreatePostState>(
               builder: (BuildContext context, CreatePostState state) {
                 final isCollectingData = state is CreatePostCollectingData
-                  && ((state.content != null && state.content!.isNotEmpty)
-                  || (state.mediaAssetEntities != null && state.mediaAssetEntities!.isNotEmpty));
-
+                  && ((state.content != null && state.content!.isNotEmpty));
                 return SliverAppBar(
                   pinned: true,
                   elevation: 0,

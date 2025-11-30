@@ -159,7 +159,6 @@ class _FollowingTabState extends State<FollowingTab> with AutomaticKeepAliveClie
   }
   
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }
 

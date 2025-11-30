@@ -6,7 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:kit/features/create_post/domain/entities/create_post_request.dart';
+import 'package:kit/features/create_post/data/models/create_post_request_dto.dart';
 import 'package:kit/features/create_post/domain/usecases/create_post_usecase.dart';
 import 'package:kit/shared/constants/enum/post_view_scope.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
@@ -87,12 +87,16 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     emit(const CreatePostState.loading());
 
     try {
-      final request = CreatePostRequest(
+      final request = CreatePostRequestDto(
         content: data.content ?? '',
         visibility: data.viewScope.value,
         language: 'en',
         difficulty: 'BEGINNER',
         topics: [],
+        pickedMedia: data.mediaFiles
+            ?.where((file) => file != null)
+            .map((file) => file!.path)
+            .toList(),
       );
 
       final result = await createPostUseCase.execute(request);
