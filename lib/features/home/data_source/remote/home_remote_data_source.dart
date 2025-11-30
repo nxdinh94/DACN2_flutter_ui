@@ -9,6 +9,11 @@ abstract class HomeRemoteDataSource {
     int page = 1,
     int limit = 10,
   });
+  
+  Future<Either<String, List<PostDto>>> getFollowingPosts({
+    int page = 1,
+    int limit = 10,
+  });
 }
 
 @Injectable(as: HomeRemoteDataSource)
@@ -32,6 +37,29 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
 
     return result.fold(
       (error) => Left('Failed to fetch posts: ${error.toString()}'),
+      (response) {
+        final List<dynamic> data = response.data['data'] ?? [];
+        final posts = data.map((json) => PostDto.fromJson(json)).toList();
+        return Right(posts);
+      },
+    );
+  }
+
+  @override
+  Future<Either<String, List<PostDto>>> getFollowingPosts({
+    int page = 1,
+    int limit = 10,
+  }) async {
+    final result = await dioClient.get(
+      AppConstants.getFollowingPostsEndpoint,
+      queryParameters: {
+        'page': page,
+        'limit': limit,
+      },
+    );
+
+    return result.fold(
+      (error) => Left('Failed to fetch following posts: ${error.toString()}'),
       (response) {
         final List<dynamic> data = response.data['data'] ?? [];
         final posts = data.map((json) => PostDto.fromJson(json)).toList();

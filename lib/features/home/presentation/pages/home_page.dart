@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:kit/core/extensions/context.dart';
 import 'package:kit/core/router/app_routes.dart';
 import 'package:kit/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:kit/features/home/presentation/bloc/home_bloc/for_you_bloc.dart';
 import 'package:kit/features/home/presentation/pages/following_tab.dart';
 import 'package:kit/features/home/presentation/pages/for_you_tab.dart';
 import 'package:kit/features/profile/presentation/bloc/profile_bloc/profile_bloc.dart';
@@ -23,6 +24,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<ProfileBloc>().add(const ProfileEvents.getProfile());
+      context.read<HomeBloc>().add(const HomeEvent.fetchPosts());
     });
     super.initState();
   }

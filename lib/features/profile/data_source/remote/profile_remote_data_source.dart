@@ -48,7 +48,7 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
   Future<Either<String, List<PostDto>>> getSelfPosts() async{
 
     // Implementation for fetching self posts from remote API
-    final result = await _client.get(AppConstants.getFollowingPostsEndpoint);
+    final result = await _client.get(AppConstants.getMyPostsEndpoint);
     return result.fold(
       (error) => Left('Failed to fetch self posts: $error'),
       (res) => Right((res.data['data'] as List).map((item) => PostDto.fromJson(item)).toList()),

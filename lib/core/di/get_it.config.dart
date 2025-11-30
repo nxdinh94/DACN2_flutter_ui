@@ -41,8 +41,10 @@ import '../../features/home/data_source/remote/home_remote_data_source.dart'
     as _i364;
 import '../../features/home/data_source/repository/home_repository.dart'
     as _i989;
-import '../../features/home/presentation/bloc/for_you/for_you_bloc.dart'
-    as _i866;
+import '../../features/home/presentation/bloc/following_bloc/following_bloc.dart'
+    as _i392;
+import '../../features/home/presentation/bloc/home_bloc/for_you_bloc.dart'
+    as _i600;
 import '../../features/post_interaction/data_source/remote/post_interaction_remote_data_source.dart'
     as _i209;
 import '../../features/post_interaction/data_source/repository/post_interaction_repository.dart'
@@ -174,8 +176,11 @@ extension GetItInjectableX on _i174.GetIt {
         registerUseCase: gh<_i941.RegisterUseCase>(),
       ),
     );
-    gh.factory<_i866.ForYouBloc>(
-      () => _i866.ForYouBloc(gh<_i989.HomeRepository>()),
+    gh.factory<_i600.HomeBloc>(
+      () => _i600.HomeBloc(gh<_i989.HomeRepository>()),
+    );
+    gh.factory<_i392.FollowingBloc>(
+      () => _i392.FollowingBloc(gh<_i989.HomeRepository>()),
     );
     return this;
   }

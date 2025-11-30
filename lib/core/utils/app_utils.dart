@@ -19,6 +19,7 @@ class AppConstants {
   static const String uploadVideo = '/api/media/video/upload';
   static const String createPostEndpoint = '/api/post';
   static const String getFollowingPostsEndpoint = '/api/post/feed';
+  static const String getMyPostsEndpoint = '/api/post/my-posts';
   static const String getForYouPostsEndpoint = '/api/post/public/';
   static const String getBookmarkedPostsEndpoint = '/api/post/bookmarks';
   static const String bookMarkAnPostEndpoint = '/api/post/:id/bookmark';

@@ -8,6 +8,11 @@ abstract class HomeRepository {
     int page = 1,
     int limit = 10,
   });
+  
+  Future<Either<String, List<PostEntity>>> getFollowingPosts({
+    int page = 1,
+    int limit = 10,
+  });
 }
 
 @Injectable(as: HomeRepository)
@@ -22,6 +27,22 @@ class HomeRepositoryImpl implements HomeRepository {
     int limit = 10,
   }) async {
     final result = await remoteDataSource.getForYouPosts(
+      page: page,
+      limit: limit,
+    );
+
+    return result.fold(
+      (error) => Left(error),
+      (posts) => Right(posts.map((dto) => dto.toEntity()).toList()),
+    );
+  }
+
+  @override
+  Future<Either<String, List<PostEntity>>> getFollowingPosts({
+    int page = 1,
+    int limit = 10,
+  }) async {
+    final result = await remoteDataSource.getFollowingPosts(
       page: page,
       limit: limit,
     );

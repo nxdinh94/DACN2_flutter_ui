@@ -215,7 +215,6 @@ Widget buildStatItem({
   bool? isActive = false,
 }) {
     return SizedBox(
-      width: 28,
       height: 28,
       child: AppButton.icon(
         iconSize: 14,
@@ -223,6 +222,9 @@ Widget buildStatItem({
         iconPath: isActive == true && activeIconPath != null ? activeIconPath : iconPath,
         iconColor: context.appTheme.onSurfaceColor,
         onPressed: onTap,
+        text: count,
+        textColor: context.appTheme.onSurfaceColor,
+        fontSize: 12,
       ),
     );
   }

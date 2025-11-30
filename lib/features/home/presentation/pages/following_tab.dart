@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kit/core/extensions/context.dart';
+import 'package:kit/features/home/presentation/bloc/home_bloc/for_you_bloc.dart';
+import 'package:kit/features/post_interaction/presentation/feed_item.dart';
+import 'package:kit/shared/model/post/post_entity.dart';
 
 class FollowingTab extends StatefulWidget {
   const FollowingTab({super.key});
@@ -8,80 +12,154 @@ class FollowingTab extends StatefulWidget {
   State<FollowingTab> createState() => _FollowingTabState();
 }
 
-class _FollowingTabState extends State<FollowingTab> {
-  double _velocity = 0.0; // tốc độ hiện tại (px/s)
-  double? _lastOffset;
-  DateTime? _lastTime;
+class _FollowingTabState extends State<FollowingTab> with AutomaticKeepAliveClientMixin<FollowingTab> {
+  @override
+  void initState() {
+    super.initState();
+    // Fetch following posts when tab is first loaded
+    final bloc = context.read<HomeBloc>();
+    final state = bloc.state;
+    if (state is HomeLoaded && state.followingPost.isEmpty) {
+      bloc.add(const HomeEvent.fetchFollowingPosts());
+    } else if (state is! HomeLoaded) {
+      bloc.add(const HomeEvent.fetchFollowingPosts());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return NotificationListener<ScrollNotification>(
-        onNotification: (notification) {
-          // Chỉ xử lý khi đang cuộn
-          if (notification is ScrollUpdateNotification) {
-            final offset = notification.metrics.pixels; // vị trí hiện tại
-            final now = DateTime.now();
+    super.build(context);
+    return BlocBuilder<HomeBloc, HomeState>(
+      builder: (context, state) {
+        return switch (state) {
+          HomeInitial() => const SizedBox.shrink(),
+          HomeLoading() => const Center(
+              child: CircularProgressIndicator(),
+            ),
+          HomeLoaded(
+            :final followingPost,
+            :final followingIsLoadingMore,
+            :final followingHasReachedMax,
+            :final followingIsLoading,
+          ) =>
+            followingIsLoading
+                ? const Center(child: CircularProgressIndicator())
+                : _buildPostsList(
+                    context,
+                    followingPost,
+                    followingIsLoadingMore,
+                    followingHasReachedMax,
+                  ),
+          HomeError(:final message) => _buildErrorView(context, message),
+        };
+      },
+    );
+  }
 
-            if (_lastOffset != null && _lastTime != null) {
-              final dt = now.difference(_lastTime!).inMilliseconds;
-              final dy = offset - _lastOffset!;
-              if (dt > 0) {
-                final velocity = dy / (dt / 1000); // px/s
-                // if(velocity < -300) {
-                //   widget.voidCallbackAction(true);
-                // }else if(velocity > 0) {
-                //   widget.voidCallbackAction(false);
-                // }
-                setState(() {
-                  _velocity = velocity;
-                });
-              }
-            }
-
-            // Cập nhật giá trị lần trước
-            _lastOffset = offset;
-            _lastTime = now;
-          }else if(notification is ScrollEndNotification){
-            // Xử lý khi cuộn kết thúc
-            setState(() {
-              _velocity = 0.0;
-            });
-          }
-
-          // Trả về false để không chặn event gốc
-          return false;
-        },
-        child: Stack(
+  Widget _buildPostsList(
+    BuildContext context,
+    List<PostEntity> posts,
+    bool isLoadingMore,
+    bool hasReachedMax,
+  ) {
+    if (posts.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            RefreshIndicator(
-              onRefresh: () { 
-                return Future.delayed(const Duration(seconds: 2));
-              },
-              child: ListView.builder(
-                itemCount: 100,
-                itemBuilder: (_, i) => ListTile(
-                  title: Text('Item #$i'),
-                ),
+            Icon(
+              Icons.people_outline,
+              size: 64,
+              color: context.appTheme.textSubtle,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'No posts from people you follow',
+              style: context.textStyle.bodyLarge?.copyWith(
+                color: context.appTheme.textSubtle,
               ),
             ),
-            Positioned(
-              bottom: 40,
-              right: 20,
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Colors.black.withValues(alpha: .6),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Text(
-                  'Velocity: ${_velocity.toStringAsFixed(2)} px/s',
-                  style: const TextStyle(color: Colors.white),
-                ),
+            const SizedBox(height: 8),
+            Text(
+              'Follow some people to see their posts here',
+              style: context.textStyle.bodyMedium?.copyWith(
+                color: context.appTheme.textSubtle,
               ),
             ),
           ],
         ),
       );
+    }
+
+    return RefreshIndicator(
+      onRefresh: () async {
+        context.read<HomeBloc>().add(const HomeEvent.refreshFollowingPosts());
+      },
+      child: NotificationListener<ScrollNotification>(
+        onNotification: (scrollInfo) {
+          if (scrollInfo.metrics.pixels >=
+                  scrollInfo.metrics.maxScrollExtent - 200 &&
+              !isLoadingMore &&
+              !hasReachedMax) {
+            context.read<HomeBloc>().add(const HomeEvent.loadMoreFollowingPosts());
+          }
+          return false;
+        },
+        child: ListView.builder(
+          physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics(),
+          ),
+          itemCount: posts.length + (isLoadingMore ? 1 : 0),
+          itemBuilder: (context, index) {
+            if (index >= posts.length) {
+              return const Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Center(child: CircularProgressIndicator()),
+              );
+            }
+
+            final post = posts[index];
+            return FeedItem(
+              postEntity: post,
+            );
+          },
+        ),
+      ),
+    );
   }
+
+  Widget _buildErrorView(BuildContext context, String message) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.error_outline,
+            size: 64,
+            color: context.appTheme.errorColor,
+          ),
+          const SizedBox(height: 16),
+          Text(
+            message,
+            style: context.textStyle.bodyLarge?.copyWith(
+              color: context.appTheme.textSubtle,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: () {
+              context.read<HomeBloc>().add(const HomeEvent.fetchFollowingPosts());
+            },
+            child: const Text('Retry'),
+          ),
+        ],
+      ),
+    );
+  }
+  
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }
 
