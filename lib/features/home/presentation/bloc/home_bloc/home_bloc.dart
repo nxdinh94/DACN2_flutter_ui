@@ -4,9 +4,9 @@ import 'package:injectable/injectable.dart';
 import 'package:kit/features/home/data_source/repository/home_repository.dart';
 import 'package:kit/shared/model/post/post_entity.dart';
 
-part 'for_you_event.dart';
-part 'for_you_state.dart';
-part 'for_you_bloc.freezed.dart';
+part 'home_event.dart';
+part 'home_state.dart';
+part 'home_bloc.freezed.dart';
 
 @injectable
 class HomeBloc extends Bloc<HomeEvent, HomeState> {

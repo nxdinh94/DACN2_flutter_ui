@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -79,9 +78,7 @@ class _FeedItemState extends State<FeedItem> {
         
         // Handle bookmark interaction
         if (state.type == InteractionType.bookmark) {
-          print('Bookmark state status: ${state.type}');
           if (state.status == InteractionStatus.success) {
-            log('Bookmark success isBookMarked: $isBookMarked');
             setState(() {
               isBookMarked = !isBookMarked;
             });
@@ -96,10 +93,19 @@ class _FeedItemState extends State<FeedItem> {
         if (state.type == InteractionType.like &&
             state.status == InteractionStatus.success) {
           setState(() {
-            isLiked = !isLiked;
+            isLiked = true;
             likeCount = likeCount + 1;
           });
-        }else if (state.type == InteractionType.like &&
+        }else if (
+            state.type == InteractionType.unlike &&
+            state.status == InteractionStatus.success
+        ){
+          setState(() {
+            isLiked = false;
+            likeCount = likeCount - 1;
+          });
+        }
+        else if ((state.type == InteractionType.like || state.type == InteractionType.unlike) &&
             state.status == InteractionStatus.error) {
           setState(() {
             isLiked = !isLiked;

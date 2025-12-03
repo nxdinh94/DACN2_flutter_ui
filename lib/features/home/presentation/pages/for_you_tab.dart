@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kit/core/extensions/context.dart';
-import 'package:kit/features/home/presentation/bloc/home_bloc/for_you_bloc.dart';
+import 'package:kit/features/home/presentation/bloc/home_bloc/home_bloc.dart';
 import 'package:kit/features/post_interaction/presentation/feed_item.dart';
 import 'package:kit/shared/model/post/post_entity.dart';
 
@@ -78,10 +78,8 @@ class _ForYouTabView extends StatelessWidget {
       },
       child: NotificationListener<ScrollNotification>(
         onNotification: (scrollInfo) {
-          if (scrollInfo.metrics.pixels >=
-                  scrollInfo.metrics.maxScrollExtent - 200 &&
-              !isLoadingMore &&
-              !hasReachedMax) {
+          if (scrollInfo.metrics.pixels >= scrollInfo.metrics.maxScrollExtent - 200 &&
+              !isLoadingMore && !hasReachedMax) {
             context.read<HomeBloc>().add(const HomeEvent.loadMorePosts());
           }
           return false;

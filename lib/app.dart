@@ -8,7 +8,7 @@ import 'package:kit/core/theme/app_theme.dart';
 import 'package:kit/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:kit/features/create_post/presentation/bloc/cache_thumbnail_video.dart';
 import 'package:kit/features/create_post/presentation/bloc/create_post_bloc.dart';
-import 'package:kit/features/home/presentation/bloc/home_bloc/for_you_bloc.dart';
+import 'package:kit/features/home/presentation/bloc/home_bloc/home_bloc.dart';
 import 'package:kit/features/post_interaction/presentation/bloc/post_interaction_bloc.dart';
 import 'package:kit/features/profile/presentation/bloc/posts_bloc/posts_bloc.dart';
 import 'package:kit/features/profile/presentation/bloc/profile_bloc/profile_bloc.dart';

@@ -4,6 +4,7 @@ enum InteractionType {
   none,
   bookmark,
   like,
+  unlike,
   comment,
   repost,
   share,

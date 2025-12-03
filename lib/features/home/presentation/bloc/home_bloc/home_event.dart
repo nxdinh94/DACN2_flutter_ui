@@ -1,4 +1,4 @@
-part of 'for_you_bloc.dart';
+part of 'home_bloc.dart';
 
 @freezed
 sealed class HomeEvent with _$HomeEvent {

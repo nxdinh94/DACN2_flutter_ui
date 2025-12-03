@@ -80,13 +80,24 @@ class PostInteractionBloc extends Bloc<PostInteractionEvent, PostInteractionStat
     LikePost event,
     Emitter<PostInteractionState> emit,
   ) async {
-    // Optimistic UI: emit success state immediately
-    emit(state.copyWith(
-      postId: event.postId,
-      type: InteractionType.like,
-      status: InteractionStatus.success,
-      interactionId: _uuid.v4(),
-    ));
+    
+    if(state.type == InteractionType.unlike){
+      // Optimistic UI: emit success state immediately
+      emit(state.copyWith(
+        postId: event.postId,
+        type: InteractionType.like,
+        status: InteractionStatus.success,
+        interactionId: _uuid.v4(),
+      ));
+    }else{
+      // Optimistic UI: emit success state immediately
+      emit(state.copyWith(
+        postId: event.postId,
+        type: InteractionType.unlike,
+        status: InteractionStatus.success,
+        interactionId: _uuid.v4(),
+      ));
+    }
 
     final result = await repository.likePost(postId: event.postId);
 
@@ -94,7 +105,6 @@ class PostInteractionBloc extends Bloc<PostInteractionEvent, PostInteractionStat
       (error) => emit(state.copyWith(
         postId: event.postId,
         message: error,
-        type: InteractionType.like,
         status: InteractionStatus.error,
       )),
       (success) {
