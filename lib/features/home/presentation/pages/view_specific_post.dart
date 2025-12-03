@@ -59,7 +59,6 @@ class _ViewSpecificPostState extends State<ViewSpecificPost> {
                   );
                 }
                 if (state.postEntity != null &&
-                    state.type == InteractionType.getPost &&
                     state.postId == widget.postId) {
                   return _buildContent(context, state.postEntity!);
                 }

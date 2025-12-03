@@ -25,5 +25,6 @@ abstract class PostInteractionState with _$PostInteractionState {
     String? postId,
     String? message,
     PostEntity? postEntity,
+    String? interactionId,
   }) = _PostInteractionState;
 }

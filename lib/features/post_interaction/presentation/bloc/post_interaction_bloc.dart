@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:kit/features/post_interaction/data_source/repository/post_interaction_repository.dart';
 import 'package:kit/shared/model/post/post_entity.dart';
+import 'package:uuid/uuid.dart';
 
 part 'post_interaction_event.dart';
 part 'post_interaction_state.dart';
@@ -11,7 +12,7 @@ part 'post_interaction_bloc.freezed.dart';
 @injectable
 class PostInteractionBloc extends Bloc<PostInteractionEvent, PostInteractionState> {
   final PostInteractionRepository repository;
-
+  final  Uuid _uuid = Uuid();
   PostInteractionBloc(this.repository) : super(const PostInteractionState(status: InteractionStatus.idle)) {
     on<BookmarkPost>(_onBookmarkPost);
     // Placeholder handlers for future implementation
@@ -53,7 +54,12 @@ class PostInteractionBloc extends Bloc<PostInteractionEvent, PostInteractionStat
     BookmarkPost event,
     Emitter<PostInteractionState> emit,
   ) async {
-    emit(state.copyWith(postId: event.postId, status: InteractionStatus.success, type: InteractionType.bookmark));
+    emit(state.copyWith(
+      interactionId: _uuid.v4(),
+      postId: event.postId, 
+      status: InteractionStatus.success, 
+      type: InteractionType.bookmark
+    ));
     
     final result = await repository.bookmarkPost(postId: event.postId);
     
@@ -79,6 +85,7 @@ class PostInteractionBloc extends Bloc<PostInteractionEvent, PostInteractionStat
       postId: event.postId,
       type: InteractionType.like,
       status: InteractionStatus.success,
+      interactionId: _uuid.v4(),
     ));
 
     final result = await repository.likePost(postId: event.postId);

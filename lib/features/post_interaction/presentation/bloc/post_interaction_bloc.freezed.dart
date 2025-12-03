@@ -627,7 +627,7 @@ as String,
 /// @nodoc
 mixin _$PostInteractionState {
 
- InteractionType get type; InteractionStatus get status; String? get postId; String? get message; PostEntity? get postEntity;
+ InteractionType get type; InteractionStatus get status; String? get postId; String? get message; PostEntity? get postEntity; String? get interactionId;
 /// Create a copy of PostInteractionState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -638,16 +638,16 @@ $PostInteractionStateCopyWith<PostInteractionState> get copyWith => _$PostIntera
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PostInteractionState&&(identical(other.type, type) || other.type == type)&&(identical(other.status, status) || other.status == status)&&(identical(other.postId, postId) || other.postId == postId)&&(identical(other.message, message) || other.message == message)&&(identical(other.postEntity, postEntity) || other.postEntity == postEntity));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PostInteractionState&&(identical(other.type, type) || other.type == type)&&(identical(other.status, status) || other.status == status)&&(identical(other.postId, postId) || other.postId == postId)&&(identical(other.message, message) || other.message == message)&&(identical(other.postEntity, postEntity) || other.postEntity == postEntity)&&(identical(other.interactionId, interactionId) || other.interactionId == interactionId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,type,status,postId,message,postEntity);
+int get hashCode => Object.hash(runtimeType,type,status,postId,message,postEntity,interactionId);
 
 @override
 String toString() {
-  return 'PostInteractionState(type: $type, status: $status, postId: $postId, message: $message, postEntity: $postEntity)';
+  return 'PostInteractionState(type: $type, status: $status, postId: $postId, message: $message, postEntity: $postEntity, interactionId: $interactionId)';
 }
 
 
@@ -658,7 +658,7 @@ abstract mixin class $PostInteractionStateCopyWith<$Res>  {
   factory $PostInteractionStateCopyWith(PostInteractionState value, $Res Function(PostInteractionState) _then) = _$PostInteractionStateCopyWithImpl;
 @useResult
 $Res call({
- InteractionType type, InteractionStatus status, String? postId, String? message, PostEntity? postEntity
+ InteractionType type, InteractionStatus status, String? postId, String? message, PostEntity? postEntity, String? interactionId
 });
 
 
@@ -675,14 +675,15 @@ class _$PostInteractionStateCopyWithImpl<$Res>
 
 /// Create a copy of PostInteractionState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? type = null,Object? status = null,Object? postId = freezed,Object? message = freezed,Object? postEntity = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? type = null,Object? status = null,Object? postId = freezed,Object? message = freezed,Object? postEntity = freezed,Object? interactionId = freezed,}) {
   return _then(_self.copyWith(
 type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as InteractionType,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as InteractionStatus,postId: freezed == postId ? _self.postId : postId // ignore: cast_nullable_to_non_nullable
 as String?,message: freezed == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String?,postEntity: freezed == postEntity ? _self.postEntity : postEntity // ignore: cast_nullable_to_non_nullable
-as PostEntity?,
+as PostEntity?,interactionId: freezed == interactionId ? _self.interactionId : interactionId // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 /// Create a copy of PostInteractionState
@@ -779,10 +780,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( InteractionType type,  InteractionStatus status,  String? postId,  String? message,  PostEntity? postEntity)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( InteractionType type,  InteractionStatus status,  String? postId,  String? message,  PostEntity? postEntity,  String? interactionId)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PostInteractionState() when $default != null:
-return $default(_that.type,_that.status,_that.postId,_that.message,_that.postEntity);case _:
+return $default(_that.type,_that.status,_that.postId,_that.message,_that.postEntity,_that.interactionId);case _:
   return orElse();
 
 }
@@ -800,10 +801,10 @@ return $default(_that.type,_that.status,_that.postId,_that.message,_that.postEnt
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( InteractionType type,  InteractionStatus status,  String? postId,  String? message,  PostEntity? postEntity)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( InteractionType type,  InteractionStatus status,  String? postId,  String? message,  PostEntity? postEntity,  String? interactionId)  $default,) {final _that = this;
 switch (_that) {
 case _PostInteractionState():
-return $default(_that.type,_that.status,_that.postId,_that.message,_that.postEntity);case _:
+return $default(_that.type,_that.status,_that.postId,_that.message,_that.postEntity,_that.interactionId);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -820,10 +821,10 @@ return $default(_that.type,_that.status,_that.postId,_that.message,_that.postEnt
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( InteractionType type,  InteractionStatus status,  String? postId,  String? message,  PostEntity? postEntity)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( InteractionType type,  InteractionStatus status,  String? postId,  String? message,  PostEntity? postEntity,  String? interactionId)?  $default,) {final _that = this;
 switch (_that) {
 case _PostInteractionState() when $default != null:
-return $default(_that.type,_that.status,_that.postId,_that.message,_that.postEntity);case _:
+return $default(_that.type,_that.status,_that.postId,_that.message,_that.postEntity,_that.interactionId);case _:
   return null;
 
 }
@@ -835,7 +836,7 @@ return $default(_that.type,_that.status,_that.postId,_that.message,_that.postEnt
 
 
 class _PostInteractionState implements PostInteractionState {
-  const _PostInteractionState({this.type = InteractionType.none, this.status = InteractionStatus.idle, this.postId, this.message, this.postEntity});
+  const _PostInteractionState({this.type = InteractionType.none, this.status = InteractionStatus.idle, this.postId, this.message, this.postEntity, this.interactionId});
   
 
 @override@JsonKey() final  InteractionType type;
@@ -843,6 +844,7 @@ class _PostInteractionState implements PostInteractionState {
 @override final  String? postId;
 @override final  String? message;
 @override final  PostEntity? postEntity;
+@override final  String? interactionId;
 
 /// Create a copy of PostInteractionState
 /// with the given fields replaced by the non-null parameter values.
@@ -854,16 +856,16 @@ _$PostInteractionStateCopyWith<_PostInteractionState> get copyWith => __$PostInt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PostInteractionState&&(identical(other.type, type) || other.type == type)&&(identical(other.status, status) || other.status == status)&&(identical(other.postId, postId) || other.postId == postId)&&(identical(other.message, message) || other.message == message)&&(identical(other.postEntity, postEntity) || other.postEntity == postEntity));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PostInteractionState&&(identical(other.type, type) || other.type == type)&&(identical(other.status, status) || other.status == status)&&(identical(other.postId, postId) || other.postId == postId)&&(identical(other.message, message) || other.message == message)&&(identical(other.postEntity, postEntity) || other.postEntity == postEntity)&&(identical(other.interactionId, interactionId) || other.interactionId == interactionId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,type,status,postId,message,postEntity);
+int get hashCode => Object.hash(runtimeType,type,status,postId,message,postEntity,interactionId);
 
 @override
 String toString() {
-  return 'PostInteractionState(type: $type, status: $status, postId: $postId, message: $message, postEntity: $postEntity)';
+  return 'PostInteractionState(type: $type, status: $status, postId: $postId, message: $message, postEntity: $postEntity, interactionId: $interactionId)';
 }
 
 
@@ -874,7 +876,7 @@ abstract mixin class _$PostInteractionStateCopyWith<$Res> implements $PostIntera
   factory _$PostInteractionStateCopyWith(_PostInteractionState value, $Res Function(_PostInteractionState) _then) = __$PostInteractionStateCopyWithImpl;
 @override @useResult
 $Res call({
- InteractionType type, InteractionStatus status, String? postId, String? message, PostEntity? postEntity
+ InteractionType type, InteractionStatus status, String? postId, String? message, PostEntity? postEntity, String? interactionId
 });
 
 
@@ -891,14 +893,15 @@ class __$PostInteractionStateCopyWithImpl<$Res>
 
 /// Create a copy of PostInteractionState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? type = null,Object? status = null,Object? postId = freezed,Object? message = freezed,Object? postEntity = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? type = null,Object? status = null,Object? postId = freezed,Object? message = freezed,Object? postEntity = freezed,Object? interactionId = freezed,}) {
   return _then(_PostInteractionState(
 type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as InteractionType,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as InteractionStatus,postId: freezed == postId ? _self.postId : postId // ignore: cast_nullable_to_non_nullable
 as String?,message: freezed == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String?,postEntity: freezed == postEntity ? _self.postEntity : postEntity // ignore: cast_nullable_to_non_nullable
-as PostEntity?,
+as PostEntity?,interactionId: freezed == interactionId ? _self.interactionId : interactionId // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

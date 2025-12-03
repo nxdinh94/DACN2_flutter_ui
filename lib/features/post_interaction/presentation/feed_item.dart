@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -77,7 +79,9 @@ class _FeedItemState extends State<FeedItem> {
         
         // Handle bookmark interaction
         if (state.type == InteractionType.bookmark) {
+          print('Bookmark state status: ${state.type}');
           if (state.status == InteractionStatus.success) {
+            log('Bookmark success isBookMarked: $isBookMarked');
             setState(() {
               isBookMarked = !isBookMarked;
             });
