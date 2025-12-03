@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gpt_markdown/gpt_markdown.dart';
 import 'package:kit/core/extensions/context.dart';
+import 'package:kit/core/extensions/date_extension.dart';
 import 'package:kit/core/router/app_routes.dart';
 import 'package:kit/features/home/presentation/widgets/build_media_layout.dart';
 import 'package:kit/features/post_interaction/presentation/bloc/post_interaction_bloc.dart';
@@ -15,9 +16,11 @@ class FeedItem extends StatefulWidget {
     const FeedItem({
       super.key,
       required this.postEntity,
+      this.currentRoute,
   });
 
   final PostEntity postEntity;
+  final String? currentRoute;
 
   @override
   State<FeedItem> createState() => _FeedItemState();
@@ -28,23 +31,26 @@ class _FeedItemState extends State<FeedItem> {
   late bool isBookMarked;
   late bool isLiked;
   late int likeCount;
+  late bool isInViewSpcecificPostPage;
+  String createdAt = '';
   @override
   void initState() {
     isBookMarked = widget.postEntity.isBookmarked;
     isLiked = widget.postEntity.isLiked;
     likeCount = widget.postEntity.likeCount;
+    // Determine if we are in ViewSpecificPost page
+    isInViewSpcecificPostPage = widget.currentRoute != null 
+                                && widget.currentRoute == AppRoutes.viewSpecificPost;
+    createdAt = '${widget.postEntity.createdAt.toTime()} · ${widget.postEntity.createdAt.toDDMMYY()}';
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
-
-    final mediaList = widget.postEntity.media.map((e) => e.url).toList();
-
     void open({required BuildContext context, required final int index}) {
       context.push(
         AppRoutes.feedMediaView,
         extra: {
-          'mediaUrls': mediaList,
+          'mediaUrls': widget.postEntity.media,
           'initialIndex': index,
         },
       );
@@ -53,11 +59,7 @@ class _FeedItemState extends State<FeedItem> {
     void openPostDetails() {
       context.push(
         AppRoutes.viewSpecificPost,
-        extra: {
-          'medias': mediaList,
-          'contents': widget.postEntity.content,
-          'tags': widget.postEntity.hashtags,
-        },
+        extra: widget.postEntity.id,
       );
     }
 
@@ -102,16 +104,18 @@ class _FeedItemState extends State<FeedItem> {
         }
       },
       child: InkWell(
-      onTap: openPostDetails,
+      onTap: widget.currentRoute == null ? openPostDetails : null,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppNetworkImage.avatar(
-              size: 48,
-              imageUrl: widget.postEntity.user.avatar ?? '',
-            ),
+            // Build avatar
+            if(!isInViewSpcecificPostPage)
+              BuildAvatar(
+                avatarUrl: widget.postEntity.user.avatar ?? ''
+              ),
+            // Build post content
             Expanded(
               child: Container(
                 padding: const EdgeInsets.only(left: 8),
@@ -120,43 +124,12 @@ class _FeedItemState extends State<FeedItem> {
                   mainAxisSize: MainAxisSize.min,
                   spacing: 8,
                   children: [
-                    Row(
-                      spacing: 12,
-                      children: [
-                        Expanded(
-                          child: RichText(
-                            overflow: TextOverflow.ellipsis,
-                            text: TextSpan(
-                              style: context.textStyle.bodyMedium,
-                              children: [
-                                TextSpan(
-                                  text: widget.postEntity.user.fullName,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: ' @${widget.postEntity.user.username}',
-                                  style: TextStyle(
-                                    color: context.appTheme.textSubtle,
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: ' · ${widget.postEntity.createdAt}',
-                                  style: TextStyle(
-                                    color: context.appTheme.textSubtle,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Icon(
-                          Icons.more_horiz,
-                          color: context.appTheme.textSubtle,
-                          size: 16,
-                        ),
-                      ],
+                    BuildCreatorSection(
+                      feedItem: widget, 
+                      isInViewSpecificPostPage: isInViewSpcecificPostPage,
+                      onFollowTap: () {
+                        // Handle follow tap
+                      },
                     ),
                     GptMarkdown(
                       widget.postEntity.content,
@@ -177,13 +150,21 @@ class _FeedItemState extends State<FeedItem> {
                       ),
                     ],
                     // Media
-                    if (mediaList.isNotEmpty)...[
+                    if (widget.postEntity.media.isNotEmpty)...[
                       ClipRRect(
                             borderRadius: BorderRadius.circular(8),
                             child: buildMediaLayout(
-                              context, mediaList, open),
+                              context, widget.postEntity.media, open),
                         ),
                     ],
+                    // Post Time and Date
+                    Text(
+                      createdAt,
+                      style: context.textStyle.bodySmall?.copyWith(
+                        color: context.appTheme.textSubtle,
+                      ),
+                    ),
+                    // Stats
                     buildStat( 
                       context,
                       commentCount: widget.postEntity.commentCount.toString(),
@@ -202,6 +183,119 @@ class _FeedItemState extends State<FeedItem> {
         ),
       ),
     ),
+    );
+  }
+}
+
+class BuildCreatorSection extends StatelessWidget {
+  const BuildCreatorSection({
+    super.key,
+    required this.feedItem,
+    required this.isInViewSpecificPostPage,
+    required this.onFollowTap,
+  });
+
+  final FeedItem feedItem;
+  final bool isInViewSpecificPostPage;
+  final VoidCallback onFollowTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return isInViewSpecificPostPage ? Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          spacing: 6,
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            BuildAvatar(
+              avatarUrl: feedItem.postEntity.user.avatar ?? ''
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  feedItem.postEntity.user.fullName,
+                  style: context.textStyle.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Text(
+                  '@${feedItem.postEntity.user.username}',
+                  style: context.textStyle.bodySmall?.copyWith(
+                    color: context.appTheme.textSubtle,
+                  ),
+                ),
+          ],
+        ),
+      ]),
+      // Build Follow Button
+      AppButton.elevated(
+        text: 'Follow',
+        fontSize: 12,
+        fontWeight: FontWeight.bold,
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+        backgroundColor: context.appTheme.primaryColor,
+        textColor: Colors.white,
+        onPressed: onFollowTap,
+      ),
+      ]  
+    ) : Row(
+      spacing: 12,
+      children: [
+        Expanded(
+          child: RichText(
+            overflow: TextOverflow.ellipsis,
+            text: TextSpan(
+              style: context.textStyle.bodyMedium,
+              children: [
+                TextSpan(
+                  text: feedItem.postEntity.user.fullName,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                TextSpan(
+                  text: ' @${feedItem.postEntity.user.username}',
+                  style: TextStyle(
+                    color: context.appTheme.textSubtle,
+                  ),
+                ),
+                TextSpan(
+                  text: ' · ${feedItem.postEntity.createdAt}',
+                  style: TextStyle(
+                    color: context.appTheme.textSubtle,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Icon(
+          Icons.more_horiz,
+          color: context.appTheme.textSubtle,
+          size: 16,
+        ),
+      ],
+    );
+  }
+}
+
+class BuildAvatar extends StatelessWidget {
+  const BuildAvatar({
+    super.key,
+    required this.avatarUrl,
+  });
+
+  final String avatarUrl;
+
+  @override
+  Widget build(BuildContext context) {
+    return AppNetworkImage.avatar(
+      size: 48,
+      imageUrl: avatarUrl,
     );
   }
 }

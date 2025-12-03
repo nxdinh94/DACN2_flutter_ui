@@ -2,6 +2,9 @@ part of 'post_interaction_bloc.dart';
 
 @freezed
 sealed class PostInteractionEvent with _$PostInteractionEvent {
+  // Get a post by ID 
+  const factory PostInteractionEvent.getPostById({required String postId}) = GetPostById;
+  
   // Bookmark
   const factory PostInteractionEvent.bookmarkPost({required String postId}) = BookmarkPost;
   

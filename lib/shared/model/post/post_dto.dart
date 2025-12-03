@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:kit/core/extensions/extensions.dart';
 import 'package:kit/shared/model/post/post_entity.dart';
 part 'post_dto.freezed.dart';
 part 'post_dto.g.dart';
@@ -77,8 +76,8 @@ abstract class PostDto with _$PostDto {
       repostOf: repostOf?.toEntity(),
       quoteOf: quoteOf?.toEntity(),
       deletedAt: deletedAt,
-      createdAt: createdAt.timeAgo,
-      updatedAt: updatedAt.timeAgo,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
       isLiked: isLiked,
       isBookmarked: isBookmarked,
       user: user.toEntity(),

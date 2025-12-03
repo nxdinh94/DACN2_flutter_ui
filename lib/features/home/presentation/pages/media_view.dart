@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:kit/shared/model/post/post_entity.dart';
 import 'package:kit/shared/widgets/back_appbar.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
@@ -11,7 +12,7 @@ class MediaView extends StatefulWidget {
     required this.initialIndex,
   });
 
-  final List<String> mediaUrls;
+  final List<MediaEntity> mediaUrls;
   final int initialIndex;
   
   @override
@@ -102,7 +103,7 @@ class _MediaViewState extends State<MediaView> {
                     },
                     onVerticalDragEnd: _handleVerticalDragEnd,
                     child: PhotoView(
-                      imageProvider: CachedNetworkImageProvider(item),
+                      imageProvider: CachedNetworkImageProvider(item.url),
                       initialScale: PhotoViewComputedScale.contained,
                       minScale: PhotoViewComputedScale.contained,
                       maxScale: PhotoViewComputedScale.covered * 4.1,

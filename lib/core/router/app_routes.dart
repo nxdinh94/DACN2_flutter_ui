@@ -109,23 +109,15 @@ class AppRoutes {
               ),
               GoRoute(
                 path: viewSpecificPost,
-                pageBuilder: (context, state){
-
-                  final medias = state.extra != null && (state.extra as Map).containsKey('medias')
-                      ? (state.extra as Map)['medias'] as List<String>
-                      : <String>[];
-                  final contents = state.extra != null && (state.extra as Map).containsKey('contents')
-                      ? (state.extra as Map)['contents'] as String
-                      : null;
-                  final tags = state.extra != null && (state.extra as Map).containsKey('tags')
-                      ? (state.extra as Map)['tags'] as List<HashtagEntity>
-                      : null;
+                pageBuilder: (context, state) {
+                  // Support both PostEntity and postId navigation
+                  final extra = state.extra;
+                  String postId = extra is String ? extra : '';
 
                   return slideTransitionPage(
                     child: ViewSpecificPost(
-                      medias: medias,
-                      contents: contents,
-                      tags: tags,
+                      postId: postId,
+                      currentRoute: state.matchedLocation,
                     ),
                   );
                 },
@@ -179,8 +171,8 @@ class AppRoutes {
         path: feedMediaView,
         pageBuilder: (context, state){
           final mediaUrls = state.extra != null && (state.extra as Map).containsKey('mediaUrls')
-              ? (state.extra as Map)['mediaUrls'] as List<String>
-              : <String>[];
+              ? (state.extra as Map)['mediaUrls'] as List<MediaEntity>
+              : <MediaEntity>[];
           final initialIndex = state.extra != null && (state.extra as Map).containsKey('initialIndex')
               ? (state.extra as Map)['initialIndex'] as int
               : 0;

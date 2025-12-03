@@ -7,6 +7,7 @@ enum InteractionType {
   comment,
   repost,
   share,
+  getPost,
 }
 
 enum InteractionStatus {
@@ -23,5 +24,6 @@ abstract class PostInteractionState with _$PostInteractionState {
     @Default(InteractionStatus.idle) InteractionStatus status,
     String? postId,
     String? message,
+    PostEntity? postEntity,
   }) = _PostInteractionState;
 }

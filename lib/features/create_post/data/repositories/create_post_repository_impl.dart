@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';

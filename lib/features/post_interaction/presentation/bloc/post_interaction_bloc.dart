@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:kit/features/post_interaction/data_source/repository/post_interaction_repository.dart';
+import 'package:kit/shared/model/post/post_entity.dart';
 
 part 'post_interaction_event.dart';
 part 'post_interaction_state.dart';
@@ -18,8 +19,36 @@ class PostInteractionBloc extends Bloc<PostInteractionEvent, PostInteractionStat
     on<CommentPost>(_onCommentPost);
     on<RepostPost>(_onRepostPost);
     on<SharePost>(_onSharePost);
+    on<GetPostById>(_onGetPostById);
   }
+  Future<void> _onGetPostById(
+    GetPostById event,
+    Emitter<PostInteractionState> emit,
+  ) async {
+    emit(state.copyWith(
+      postId: event.postId,
+      status: InteractionStatus.loading,
+      type: InteractionType.getPost,
+      postEntity: null,
+    ));
 
+    final result = await repository.getPostById(postId: event.postId);
+
+    result.fold(
+      (error) => emit(state.copyWith(
+        postId: event.postId,
+        message: error,
+        status: InteractionStatus.error,
+        type: InteractionType.getPost,
+      )),
+      (post) => emit(state.copyWith(
+        postId: event.postId,
+        postEntity: post,
+        status: InteractionStatus.success,
+        type: InteractionType.getPost,
+      )),
+    );
+  }
   Future<void> _onBookmarkPost(
     BookmarkPost event,
     Emitter<PostInteractionState> emit,
