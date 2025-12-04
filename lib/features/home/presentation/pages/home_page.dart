@@ -9,6 +9,8 @@ import 'package:kit/features/home/presentation/pages/following_tab.dart';
 import 'package:kit/features/home/presentation/pages/for_you_tab.dart';
 import 'package:kit/features/profile/presentation/bloc/profile_bloc/profile_bloc.dart';
 import 'package:kit/shared/constants/app_assets.dart';
+import 'package:kit/shared/widgets/app_button.dart';
+import 'package:kit/shared/widgets/app_svg.dart';
 import 'package:kit/shared/widgets/network_image.dart';
 import 'package:kit/shared/widgets/toast.dart';
 
@@ -35,11 +37,18 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            context.push(AppRoutes.createPost);
+            // click this button to navigte to chatbot page
+            
           },
           shape: CircleBorder(),
-          backgroundColor: context.appTheme.primaryColor,
-          child: Icon(Icons.add, size: 32, color: context.appTheme.onPrimaryColor),
+          elevation: 0,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(30),
+            child: Image.asset(
+              AppAssets.chatBot,
+            ),
+          ), // also important, removes the shadow
+
         ),
         body: DefaultTabController(
           length: 2,
@@ -89,6 +98,21 @@ class _HomePageState extends State<HomePage> {
                       )
                     ),
                   ),
+                  actions: [
+                    Padding(
+                      padding: const EdgeInsets.all(0),
+                      child: AppButton.icon(
+                        onPressed: () {
+                          context.push(AppRoutes.createPost);
+                        },
+                        padding: EdgeInsets.zero,
+                        iconPath: AppAssets.plusSvg,
+                        backgroundColor: Colors.transparent,
+                        iconColor: context.appTheme.onSurfaceColor,
+                        iconSize: 32,
+                      ),
+                    ),
+                  ],
                   bottom: TabBar(
                     indicatorColor: context.appTheme.primaryColor,
                     indicatorSize: TabBarIndicatorSize.label,

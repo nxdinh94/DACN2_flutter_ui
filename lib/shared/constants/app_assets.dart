@@ -1,6 +1,7 @@
 class AppAssets {
   AppAssets._();
   static const String googleIcon = 'assets/images/google_icon.png';
+  static const String chatBot = 'assets/images/chatbot.png';
   static const String appLogo = 'assets/images/logo.png';
 
   static const String imageSvg = 'assets/svgs/image.svg';
@@ -21,4 +22,5 @@ class AppAssets {
   static const String heartOutlinedSvg = 'assets/svgs/heart_outline.svg';
   static const String shareSvg = 'assets/svgs/share.svg';
   static const String repostSvg = 'assets/svgs/repost.svg';
+  static const String plusSvg = 'assets/svgs/plus.svg';
 }
