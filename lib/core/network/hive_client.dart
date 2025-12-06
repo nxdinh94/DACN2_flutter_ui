@@ -14,7 +14,8 @@ class HiveClient {
   static const List<String> _boxNames = [
     AppConstants.hiveUserInfoBox,
     AppConstants.hiveSettingsBox,
-    AppConstants.hiveThemeModeBox
+    AppConstants.hiveThemeModeBox,
+    AppConstants.chatBotHistoryBox,
   ];
 
   BoxCollection? _boxCollection;
@@ -52,7 +53,7 @@ class HiveClient {
       await box.put(entry.key, entry.value);
     }
   }
-
+  
   // ==================== READ Operations ====================
 
   /// Get a single value from a box

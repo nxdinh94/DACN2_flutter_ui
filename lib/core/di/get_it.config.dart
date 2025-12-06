@@ -23,6 +23,13 @@ import '../../features/auth/domain/usecases/login_usecase.dart' as _i188;
 import '../../features/auth/domain/usecases/logout_usecase.dart' as _i48;
 import '../../features/auth/domain/usecases/register_usecase.dart' as _i941;
 import '../../features/auth/presentation/bloc/auth_bloc.dart' as _i797;
+import '../../features/chatbot/data/data_source/chatbot_local_data_source.dart'
+    as _i545;
+import '../../features/chatbot/data/data_source/chatbot_remote_data_source.dart'
+    as _i676;
+import '../../features/chatbot/data/repository/chatbot_repository.dart'
+    as _i437;
+import '../../features/chatbot/presentation/bloc/chatbot_bloc.dart' as _i927;
 import '../../features/create_post/data/data_source/create_post_data_source.dart'
     as _i181;
 import '../../features/create_post/data/repositories/create_post_repository_impl.dart'
@@ -63,6 +70,7 @@ import '../../shared/services/upload_media.dart' as _i182;
 import '../../shared/services/upload_post_media.dart' as _i931;
 import '../logger/logger.dart' as _i512;
 import '../network/dio_client.dart' as _i667;
+import '../network/dio_client_ai.dart' as _i1057;
 import '../network/hive_client.dart' as _i980;
 import '../utils/auth_token_services.dart' as _i822;
 import 'module.dart' as _i946;
@@ -88,6 +96,10 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i911.ProfileLocalDataSource>(
       () => _i911.ProfileLocalDataSourceImpl(gh<_i980.HiveClient>()),
     );
+    gh.singleton<_i545.ChatbotLocalDataSource>(
+      () =>
+          _i545.ChatbotLocalDataSourceImpl(hiveClient: gh<_i980.HiveClient>()),
+    );
     gh.lazySingleton<_i751.FirebaseMessagingService>(
       () => _i751.FirebaseMessagingService(gh<_i892.FirebaseMessaging>()),
     );
@@ -96,6 +108,10 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i667.DioClient>(
       () => _i667.DioClient(authTokenServices: gh<_i822.AuthTokenServices>()),
+    );
+    gh.lazySingleton<_i1057.DioClientAI>(
+      () =>
+          _i1057.DioClientAI(authTokenServices: gh<_i822.AuthTokenServices>()),
     );
     gh.factory<_i182.UploadMediaService>(
       () => _i182.UploadMediaServiceImpl(gh<_i667.DioClient>()),
@@ -133,6 +149,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i107.AuthRemoteDataSource>(
       () => _i107.AuthRemoteDataSourceImpl(dioClient: gh<_i667.DioClient>()),
     );
+    gh.factory<_i676.ChatbotRemoteDataSource>(
+      () => _i676.ChatbotRemoteDataSourceImpl(
+        dioClientAI: gh<_i1057.DioClientAI>(),
+      ),
+    );
     gh.factory<_i185.PostInteractionRepository>(
       () => _i185.PostInteractionRepositoryImpl(
         gh<_i209.PostInteractionRemoteDataSource>(),
@@ -143,6 +164,12 @@ extension GetItInjectableX on _i174.GetIt {
         remoteDataSource: gh<_i107.AuthRemoteDataSource>(),
         authTokenServices: gh<_i822.AuthTokenServices>(),
         hiveClient: gh<_i980.HiveClient>(),
+      ),
+    );
+    gh.factory<_i437.ChatbotRepository>(
+      () => _i437.ChatbotRepositoryImpl(
+        gh<_i676.ChatbotRemoteDataSource>(),
+        gh<_i545.ChatbotLocalDataSource>(),
       ),
     );
     gh.factory<_i244.CreatePostRepository>(
@@ -162,6 +189,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i941.RegisterUseCase>(
       () => _i941.RegisterUseCase(gh<_i787.AuthRepository>()),
+    );
+    gh.factory<_i927.ChatbotBloc>(
+      () => _i927.ChatbotBloc(gh<_i437.ChatbotRepository>()),
     );
     gh.factory<_i528.CreatePostUseCase>(
       () => _i528.CreatePostUseCase(gh<_i244.CreatePostRepository>()),

@@ -17,6 +17,7 @@ import 'package:kit/features/home/presentation/pages/view_specific_post.dart';
 import 'package:kit/features/notification/presentations/screens/notification_screen.dart';
 import 'package:kit/features/profile/presentation/profile_screen.dart';
 import 'package:kit/features/settings/presentation/pages/settings_page.dart';
+import 'package:kit/features/chatbot/presentation/pages/chatbot_page.dart';
 import 'package:kit/shared/model/post/post_entity.dart';
 
 
@@ -48,6 +49,7 @@ class AppRoutes {
 
   static const String feedMediaView = '/feed_media_view';
   static const String viewSpecificPost = '/view_specific_post';
+  static const String chatbot = '/chatbot';
   
 
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -107,6 +109,7 @@ class AppRoutes {
                   child: const ProfilePage(),
                 ),
               ),
+              
               GoRoute(
                 path: viewSpecificPost,
                 pageBuilder: (context, state) {
@@ -148,6 +151,12 @@ class AppRoutes {
             ],
           ),
         ],
+      ),
+      GoRoute(
+        path: chatbot,
+        pageBuilder: (context, state) => slideTransitionPage(
+          child: const ChatbotPage(),
+        ),
       ),
       GoRoute(
         path: createPost,

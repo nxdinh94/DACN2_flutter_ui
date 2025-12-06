@@ -37,8 +37,7 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            // click this button to navigte to chatbot page
-            
+            context.push(AppRoutes.chatbot);
           },
           shape: CircleBorder(),
           elevation: 0,

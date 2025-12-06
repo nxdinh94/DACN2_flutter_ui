@@ -34,6 +34,7 @@ class AppConstants {
 
   static const String hiveSettingsBox = 'settings';
   static const String hiveThemeModeBox = 'theme_mode';
+  static const String chatBotHistoryBox = 'chatbot_history';
 
   
   // Storage keys
