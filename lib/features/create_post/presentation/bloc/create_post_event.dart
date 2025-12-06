@@ -7,7 +7,7 @@ sealed class CreatePostEvent with _$CreatePostEvent {
   const factory CreatePostEvent.collectingData({
     String? content,
     List<AssetEntity>? mediaAssetEntities,
-    List<File?>? mediaFiles,
+    List<File?>? mediaFiles,  
     @Default(PostViewScope.public) PostViewScope viewScope
   }) = CollectingDataEvent;
 
@@ -15,4 +15,6 @@ sealed class CreatePostEvent with _$CreatePostEvent {
   const factory CreatePostEvent.resetCreatePostEvent() = ResetCreatePostEvent;
 
   const factory CreatePostEvent.removeAnSelectedImage(AssetEntity media) = RemoveAnSelectedImageEvent;
+  const factory CreatePostEvent.correctContent(String content) = CorrectContentEvent;
+  const factory CreatePostEvent.resetCorrectContent() = ResetCorrectContentEvent;
 }

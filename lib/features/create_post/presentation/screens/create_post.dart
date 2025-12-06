@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:gpt_markdown/gpt_markdown.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kit/core/extensions/context.dart';
 import 'package:kit/core/utils/debounce.dart';
@@ -203,6 +204,21 @@ class _CreatePostState extends State<CreatePost> {
                     ),
                   ),
                   actions: [
+                    if(isCollectingData)
+                      InkWell(
+                        onTap: () {
+                          context.read<CreatePostBloc>().add(CorrectContentEvent(_controller.text));
+                        },
+                        child: Image.asset(
+                          AppAssets.grammarlyPng,
+                          height: 24,
+                          width: 24,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+
+                    const SizedBox(width: 12,),
+
                     Padding(
                       padding: const EdgeInsets.only(right: 16.0),
                       child: AppButton.elevated(
@@ -228,16 +244,68 @@ class _CreatePostState extends State<CreatePost> {
                 child: Column(
                   spacing: 16,
                   children: [
-                    AppTextField(
-                      controller: _controller,
-                      keyboardType: TextInputType.multiline,
-                      maxLines: null, // grow dynamically
-                      hintText: 'What\'s on your mind?',
-                      border: InputBorder.none,
-                      onChanged: (value) {
-                        context.read<CreatePostBloc>().add(CollectingDataEvent(content: value));
+                    _buildCollectContentSection(context),
+
+                    BlocBuilder<CreatePostBloc, CreatePostState>(
+                      builder: (context, state) {
+                        final currentState = state.mapOrNull(
+                          collectingData: (value) => value,
+                        );
+                        
+                        if (currentState == null) {
+                          return const SizedBox.shrink();
+                        }
+                        
+                        return switch (currentState.correctionStatus) {
+                          CorrectionStatus.correcting => Container(
+                            width: context.width,
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade200,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: const Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                _ThreeDotsLoadingAnimation(),
+                              ],
+                            ),
+                          ),
+                          CorrectionStatus.corrected => Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            spacing: 4,
+                            children: [
+                              Container(
+                                width: context.width,
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  color: Colors.grey.shade200,
+                                  borderRadius: BorderRadius.circular(8)
+                                ),
+                                child: GptMarkdown(
+                                  currentState.correctedContent!.diff
+                                ),
+                              ),
+                              SizedBox(
+                                width: 48,
+                                child: AppButton.elevated(
+                                  text: 'Use',
+                                  fontSize: 12,
+                                  padding: EdgeInsetsGeometry.all(4),
+                                  onPressed: (){
+                                    _controller.text = currentState.correctedContent!.corrected;
+                                    context.read<CreatePostBloc>().add(ResetCorrectContentEvent());
+                                  },
+                                ),
+                              )
+                            ],
+                          ),
+                          _ => const SizedBox.shrink(),
+                        };
                       },
                     ),
+                    
+
                     BlocBuilder<CreatePostBloc, CreatePostState>(
                       builder: (BuildContext context, CreatePostState state) {
                         if(state is CreatePostCollectingData &&  state.mediaAssetEntities != null ) {
@@ -296,6 +364,78 @@ class _CreatePostState extends State<CreatePost> {
           ],
         ),
       ),
+    );
+  }
+
+  AppTextField _buildCollectContentSection(BuildContext context) {
+    return AppTextField(
+      controller: _controller,
+      keyboardType: TextInputType.multiline,
+      maxLines: null, // grow dynamically
+      hintText: 'What\'s on your mind?',
+      border: InputBorder.none,
+      onChanged: (value) {
+        context.read<CreatePostBloc>().add(CollectingDataEvent(content: value));
+      },
+    );
+  }
+}
+
+class _ThreeDotsLoadingAnimation extends StatefulWidget {
+  const _ThreeDotsLoadingAnimation();
+
+  @override
+  State<_ThreeDotsLoadingAnimation> createState() => _ThreeDotsLoadingAnimationState();
+}
+
+class _ThreeDotsLoadingAnimationState extends State<_ThreeDotsLoadingAnimation> 
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1200),
+    )..repeat();
+  }
+  
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+  
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      spacing: 8,
+      children: List.generate(3, (index) {
+        return AnimatedBuilder(
+          animation: _controller,
+          builder: (context, child) {
+            final delay = index * 0.2;
+            final value = (_controller.value - delay) % 1.0;
+            final scale = value < 0.5 
+                ? 1.0 + (value * 2) * 0.5
+                : 1.5 - ((value - 0.5) * 2) * 0.5;
+            
+            return Transform.scale(
+              scale: scale,
+              child: Container(
+                width: 8,
+                height: 8,
+                decoration: BoxDecoration(
+                  color: context.appTheme.primaryColor.withAlpha((0.7 * 255).round()),
+                  shape: BoxShape.circle,
+                ),
+              ),
+            );
+          },
+        );
+      }),
     );
   }
 }

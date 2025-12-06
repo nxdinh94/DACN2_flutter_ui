@@ -3,6 +3,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
 import 'package:kit/features/create_post/data/data_source/create_post_data_source.dart';
 import 'package:kit/features/create_post/data/models/create_post_request_dto.dart';
+import 'package:kit/features/create_post/domain/entities/correct_content_entity.dart';
 import 'package:kit/features/create_post/domain/repositories/create_post_repository.dart';
 import 'package:kit/shared/model/post/post_entity.dart';
 import 'package:kit/shared/model/upload_media/upload_media_request_dto.dart';
@@ -53,5 +54,14 @@ class CreatePostRepositoryImpl implements CreatePostRepository {
     final result = await dataSource.createPost(request);
     
     return result.map((response) => response.data.toEntity());
+  }
+
+  @override
+  Future<Either<String, CorrectContentEntity>> correctContent(String content)async {
+    final data = await dataSource.correctContent(content);
+    return data.fold(
+      (error) => Left(error), 
+      (right)=> Right(right.toEntity())
+    );
   }
 }

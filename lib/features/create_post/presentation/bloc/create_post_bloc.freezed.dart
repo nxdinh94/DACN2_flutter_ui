@@ -55,14 +55,16 @@ extension CreatePostEventPatterns on CreatePostEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( CollectingDataEvent value)?  collectingData,TResult Function( StartPostEvent value)?  startPost,TResult Function( ResetCreatePostEvent value)?  resetCreatePostEvent,TResult Function( RemoveAnSelectedImageEvent value)?  removeAnSelectedImage,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( CollectingDataEvent value)?  collectingData,TResult Function( StartPostEvent value)?  startPost,TResult Function( ResetCreatePostEvent value)?  resetCreatePostEvent,TResult Function( RemoveAnSelectedImageEvent value)?  removeAnSelectedImage,TResult Function( CorrectContentEvent value)?  correctContent,TResult Function( ResetCorrectContentEvent value)?  resetCorrectContent,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case CollectingDataEvent() when collectingData != null:
 return collectingData(_that);case StartPostEvent() when startPost != null:
 return startPost(_that);case ResetCreatePostEvent() when resetCreatePostEvent != null:
 return resetCreatePostEvent(_that);case RemoveAnSelectedImageEvent() when removeAnSelectedImage != null:
-return removeAnSelectedImage(_that);case _:
+return removeAnSelectedImage(_that);case CorrectContentEvent() when correctContent != null:
+return correctContent(_that);case ResetCorrectContentEvent() when resetCorrectContent != null:
+return resetCorrectContent(_that);case _:
   return orElse();
 
 }
@@ -80,14 +82,16 @@ return removeAnSelectedImage(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( CollectingDataEvent value)  collectingData,required TResult Function( StartPostEvent value)  startPost,required TResult Function( ResetCreatePostEvent value)  resetCreatePostEvent,required TResult Function( RemoveAnSelectedImageEvent value)  removeAnSelectedImage,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( CollectingDataEvent value)  collectingData,required TResult Function( StartPostEvent value)  startPost,required TResult Function( ResetCreatePostEvent value)  resetCreatePostEvent,required TResult Function( RemoveAnSelectedImageEvent value)  removeAnSelectedImage,required TResult Function( CorrectContentEvent value)  correctContent,required TResult Function( ResetCorrectContentEvent value)  resetCorrectContent,}){
 final _that = this;
 switch (_that) {
 case CollectingDataEvent():
 return collectingData(_that);case StartPostEvent():
 return startPost(_that);case ResetCreatePostEvent():
 return resetCreatePostEvent(_that);case RemoveAnSelectedImageEvent():
-return removeAnSelectedImage(_that);}
+return removeAnSelectedImage(_that);case CorrectContentEvent():
+return correctContent(_that);case ResetCorrectContentEvent():
+return resetCorrectContent(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -101,14 +105,16 @@ return removeAnSelectedImage(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( CollectingDataEvent value)?  collectingData,TResult? Function( StartPostEvent value)?  startPost,TResult? Function( ResetCreatePostEvent value)?  resetCreatePostEvent,TResult? Function( RemoveAnSelectedImageEvent value)?  removeAnSelectedImage,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( CollectingDataEvent value)?  collectingData,TResult? Function( StartPostEvent value)?  startPost,TResult? Function( ResetCreatePostEvent value)?  resetCreatePostEvent,TResult? Function( RemoveAnSelectedImageEvent value)?  removeAnSelectedImage,TResult? Function( CorrectContentEvent value)?  correctContent,TResult? Function( ResetCorrectContentEvent value)?  resetCorrectContent,}){
 final _that = this;
 switch (_that) {
 case CollectingDataEvent() when collectingData != null:
 return collectingData(_that);case StartPostEvent() when startPost != null:
 return startPost(_that);case ResetCreatePostEvent() when resetCreatePostEvent != null:
 return resetCreatePostEvent(_that);case RemoveAnSelectedImageEvent() when removeAnSelectedImage != null:
-return removeAnSelectedImage(_that);case _:
+return removeAnSelectedImage(_that);case CorrectContentEvent() when correctContent != null:
+return correctContent(_that);case ResetCorrectContentEvent() when resetCorrectContent != null:
+return resetCorrectContent(_that);case _:
   return null;
 
 }
@@ -125,13 +131,15 @@ return removeAnSelectedImage(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String? content,  List<AssetEntity>? mediaAssetEntities,  List<File?>? mediaFiles,  PostViewScope viewScope)?  collectingData,TResult Function()?  startPost,TResult Function()?  resetCreatePostEvent,TResult Function( AssetEntity media)?  removeAnSelectedImage,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String? content,  List<AssetEntity>? mediaAssetEntities,  List<File?>? mediaFiles,  PostViewScope viewScope)?  collectingData,TResult Function()?  startPost,TResult Function()?  resetCreatePostEvent,TResult Function( AssetEntity media)?  removeAnSelectedImage,TResult Function( String content)?  correctContent,TResult Function()?  resetCorrectContent,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case CollectingDataEvent() when collectingData != null:
 return collectingData(_that.content,_that.mediaAssetEntities,_that.mediaFiles,_that.viewScope);case StartPostEvent() when startPost != null:
 return startPost();case ResetCreatePostEvent() when resetCreatePostEvent != null:
 return resetCreatePostEvent();case RemoveAnSelectedImageEvent() when removeAnSelectedImage != null:
-return removeAnSelectedImage(_that.media);case _:
+return removeAnSelectedImage(_that.media);case CorrectContentEvent() when correctContent != null:
+return correctContent(_that.content);case ResetCorrectContentEvent() when resetCorrectContent != null:
+return resetCorrectContent();case _:
   return orElse();
 
 }
@@ -149,13 +157,15 @@ return removeAnSelectedImage(_that.media);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String? content,  List<AssetEntity>? mediaAssetEntities,  List<File?>? mediaFiles,  PostViewScope viewScope)  collectingData,required TResult Function()  startPost,required TResult Function()  resetCreatePostEvent,required TResult Function( AssetEntity media)  removeAnSelectedImage,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String? content,  List<AssetEntity>? mediaAssetEntities,  List<File?>? mediaFiles,  PostViewScope viewScope)  collectingData,required TResult Function()  startPost,required TResult Function()  resetCreatePostEvent,required TResult Function( AssetEntity media)  removeAnSelectedImage,required TResult Function( String content)  correctContent,required TResult Function()  resetCorrectContent,}) {final _that = this;
 switch (_that) {
 case CollectingDataEvent():
 return collectingData(_that.content,_that.mediaAssetEntities,_that.mediaFiles,_that.viewScope);case StartPostEvent():
 return startPost();case ResetCreatePostEvent():
 return resetCreatePostEvent();case RemoveAnSelectedImageEvent():
-return removeAnSelectedImage(_that.media);}
+return removeAnSelectedImage(_that.media);case CorrectContentEvent():
+return correctContent(_that.content);case ResetCorrectContentEvent():
+return resetCorrectContent();}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -169,13 +179,15 @@ return removeAnSelectedImage(_that.media);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String? content,  List<AssetEntity>? mediaAssetEntities,  List<File?>? mediaFiles,  PostViewScope viewScope)?  collectingData,TResult? Function()?  startPost,TResult? Function()?  resetCreatePostEvent,TResult? Function( AssetEntity media)?  removeAnSelectedImage,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String? content,  List<AssetEntity>? mediaAssetEntities,  List<File?>? mediaFiles,  PostViewScope viewScope)?  collectingData,TResult? Function()?  startPost,TResult? Function()?  resetCreatePostEvent,TResult? Function( AssetEntity media)?  removeAnSelectedImage,TResult? Function( String content)?  correctContent,TResult? Function()?  resetCorrectContent,}) {final _that = this;
 switch (_that) {
 case CollectingDataEvent() when collectingData != null:
 return collectingData(_that.content,_that.mediaAssetEntities,_that.mediaFiles,_that.viewScope);case StartPostEvent() when startPost != null:
 return startPost();case ResetCreatePostEvent() when resetCreatePostEvent != null:
 return resetCreatePostEvent();case RemoveAnSelectedImageEvent() when removeAnSelectedImage != null:
-return removeAnSelectedImage(_that.media);case _:
+return removeAnSelectedImage(_that.media);case CorrectContentEvent() when correctContent != null:
+return correctContent(_that.content);case ResetCorrectContentEvent() when resetCorrectContent != null:
+return resetCorrectContent();case _:
   return null;
 
 }
@@ -402,6 +414,104 @@ as AssetEntity,
 }
 
 /// @nodoc
+
+
+class CorrectContentEvent implements CreatePostEvent {
+  const CorrectContentEvent(this.content);
+  
+
+ final  String content;
+
+/// Create a copy of CreatePostEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$CorrectContentEventCopyWith<CorrectContentEvent> get copyWith => _$CorrectContentEventCopyWithImpl<CorrectContentEvent>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CorrectContentEvent&&(identical(other.content, content) || other.content == content));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,content);
+
+@override
+String toString() {
+  return 'CreatePostEvent.correctContent(content: $content)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $CorrectContentEventCopyWith<$Res> implements $CreatePostEventCopyWith<$Res> {
+  factory $CorrectContentEventCopyWith(CorrectContentEvent value, $Res Function(CorrectContentEvent) _then) = _$CorrectContentEventCopyWithImpl;
+@useResult
+$Res call({
+ String content
+});
+
+
+
+
+}
+/// @nodoc
+class _$CorrectContentEventCopyWithImpl<$Res>
+    implements $CorrectContentEventCopyWith<$Res> {
+  _$CorrectContentEventCopyWithImpl(this._self, this._then);
+
+  final CorrectContentEvent _self;
+  final $Res Function(CorrectContentEvent) _then;
+
+/// Create a copy of CreatePostEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? content = null,}) {
+  return _then(CorrectContentEvent(
+null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class ResetCorrectContentEvent implements CreatePostEvent {
+  const ResetCorrectContentEvent();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ResetCorrectContentEvent);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'CreatePostEvent.resetCorrectContent()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
 mixin _$CreatePostState {
 
 
@@ -521,14 +631,14 @@ return collectingData(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function()?  success,TResult Function( String message)?  error,TResult Function( String? content,  List<AssetEntity>? mediaAssetEntities,  List<File?>? mediaFiles,  List<Uint8List>? cachedThumbnails,  PostViewScope viewScope)?  collectingData,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function()?  success,TResult Function( String message)?  error,TResult Function( String? content,  List<AssetEntity>? mediaAssetEntities,  List<File?>? mediaFiles,  List<Uint8List>? cachedThumbnails,  PostViewScope viewScope,  CorrectionStatus correctionStatus,  CorrectContentEntity? correctedContent)?  collectingData,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case CreatePostInitial() when initial != null:
 return initial();case CreatePostLoading() when loading != null:
 return loading();case CreatePostSuccess() when success != null:
 return success();case CreatePostError() when error != null:
 return error(_that.message);case CreatePostCollectingData() when collectingData != null:
-return collectingData(_that.content,_that.mediaAssetEntities,_that.mediaFiles,_that.cachedThumbnails,_that.viewScope);case _:
+return collectingData(_that.content,_that.mediaAssetEntities,_that.mediaFiles,_that.cachedThumbnails,_that.viewScope,_that.correctionStatus,_that.correctedContent);case _:
   return orElse();
 
 }
@@ -546,14 +656,14 @@ return collectingData(_that.content,_that.mediaAssetEntities,_that.mediaFiles,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function()  success,required TResult Function( String message)  error,required TResult Function( String? content,  List<AssetEntity>? mediaAssetEntities,  List<File?>? mediaFiles,  List<Uint8List>? cachedThumbnails,  PostViewScope viewScope)  collectingData,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function()  success,required TResult Function( String message)  error,required TResult Function( String? content,  List<AssetEntity>? mediaAssetEntities,  List<File?>? mediaFiles,  List<Uint8List>? cachedThumbnails,  PostViewScope viewScope,  CorrectionStatus correctionStatus,  CorrectContentEntity? correctedContent)  collectingData,}) {final _that = this;
 switch (_that) {
 case CreatePostInitial():
 return initial();case CreatePostLoading():
 return loading();case CreatePostSuccess():
 return success();case CreatePostError():
 return error(_that.message);case CreatePostCollectingData():
-return collectingData(_that.content,_that.mediaAssetEntities,_that.mediaFiles,_that.cachedThumbnails,_that.viewScope);case _:
+return collectingData(_that.content,_that.mediaAssetEntities,_that.mediaFiles,_that.cachedThumbnails,_that.viewScope,_that.correctionStatus,_that.correctedContent);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -570,14 +680,14 @@ return collectingData(_that.content,_that.mediaAssetEntities,_that.mediaFiles,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function()?  success,TResult? Function( String message)?  error,TResult? Function( String? content,  List<AssetEntity>? mediaAssetEntities,  List<File?>? mediaFiles,  List<Uint8List>? cachedThumbnails,  PostViewScope viewScope)?  collectingData,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function()?  success,TResult? Function( String message)?  error,TResult? Function( String? content,  List<AssetEntity>? mediaAssetEntities,  List<File?>? mediaFiles,  List<Uint8List>? cachedThumbnails,  PostViewScope viewScope,  CorrectionStatus correctionStatus,  CorrectContentEntity? correctedContent)?  collectingData,}) {final _that = this;
 switch (_that) {
 case CreatePostInitial() when initial != null:
 return initial();case CreatePostLoading() when loading != null:
 return loading();case CreatePostSuccess() when success != null:
 return success();case CreatePostError() when error != null:
 return error(_that.message);case CreatePostCollectingData() when collectingData != null:
-return collectingData(_that.content,_that.mediaAssetEntities,_that.mediaFiles,_that.cachedThumbnails,_that.viewScope);case _:
+return collectingData(_that.content,_that.mediaAssetEntities,_that.mediaFiles,_that.cachedThumbnails,_that.viewScope,_that.correctionStatus,_that.correctedContent);case _:
   return null;
 
 }
@@ -751,7 +861,7 @@ as String,
 
 
 class CreatePostCollectingData implements CreatePostState {
-  const CreatePostCollectingData({this.content, final  List<AssetEntity>? mediaAssetEntities, final  List<File?>? mediaFiles, final  List<Uint8List>? cachedThumbnails, this.viewScope = PostViewScope.public}): _mediaAssetEntities = mediaAssetEntities,_mediaFiles = mediaFiles,_cachedThumbnails = cachedThumbnails;
+  const CreatePostCollectingData({this.content, final  List<AssetEntity>? mediaAssetEntities, final  List<File?>? mediaFiles, final  List<Uint8List>? cachedThumbnails, this.viewScope = PostViewScope.public, this.correctionStatus = CorrectionStatus.idle, this.correctedContent}): _mediaAssetEntities = mediaAssetEntities,_mediaFiles = mediaFiles,_cachedThumbnails = cachedThumbnails;
   
 
  final  String? content;
@@ -783,6 +893,8 @@ class CreatePostCollectingData implements CreatePostState {
 }
 
 @JsonKey() final  PostViewScope viewScope;
+@JsonKey() final  CorrectionStatus correctionStatus;
+ final  CorrectContentEntity? correctedContent;
 
 /// Create a copy of CreatePostState
 /// with the given fields replaced by the non-null parameter values.
@@ -794,16 +906,16 @@ $CreatePostCollectingDataCopyWith<CreatePostCollectingData> get copyWith => _$Cr
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreatePostCollectingData&&(identical(other.content, content) || other.content == content)&&const DeepCollectionEquality().equals(other._mediaAssetEntities, _mediaAssetEntities)&&const DeepCollectionEquality().equals(other._mediaFiles, _mediaFiles)&&const DeepCollectionEquality().equals(other._cachedThumbnails, _cachedThumbnails)&&(identical(other.viewScope, viewScope) || other.viewScope == viewScope));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreatePostCollectingData&&(identical(other.content, content) || other.content == content)&&const DeepCollectionEquality().equals(other._mediaAssetEntities, _mediaAssetEntities)&&const DeepCollectionEquality().equals(other._mediaFiles, _mediaFiles)&&const DeepCollectionEquality().equals(other._cachedThumbnails, _cachedThumbnails)&&(identical(other.viewScope, viewScope) || other.viewScope == viewScope)&&(identical(other.correctionStatus, correctionStatus) || other.correctionStatus == correctionStatus)&&(identical(other.correctedContent, correctedContent) || other.correctedContent == correctedContent));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,content,const DeepCollectionEquality().hash(_mediaAssetEntities),const DeepCollectionEquality().hash(_mediaFiles),const DeepCollectionEquality().hash(_cachedThumbnails),viewScope);
+int get hashCode => Object.hash(runtimeType,content,const DeepCollectionEquality().hash(_mediaAssetEntities),const DeepCollectionEquality().hash(_mediaFiles),const DeepCollectionEquality().hash(_cachedThumbnails),viewScope,correctionStatus,correctedContent);
 
 @override
 String toString() {
-  return 'CreatePostState.collectingData(content: $content, mediaAssetEntities: $mediaAssetEntities, mediaFiles: $mediaFiles, cachedThumbnails: $cachedThumbnails, viewScope: $viewScope)';
+  return 'CreatePostState.collectingData(content: $content, mediaAssetEntities: $mediaAssetEntities, mediaFiles: $mediaFiles, cachedThumbnails: $cachedThumbnails, viewScope: $viewScope, correctionStatus: $correctionStatus, correctedContent: $correctedContent)';
 }
 
 
@@ -814,11 +926,11 @@ abstract mixin class $CreatePostCollectingDataCopyWith<$Res> implements $CreateP
   factory $CreatePostCollectingDataCopyWith(CreatePostCollectingData value, $Res Function(CreatePostCollectingData) _then) = _$CreatePostCollectingDataCopyWithImpl;
 @useResult
 $Res call({
- String? content, List<AssetEntity>? mediaAssetEntities, List<File?>? mediaFiles, List<Uint8List>? cachedThumbnails, PostViewScope viewScope
+ String? content, List<AssetEntity>? mediaAssetEntities, List<File?>? mediaFiles, List<Uint8List>? cachedThumbnails, PostViewScope viewScope, CorrectionStatus correctionStatus, CorrectContentEntity? correctedContent
 });
 
 
-
+$CorrectContentEntityCopyWith<$Res>? get correctedContent;
 
 }
 /// @nodoc
@@ -831,18 +943,32 @@ class _$CreatePostCollectingDataCopyWithImpl<$Res>
 
 /// Create a copy of CreatePostState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? content = freezed,Object? mediaAssetEntities = freezed,Object? mediaFiles = freezed,Object? cachedThumbnails = freezed,Object? viewScope = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? content = freezed,Object? mediaAssetEntities = freezed,Object? mediaFiles = freezed,Object? cachedThumbnails = freezed,Object? viewScope = null,Object? correctionStatus = null,Object? correctedContent = freezed,}) {
   return _then(CreatePostCollectingData(
 content: freezed == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
 as String?,mediaAssetEntities: freezed == mediaAssetEntities ? _self._mediaAssetEntities : mediaAssetEntities // ignore: cast_nullable_to_non_nullable
 as List<AssetEntity>?,mediaFiles: freezed == mediaFiles ? _self._mediaFiles : mediaFiles // ignore: cast_nullable_to_non_nullable
 as List<File?>?,cachedThumbnails: freezed == cachedThumbnails ? _self._cachedThumbnails : cachedThumbnails // ignore: cast_nullable_to_non_nullable
 as List<Uint8List>?,viewScope: null == viewScope ? _self.viewScope : viewScope // ignore: cast_nullable_to_non_nullable
-as PostViewScope,
+as PostViewScope,correctionStatus: null == correctionStatus ? _self.correctionStatus : correctionStatus // ignore: cast_nullable_to_non_nullable
+as CorrectionStatus,correctedContent: freezed == correctedContent ? _self.correctedContent : correctedContent // ignore: cast_nullable_to_non_nullable
+as CorrectContentEntity?,
   ));
 }
 
+/// Create a copy of CreatePostState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$CorrectContentEntityCopyWith<$Res>? get correctedContent {
+    if (_self.correctedContent == null) {
+    return null;
+  }
 
+  return $CorrectContentEntityCopyWith<$Res>(_self.correctedContent!, (value) {
+    return _then(_self.copyWith(correctedContent: value));
+  });
+}
 }
 
 // dart format on

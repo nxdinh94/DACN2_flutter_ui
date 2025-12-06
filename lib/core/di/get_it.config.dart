@@ -36,6 +36,8 @@ import '../../features/create_post/data/repositories/create_post_repository_impl
     as _i918;
 import '../../features/create_post/domain/repositories/create_post_repository.dart'
     as _i244;
+import '../../features/create_post/domain/usecases/correct_content_usecase.dart'
+    as _i188;
 import '../../features/create_post/domain/usecases/create_post_usecase.dart'
     as _i528;
 import '../../features/create_post/presentation/bloc/cache_thumbnail_video.dart'
@@ -116,11 +118,23 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i182.UploadMediaService>(
       () => _i182.UploadMediaServiceImpl(gh<_i667.DioClient>()),
     );
+    gh.factory<_i181.CreatePostDataSource>(
+      () => _i181.CreatePostDataSourceImpl(
+        gh<_i667.DioClient>(),
+        gh<_i1057.DioClientAI>(),
+      ),
+    );
     gh.factory<_i156.ProfileRemoteDataSource>(
       () => _i156.ProfileRemoteDataSourceImpl(gh<_i667.DioClient>()),
     );
     gh.factory<_i931.UploadMediaPostService>(
       () => _i931.UploadMediaPostServiceImpl(gh<_i667.DioClient>()),
+    );
+    gh.factory<_i244.CreatePostRepository>(
+      () => _i918.CreatePostRepositoryImpl(
+        gh<_i181.CreatePostDataSource>(),
+        gh<_i931.UploadMediaPostService>(),
+      ),
     );
     gh.factory<_i741.ProfileRepository>(
       () => _i741.ProfileRepositoryImpl(
@@ -133,9 +147,6 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i209.PostInteractionRemoteDataSourceImpl(
         dioClient: gh<_i667.DioClient>(),
       ),
-    );
-    gh.factory<_i181.CreatePostDataSource>(
-      () => _i181.CreatePostDataSourceImpl(gh<_i667.DioClient>()),
     );
     gh.factory<_i932.ProfileBloc>(
       () => _i932.ProfileBloc(profileRepository: gh<_i741.ProfileRepository>()),
@@ -154,9 +165,21 @@ extension GetItInjectableX on _i174.GetIt {
         dioClientAI: gh<_i1057.DioClientAI>(),
       ),
     );
+    gh.factory<_i188.CorrectContentUsecase>(
+      () => _i188.CorrectContentUsecase(gh<_i244.CreatePostRepository>()),
+    );
+    gh.factory<_i528.CreatePostUseCase>(
+      () => _i528.CreatePostUseCase(gh<_i244.CreatePostRepository>()),
+    );
     gh.factory<_i185.PostInteractionRepository>(
       () => _i185.PostInteractionRepositoryImpl(
         gh<_i209.PostInteractionRemoteDataSource>(),
+      ),
+    );
+    gh.factory<_i491.CreatePostBloc>(
+      () => _i491.CreatePostBloc(
+        gh<_i528.CreatePostUseCase>(),
+        gh<_i188.CorrectContentUsecase>(),
       ),
     );
     gh.factory<_i787.AuthRepository>(
@@ -170,12 +193,6 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i437.ChatbotRepositoryImpl(
         gh<_i676.ChatbotRemoteDataSource>(),
         gh<_i545.ChatbotLocalDataSource>(),
-      ),
-    );
-    gh.factory<_i244.CreatePostRepository>(
-      () => _i918.CreatePostRepositoryImpl(
-        gh<_i181.CreatePostDataSource>(),
-        gh<_i931.UploadMediaPostService>(),
       ),
     );
     gh.factory<_i989.HomeRepository>(
@@ -193,14 +210,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i927.ChatbotBloc>(
       () => _i927.ChatbotBloc(gh<_i437.ChatbotRepository>()),
     );
-    gh.factory<_i528.CreatePostUseCase>(
-      () => _i528.CreatePostUseCase(gh<_i244.CreatePostRepository>()),
-    );
     gh.factory<_i875.PostInteractionBloc>(
       () => _i875.PostInteractionBloc(gh<_i185.PostInteractionRepository>()),
-    );
-    gh.factory<_i491.CreatePostBloc>(
-      () => _i491.CreatePostBloc(gh<_i528.CreatePostUseCase>()),
     );
     gh.singleton<_i797.AuthBloc>(
       () => _i797.AuthBloc(

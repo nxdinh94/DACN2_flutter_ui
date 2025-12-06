@@ -7,6 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:kit/features/create_post/data/models/create_post_request_dto.dart';
+import 'package:kit/features/create_post/domain/entities/correct_content_entity.dart';
+import 'package:kit/features/create_post/domain/usecases/correct_content_usecase.dart';
 import 'package:kit/features/create_post/domain/usecases/create_post_usecase.dart';
 import 'package:kit/shared/constants/enum/post_view_scope.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
@@ -18,12 +20,70 @@ part 'create_post_state.dart';
 @injectable
 class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
   final CreatePostUseCase createPostUseCase;
+  final CorrectContentUsecase correctContentUseCase;
 
-  CreatePostBloc(this.createPostUseCase) : super(const CreatePostState.initial()) {
+  CreatePostBloc(
+    this.createPostUseCase, 
+    this.correctContentUseCase
+  ) : super(const CreatePostState.initial()) {
     on<CollectingDataEvent>(_onCollectingData);
     on<StartPostEvent>(_onStartPost);
     on<RemoveAnSelectedImageEvent>(_onRemoveAnSelectedImage);
     on<ResetCreatePostEvent>(_onResetCreatePostEvent);
+    on<CorrectContentEvent>(_onCorrectContentEvent);
+    on<ResetCorrectContentEvent>(_onResetCorrectContentEvent);
+  }
+  void _onResetCorrectContentEvent(
+    ResetCorrectContentEvent event, 
+    Emitter<CreatePostState> emit
+  ){
+    final currentState = state.mapOrNull(
+      collectingData: (value) => value,
+    );
+    if(currentState !is CollectingDataEvent){
+      emit(CreatePostError(message: 'Something went wrong'));
+      return;
+    }
+    if(currentState.correctionStatus == CorrectionStatus.corrected){
+      emit(
+        currentState.copyWith(
+          correctionStatus: CorrectionStatus.idle,
+          correctedContent: null
+        )
+      );
+    }
+  }
+  void _onCorrectContentEvent(
+    CorrectContentEvent event, 
+    Emitter<CreatePostState> emit
+  )async{
+    final currentState = state.mapOrNull(
+      collectingData: (value) => value,
+    );
+    if(currentState !is CollectingDataEvent){
+      emit(CreatePostError(message: 'Something went wrong'));
+      return;
+    }
+    
+    // Set correcting status
+    emit(currentState.copyWith(
+      correctionStatus: CorrectionStatus.correcting,
+      correctedContent: null,
+    ));
+    
+    final result = await correctContentUseCase(event.content);
+    result.fold((left){
+      emit(currentState.copyWith(
+        correctionStatus: CorrectionStatus.error,
+      ));
+    }, (right){
+      emit(
+        currentState.copyWith(
+          correctionStatus: CorrectionStatus.corrected,
+          correctedContent: right
+        )
+      );
+    });
   }
   void _onResetCreatePostEvent(
     ResetCreatePostEvent event,

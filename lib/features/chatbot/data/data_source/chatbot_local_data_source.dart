@@ -33,10 +33,10 @@ class ChatbotLocalDataSourceImpl implements ChatbotLocalDataSource {
       if(existingData != null) {
         final Map<String, dynamic> dataMap = Map<String, dynamic>.from(existingData as Map);
         final List<dynamic> dataList = List<dynamic>.from(dataMap['messages'] as List);
-        dataList.add(message.toJson());
+        dataList.add(message);
         await hiveClient.put(AppConstants.chatBotHistoryBox, transformedKey, {'messages': dataList});
       } else {
-        await hiveClient.put(AppConstants.chatBotHistoryBox, transformedKey, {'messages': [message.toJson()]});
+        await hiveClient.put(AppConstants.chatBotHistoryBox, transformedKey, {'messages': [message]});
       }
 
   }

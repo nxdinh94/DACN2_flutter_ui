@@ -3,6 +3,7 @@ class AppAssets {
   static const String googleIcon = 'assets/images/google_icon.png';
   static const String chatBot = 'assets/images/chatbot.png';
   static const String appLogo = 'assets/images/logo.png';
+  static const String grammarlyPng = 'assets/images/grammarly.png';
 
   static const String imageSvg = 'assets/svgs/image.svg';
   static const String deleteSvg = 'assets/svgs/delete.svg';

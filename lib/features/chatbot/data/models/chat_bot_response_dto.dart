@@ -1,4 +1,3 @@
-import 'package:flutter_chat_core/flutter_chat_core.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:kit/features/chatbot/data/repository/chat_bot_response_entity.dart';
 import 'package:kit/features/chatbot/presentation/bloc/chatbot_bloc.dart';
