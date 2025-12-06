@@ -45,7 +45,9 @@ class _ChatbotPageState extends State<ChatbotPage> {
           surfaceTintColor: context.appTheme.surfaceColor,
           elevation: 0,
           leading: const BackAppbar(),
+          centerTitle: true,
           title: Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
               CircleAvatar(
                 radius: 16,
@@ -136,6 +138,17 @@ class _ChatbotPageState extends State<ChatbotPage> {
                           index: index,
                         );
                       },
+                      emptyChatListBuilder: (BuildContext context) {
+                        return Center(
+                          child: Text(
+                            'Start a conversation with LingGo!',
+                            style: context.textStyle.bodyMedium?.copyWith(
+                              color: context.appTheme.textSubtle,
+                            ),
+                          ),
+                        );
+                      },
+                      
                     ),
                   ),
                 ),
@@ -170,8 +183,8 @@ class _ChatbotPageState extends State<ChatbotPage> {
   
     return Container(
       margin: EdgeInsets.only(
-        left: isUser ? 48 : 8,
-        right: isUser ? 8 : 48,
+        left: isUser ? 36 : 4,
+        right: isUser ? 4 : 36,
         top: 4,
         bottom: 4,
       ),
