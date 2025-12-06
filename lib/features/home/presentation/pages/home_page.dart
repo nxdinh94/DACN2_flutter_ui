@@ -10,7 +10,6 @@ import 'package:kit/features/home/presentation/pages/for_you_tab.dart';
 import 'package:kit/features/profile/presentation/bloc/profile_bloc/profile_bloc.dart';
 import 'package:kit/shared/constants/app_assets.dart';
 import 'package:kit/shared/widgets/app_button.dart';
-import 'package:kit/shared/widgets/app_svg.dart';
 import 'package:kit/shared/widgets/network_image.dart';
 import 'package:kit/shared/widgets/toast.dart';
 

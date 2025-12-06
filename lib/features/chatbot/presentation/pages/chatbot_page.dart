@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_chat_core/flutter_chat_core.dart';
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
+import 'package:gpt_markdown/gpt_markdown.dart';
 import 'package:kit/core/di/get_it.dart';
 import 'package:kit/core/extensions/context.dart';
-import 'package:kit/features/chatbot/data/models/chat_bot_response_dto.dart';
 import 'package:kit/features/chatbot/presentation/bloc/chatbot_bloc.dart';
 import 'package:kit/shared/widgets/back_appbar.dart';
 
@@ -61,7 +61,7 @@ class _ChatbotPageState extends State<ChatbotPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Grok',
+                    'LingGo',
                     style: context.textStyle.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -82,6 +82,8 @@ class _ChatbotPageState extends State<ChatbotPage> {
             previous.messages.length != current.messages.length ||
             previous.status != current.status,
           listener: (context, state) {
+
+            log('ChatbotState listener triggered. ${state.messages.length}');
             if(state.status == ChatbotStatus.initial && state.messages.isNotEmpty)  {
               _syncMessages(state);
               return;
@@ -123,6 +125,18 @@ class _ChatbotPageState extends State<ChatbotPage> {
                     onMessageSend: (text) {
                       context.read<ChatbotBloc>().add(SendMessage(message: text));
                     },
+                    builders: Builders(
+                      textMessageBuilder: (context, message, index, {
+                        required bool isSentByMe,
+                        MessageGroupStatus? groupStatus,
+                      }) {
+                        return _buildTextMessage(
+                          context,
+                          message,
+                          index: index,
+                        );
+                      },
+                    ),
                   ),
                 ),
               ],
@@ -139,12 +153,7 @@ class _ChatbotPageState extends State<ChatbotPage> {
         .where((msg) => !_insertedMessageIds.contains(msg.id))
         .map((msg) {
       _insertedMessageIds.add(msg.id);
-      return TextMessage(
-        authorId: msg.role,
-        id: msg.id,
-        createdAt: msg.createdAt,
-        text: msg.content,
-      );
+      return msg.toTextMessage();
     }).toList();
 
     if (newMessages.isNotEmpty) {
@@ -202,7 +211,7 @@ class _ChatbotPageState extends State<ChatbotPage> {
                         color: context.appTheme.textSubtle.withAlpha(50),
                       ),
               ),
-              child: Text(
+              child: GptMarkdown(
                 message.text,
                 style: context.textStyle.bodyMedium?.copyWith(
                   color: isUser
